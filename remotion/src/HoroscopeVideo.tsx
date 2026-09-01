@@ -182,7 +182,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
           style={{
             opacity: labelOpacity,
             fontFamily: "Georgia, serif",
-            fontSize: 34,
+            fontSize: 48,
             letterSpacing: 6,
             textTransform: "uppercase",
             color: "#e8d9c0",
@@ -192,7 +192,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
           <div>{signName}</div>
           <div
             style={{
-              fontSize: 18,
+              fontSize: 24,
               letterSpacing: 4,
               marginTop: 12,
               opacity: 0.7,
