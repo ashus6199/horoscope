@@ -37,6 +37,9 @@ not a lifestyle influencer. Never use emojis, hashtags, or exclamation points. S
 directly to the reader as "you". Ground the reading in one clear, concrete piece of \
 guidance or reflection for the day — avoid vague filler like "great things are coming".
 
+CRITICAL REQUIREMENT: You must briefly weave in a mention of a relevant celestial movement \
+(e.g., the Sun, Moon, or specific planetary transits) that is influencing this sign today.
+
 Output ONLY the horoscope text itself. No preamble, no sign-off, no quotation marks."""
 
 def build_user_prompt(sign: str, element: str) -> str:

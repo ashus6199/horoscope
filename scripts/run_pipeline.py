@@ -117,14 +117,36 @@ def main():
         xfade = 1.0 if orig_dur >= 3.0 else (orig_dur / 3.0)
         offset = mid - xfade
         
+        # 2.5 Check if video has audio stream
+        has_audio_cmd = [
+            "ffprobe", "-v", "error", "-select_streams", "a", "-show_entries",
+            "stream=codec_type", "-of", "csv=p=0", str(chosen_clip_path)
+        ]
+        has_audio = bool(subprocess.run(has_audio_cmd, capture_output=True, text=True, check=True).stdout.strip())
+
         # 3. ffmpeg split and crossfade
+        if has_audio:
+            filter_complex = (
+                f"[0:v]trim=start={mid}:end={orig_dur},setpts=PTS-STARTPTS[part2];"
+                f"[0:v]trim=start=0:end={mid},setpts=PTS-STARTPTS[part1];"
+                f"[part2][part1]xfade=transition=fade:duration={xfade}:offset={offset}[outv];"
+                f"[0:a]atrim=start={mid}:end={orig_dur},asetpts=PTS-STARTPTS[apart2];"
+                f"[0:a]atrim=start=0:end={mid},asetpts=PTS-STARTPTS[apart1];"
+                f"[apart2][apart1]acrossfade=d={xfade}[outa]"
+            )
+            maps = ["-map", "[outv]", "-map", "[outa]", "-c:a", "aac"]
+        else:
+            filter_complex = (
+                f"[0:v]trim=start={mid}:end={orig_dur},setpts=PTS-STARTPTS[part2];"
+                f"[0:v]trim=start=0:end={mid},setpts=PTS-STARTPTS[part1];"
+                f"[part2][part1]xfade=transition=fade:duration={xfade}:offset={offset}[outv]"
+            )
+            maps = ["-map", "[outv]"]
+
         cmd = [
             "ffmpeg", "-y", "-i", str(chosen_clip_path),
-            "-filter_complex", 
-            f"[0:v]trim=start={mid}:end={orig_dur},setpts=PTS-STARTPTS[part2];"
-            f"[0:v]trim=start=0:end={mid},setpts=PTS-STARTPTS[part1];"
-            f"[part2][part1]xfade=transition=fade:duration={xfade}:offset={offset}[outv]",
-            "-map", "[outv]",
+            "-filter_complex", filter_complex,
+        ] + maps + [
             "-c:v", "libx264", "-preset", "ultrafast",
             str(loop_path)
         ]
@@ -142,6 +164,9 @@ def main():
     bg_video_path = f"assets/{loop_filename}"
     print(f"Using background clip: {bg_video_path} (Duration: {bg_duration_seconds}s)")
 
+    from datetime import datetime
+    date_text = datetime.now().strftime("%d %B %Y")
+
     print(f"\n=== Step 5: Writing Remotion Props File ===")
     props = {
         "signName": args.sign,
@@ -150,6 +175,7 @@ def main():
         "audioPath": f"assets/{args.sign.lower()}-audio.mp3",
         "durationInSeconds": duration_seconds,
         "bgDurationSeconds": bg_duration_seconds,
+        "dateText": date_text,
     }
     args.props_out.parent.mkdir(parents=True, exist_ok=True)
     with open(args.props_out, "w") as f:
