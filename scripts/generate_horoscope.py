@@ -37,34 +37,51 @@ not a lifestyle influencer. Never use emojis, hashtags, or exclamation points. S
 directly to the reader as "you". Ground the reading in one clear, concrete piece of \
 guidance or reflection for the day — avoid vague filler like "great things are coming".
 
-CRITICAL REQUIREMENT: You must briefly weave in a mention of a relevant celestial movement \
-(e.g., the Sun, Moon, or specific planetary transits) that is influencing this sign today.
+You will be given today's REAL astronomical transit data below. Use it as the \
+astrological basis for the reading — do NOT invent any additional transits, \
+retrogrades, or planetary events beyond what's given. Weave the given fact in \
+naturally, only where it genuinely fits — don't force it into every sentence.
 
 Output ONLY the horoscope text itself. No preamble, no sign-off, no quotation marks."""
 
-def build_user_prompt(sign: str, element: str) -> str:
+
+def build_transit_context(moon_sign, moon_phase_label, retrogrades) -> str:
+    facts = []
+    if moon_sign:
+        phase_bit = f", {moon_phase_label}" if moon_phase_label else ""
+        facts.append(f"Today's Moon is in {moon_sign}{phase_bit}.")
+    if retrogrades:
+        verb = "is" if len(retrogrades) == 1 else "are"
+        facts.append(f"{', '.join(retrogrades)} {verb} currently retrograde.")
+    if not facts:
+        return "No specific transit data available today — write a grounded reading without referencing any transit."
+    return " ".join(facts)
+
+
+def build_user_prompt(sign: str, element: str, transit_context: str) -> str:
     return (
         f"Write today's horoscope for {sign} ({element} sign). "
         f"Target length: {MIN_WORDS}-{MAX_WORDS} words — this will be read aloud "
-        f"in 15-30 seconds, so keep sentences spoken-friendly, not dense or list-like."
+        f"in 15-30 seconds, so keep sentences spoken-friendly, not dense or list-like.\n\n"
+        f"Today's real transit data: {transit_context}"
     )
 
 
-def call_openai(sign: str, element: str) -> str:
+def call_openai(sign: str, element: str, transit_context: str) -> str:
     from openai import OpenAI
     client = OpenAI()  # reads OPENAI_API_KEY from env
     resp = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": build_user_prompt(sign, element)},
+            {"role": "user", "content": build_user_prompt(sign, element, transit_context)},
         ],
         temperature=0.9,
     )
     return resp.choices[0].message.content.strip()
 
 
-def mock_response(sign: str, element: str) -> str:
+def mock_response(sign: str, element: str, transit_context: str) -> str:
     # Used only with --dry-run, to exercise the validation/retry logic offline.
     return (
         f"The {element} in you is restless today, {sign}. Something you have been "
@@ -75,12 +92,12 @@ def mock_response(sign: str, element: str) -> str:
     )
 
 
-def generate(sign: str, element: str, dry_run: bool) -> dict:
+def generate(sign: str, element: str, transit_context: str, dry_run: bool) -> dict:
     fetch = mock_response if dry_run else call_openai
 
     last_text = None
     for attempt in range(1, MAX_RETRIES + 1):
-        text = fetch(sign, element)
+        text = fetch(sign, element, transit_context)
         word_count = len(text.split())
         last_text = text
         if MIN_WORDS <= word_count <= MAX_WORDS:
@@ -106,6 +123,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--sign", required=True)
     parser.add_argument("--element", required=True, choices=["fire", "earth", "air", "water"])
+    parser.add_argument("--moon-sign", default=None, help="Override moon sign instead of computing it live")
+    parser.add_argument("--moon-phase-label", default=None)
+    parser.add_argument("--retrogrades", default="", help="Comma-separated list, e.g. 'Mercury,Venus'")
+    parser.add_argument("--no-auto-transits", action="store_true",
+                         help="Skip calling get_transits.py automatically; use only --moon-sign/--retrogrades if given")
     parser.add_argument("--dry-run", action="store_true", help="skip the API call, use a mock response")
     args = parser.parse_args()
 
@@ -113,7 +135,28 @@ def main():
         print("ERROR: OPENAI_API_KEY not set. Use --dry-run to test without an API key.", file=sys.stderr)
         sys.exit(1)
 
-    result = generate(args.sign, args.element, args.dry_run)
+    moon_sign = args.moon_sign
+    moon_phase_label = args.moon_phase_label
+    retrogrades = [r.strip() for r in args.retrogrades.split(",") if r.strip()]
+
+    if not moon_sign and not args.no_auto_transits:
+        import subprocess
+        transits_script = Path(__file__).resolve().parent / "get_transits.py"
+        try:
+            out = subprocess.run(
+                [sys.executable, str(transits_script)],
+                capture_output=True, text=True, check=True,
+            )
+            transits = json.loads(out.stdout)
+            moon_sign = transits["moon_sign"]
+            moon_phase_label = transits["moon_phase_label"]
+            retrogrades = transits["retrogrades"]
+        except Exception as e:
+            print(f"[WARNING] Could not auto-fetch transits ({e}); proceeding without them.", file=sys.stderr)
+
+    transit_context = build_transit_context(moon_sign, moon_phase_label, retrogrades)
+    result = generate(args.sign, args.element, transit_context, args.dry_run)
+    result["transit_context"] = transit_context
     print(json.dumps(result, indent=2))
 
 
