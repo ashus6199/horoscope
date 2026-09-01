@@ -88,32 +88,18 @@ def main():
     staged_audio_path = assets_dir / f"{args.sign.lower()}-audio.mp3"
     shutil.copy2(audio_output_path, staged_audio_path)
     
-    chosen_clip_filename = clip_data.get("filename", "placeholder-bg.mp4")
-    chosen_clip_path = assets_dir / chosen_clip_filename
+    chosen_clip_filename = clip_data.get("filename")
+    if not chosen_clip_filename:
+        raise ValueError("Selected clip entry has no 'filename' field")
 
-    if chosen_clip_path.exists():
-        bg_video_path = f"assets/{chosen_clip_filename}"
-        print(f"[INFO] Using selected clip asset: {bg_video_path}")
-    else:
-        # Fallback to any available clip matching element prefix (e.g. fire_*.mp4)
-        available_element_clips = sorted(list(assets_dir.glob(f"{args.element}_*.mp4")))
-        if available_element_clips:
-            fallback_clip = available_element_clips[0].name
-            bg_video_path = f"assets/{fallback_clip}"
-            print(f"[INFO] Selected clip '{chosen_clip_filename}' not found; using available element clip: {bg_video_path}")
-        else:
-            bg_video_path = "assets/placeholder-bg.mp4"
-            staged_bg_path = assets_dir / "placeholder-bg.mp4"
-            if not staged_bg_path.exists():
-                print(f"[INFO] Selected clip '{chosen_clip_filename}' not found and {staged_bg_path} does not exist; creating dummy placeholder video via ffmpeg...")
-                subprocess.run([
-                    "ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=0x1a0933:s=1080x1920:d=30",
-                    "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo", "-t", "30",
-                    "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k",
-                    str(staged_bg_path)
-                ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            else:
-                print(f"[INFO] Selected clip '{chosen_clip_filename}' not found; falling back to {bg_video_path}")
+    chosen_clip_path = assets_dir / chosen_clip_filename
+    if not chosen_clip_path.exists():
+        print(f"[ERROR] Selected clip file '{chosen_clip_filename}' not found at {chosen_clip_path}", file=sys.stderr)
+        print(f"[ERROR] Place the file into remotion/public/assets/ before running the pipeline.", file=sys.stderr)
+        raise RuntimeError(f"Missing background clip asset: {chosen_clip_path}")
+
+    bg_video_path = f"assets/{chosen_clip_filename}"
+    print(f"Using background clip: {bg_video_path}")
 
     print(f"\n=== Step 5: Writing Remotion Props File ===")
     props = {

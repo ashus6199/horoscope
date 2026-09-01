@@ -2,7 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
-  Video,
+  OffthreadVideo,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
@@ -65,7 +65,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
-      <Video
+      <OffthreadVideo
         src={staticFile(backgroundVideoPath)}
         style={{
           width: "100%",
