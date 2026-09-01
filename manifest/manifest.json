@@ -1,0 +1,40 @@
+{
+  "clips": [
+    {
+      "id": "fire_001",
+      "element": "fire",
+      "filename": "fire_001.mp4",
+      "last_used": "2026-09-01"
+    },
+    {
+      "id": "fire_002",
+      "element": "fire",
+      "filename": "fire_002.mp4",
+      "last_used": "2026-09-01"
+    },
+    {
+      "id": "fire_003",
+      "element": "fire",
+      "filename": "fire_003.mp4",
+      "last_used": "2026-09-01"
+    },
+    {
+      "id": "earth_001",
+      "element": "earth",
+      "filename": "earth_001.mp4",
+      "last_used": null
+    },
+    {
+      "id": "air_001",
+      "element": "air",
+      "filename": "air_001.mp4",
+      "last_used": null
+    },
+    {
+      "id": "water_001",
+      "element": "water",
+      "filename": "water_001.mp4",
+      "last_used": null
+    }
+  ]
+}

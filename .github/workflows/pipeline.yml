@@ -1,0 +1,94 @@
+name: Horoscope Video Pipeline
+
+on:
+  schedule:
+    # Runs daily at 01:30 UTC (7:00 AM IST)
+    - cron: '30 1 * * *'
+  workflow_dispatch:
+    inputs:
+      sign:
+        description: 'Zodiac Sign'
+        required: true
+        default: 'Sagittarius'
+      element:
+        description: 'Element'
+        required: true
+        type: choice
+        options:
+          - fire
+          - earth
+          - air
+          - water
+        default: 'fire'
+      dry_run:
+        description: 'Dry run (skip OpenAI API call)'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  build-and-render:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'remotion/package-lock.json'
+
+      - name: Install Remotion npm dependencies
+        run: |
+          cd remotion
+          npm ci
+
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Run Pipeline Orchestrator (Steps A-E)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          DRY_RUN_FLAG=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            DRY_RUN_FLAG="--dry-run"
+          fi
+          
+          SIGN="${{ inputs.sign }}"
+          ELEMENT="${{ inputs.element }}"
+          
+          if [ -z "$SIGN" ]; then SIGN="Sagittarius"; fi
+          if [ -z "$ELEMENT" ]; then ELEMENT="fire"; fi
+          
+          python scripts/run_pipeline.py --sign "$SIGN" --element "$ELEMENT" --mark-used $DRY_RUN_FLAG --skip-render
+
+      - name: Render Remotion Video in Cloud (Step F)
+        run: |
+          cd remotion
+          mkdir -p out
+          SIGN_LOWER=$(echo "${{ inputs.sign || 'sagittarius' }}" | tr '[:upper:]' '[:lower:]')
+          npx remotion render src/index.ts HoroscopeVideo "out/${SIGN_LOWER}_test.mp4" --props=props.json
+
+      - name: Upload Rendered Video Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: horoscope-video-${{ inputs.sign || 'sagittarius' }}
+          path: remotion/out/*.mp4
+          retention-days: 7
