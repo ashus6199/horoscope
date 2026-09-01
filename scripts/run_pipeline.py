@@ -131,6 +131,15 @@ def main():
         str(out_video_path),
         f"--props={rel_props}"
     ]
+
+    ffmpeg_bin = shutil.which("ffmpeg")
+    ffprobe_bin = shutil.which("ffprobe")
+    if ffmpeg_bin and ffprobe_bin:
+        render_cmd.extend([
+            f"--ffmpeg-executable={ffmpeg_bin}",
+            f"--ffprobe-executable={ffprobe_bin}"
+        ])
+
     print(f"Running: {' '.join(render_cmd)}")
     subprocess.run(render_cmd, cwd=remotion_dir, check=True)
     print(f"Render completed successfully! Output: {out_video_path}")
