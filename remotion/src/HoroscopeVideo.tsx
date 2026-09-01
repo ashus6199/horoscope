@@ -3,6 +3,7 @@ import {
   AbsoluteFill,
   Audio,
   OffthreadVideo,
+  Loop,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
@@ -65,15 +66,17 @@ export const HoroscopeVideo: React.FC<Props> = ({
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
-      <OffthreadVideo
-        src={staticFile(backgroundVideoPath)}
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-        }}
-        muted
-      />
+      <Loop durationInFrames={Math.round(durationInSeconds * fps)}>
+        <OffthreadVideo
+          src={staticFile(backgroundVideoPath)}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+          muted
+        />
+      </Loop>
 
       {/* Subtle dark gradient so caption text stays legible over any clip */}
       <AbsoluteFill
