@@ -98,31 +98,48 @@ def main():
         print(f"[ERROR] Place the file into remotion/public/assets/ before running the pipeline.", file=sys.stderr)
         raise RuntimeError(f"Missing background clip asset: {chosen_clip_path}")
 
-    # Create ping-pong loop using ffmpeg
-    pingpong_filename = f"pingpong_{chosen_clip_filename}"
-    pingpong_path = assets_dir / pingpong_filename
+    # Create a perfectly seamless crossfade loop using ffmpeg
+    loop_filename = f"loop_{chosen_clip_filename}"
+    loop_path = assets_dir / loop_filename
     
-    if not pingpong_path.exists():
-        print(f"Generating ping-pong loop for {chosen_clip_filename}...")
+    if not loop_path.exists():
+        print(f"Generating seamless crossfade loop for {chosen_clip_filename}...")
+        
+        # 1. Get original duration
+        dur_cmd = [
+            "ffprobe", "-v", "error", "-show_entries", "format=duration",
+            "-of", "default=noprint_wrappers=1:nokey=1", str(chosen_clip_path)
+        ]
+        orig_dur = float(subprocess.run(dur_cmd, capture_output=True, text=True, check=True).stdout.strip())
+        
+        # 2. Calculate split and crossfade points
+        mid = orig_dur / 2.0
+        xfade = 1.0 if orig_dur >= 3.0 else (orig_dur / 3.0)
+        offset = mid - xfade
+        
+        # 3. ffmpeg split and crossfade
         cmd = [
             "ffmpeg", "-y", "-i", str(chosen_clip_path),
-            "-filter_complex", "[0:v]reverse[r];[0:v][r]concat=n=2:v=1:a=0[outv]",
+            "-filter_complex", 
+            f"[0:v]trim=start={mid}:end={orig_dur},setpts=PTS-STARTPTS[part2];"
+            f"[0:v]trim=start=0:end={mid},setpts=PTS-STARTPTS[part1];"
+            f"[part2][part1]xfade=transition=fade:duration={xfade}:offset={offset}[outv]",
             "-map", "[outv]",
             "-c:v", "libx264", "-preset", "ultrafast",
-            str(pingpong_path)
+            str(loop_path)
         ]
         subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        print(f"Created {pingpong_filename}")
+        print(f"Created {loop_filename}")
 
-    # Extract exact duration of the ping-pong clip
+    # Extract exact duration of the seamless loop clip
     duration_cmd = [
         "ffprobe", "-v", "error", "-show_entries", "format=duration",
-        "-of", "default=noprint_wrappers=1:nokey=1", str(pingpong_path)
+        "-of", "default=noprint_wrappers=1:nokey=1", str(loop_path)
     ]
     duration_output = subprocess.run(duration_cmd, capture_output=True, text=True, check=True).stdout.strip()
     bg_duration_seconds = float(duration_output)
 
-    bg_video_path = f"assets/{pingpong_filename}"
+    bg_video_path = f"assets/{loop_filename}"
     print(f"Using background clip: {bg_video_path} (Duration: {bg_duration_seconds}s)")
 
     print(f"\n=== Step 5: Writing Remotion Props File ===")
