@@ -88,21 +88,31 @@ def main():
     staged_audio_path = assets_dir / f"{args.sign.lower()}-audio.mp3"
     shutil.copy2(audio_output_path, staged_audio_path)
     
-    staged_bg_path = assets_dir / "placeholder-bg.mp4"
-    if not staged_bg_path.exists():
-        print(f"[INFO] {staged_bg_path} does not exist; creating dummy placeholder video via ffmpeg...")
-        subprocess.run([
-            "ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=0x1a0933:s=1080x1920:d=30",
-            "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo", "-t", "30",
-            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k",
-            str(staged_bg_path)
-        ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    chosen_clip_filename = clip_data.get("filename", "placeholder-bg.mp4")
+    chosen_clip_path = assets_dir / chosen_clip_filename
+
+    if chosen_clip_path.exists():
+        bg_video_path = f"assets/{chosen_clip_filename}"
+        print(f"[INFO] Using selected clip asset: {bg_video_path}")
+    else:
+        bg_video_path = "assets/placeholder-bg.mp4"
+        staged_bg_path = assets_dir / "placeholder-bg.mp4"
+        if not staged_bg_path.exists():
+            print(f"[INFO] Selected clip '{chosen_clip_filename}' not found and {staged_bg_path} does not exist; creating dummy placeholder video via ffmpeg...")
+            subprocess.run([
+                "ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=0x1a0933:s=1080x1920:d=30",
+                "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo", "-t", "30",
+                "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k",
+                str(staged_bg_path)
+            ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        else:
+            print(f"[INFO] Selected clip '{chosen_clip_filename}' not found; falling back to {bg_video_path}")
 
     print(f"\n=== Step 5: Writing Remotion Props File ===")
     props = {
         "signName": args.sign,
         "captionText": caption_text,
-        "backgroundVideoPath": "assets/placeholder-bg.mp4",
+        "backgroundVideoPath": bg_video_path,
         "audioPath": f"assets/{args.sign.lower()}-audio.mp3",
         "durationInSeconds": duration_seconds,
     }
