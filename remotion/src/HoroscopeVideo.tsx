@@ -18,6 +18,7 @@ export const horoscopeVideoSchema = z.object({
   backgroundVideoPath: z.string(),
   audioPath: z.string(),
   durationInSeconds: z.number(),
+  bgDurationSeconds: z.number(),
 });
 
 type Props = z.infer<typeof horoscopeVideoSchema>;
@@ -39,6 +40,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
   backgroundVideoPath,
   audioPath,
   durationInSeconds,
+  bgDurationSeconds,
 }) => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
@@ -66,7 +68,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
-      <Loop durationInFrames={Math.round(durationInSeconds * fps)}>
+      <Loop durationInFrames={Math.round(bgDurationSeconds * fps)}>
         <OffthreadVideo
           src={staticFile(backgroundVideoPath)}
           style={{

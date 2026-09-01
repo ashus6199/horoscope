@@ -98,8 +98,32 @@ def main():
         print(f"[ERROR] Place the file into remotion/public/assets/ before running the pipeline.", file=sys.stderr)
         raise RuntimeError(f"Missing background clip asset: {chosen_clip_path}")
 
-    bg_video_path = f"assets/{chosen_clip_filename}"
-    print(f"Using background clip: {bg_video_path}")
+    # Create ping-pong loop using ffmpeg
+    pingpong_filename = f"pingpong_{chosen_clip_filename}"
+    pingpong_path = assets_dir / pingpong_filename
+    
+    if not pingpong_path.exists():
+        print(f"Generating ping-pong loop for {chosen_clip_filename}...")
+        cmd = [
+            "ffmpeg", "-y", "-i", str(chosen_clip_path),
+            "-filter_complex", "[0:v]reverse[r];[0:v][r]concat=n=2:v=1:a=0[outv]",
+            "-map", "[outv]",
+            "-c:v", "libx264", "-preset", "ultrafast",
+            str(pingpong_path)
+        ]
+        subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        print(f"Created {pingpong_filename}")
+
+    # Extract exact duration of the ping-pong clip
+    duration_cmd = [
+        "ffprobe", "-v", "error", "-show_entries", "format=duration",
+        "-of", "default=noprint_wrappers=1:nokey=1", str(pingpong_path)
+    ]
+    duration_output = subprocess.run(duration_cmd, capture_output=True, text=True, check=True).stdout.strip()
+    bg_duration_seconds = float(duration_output)
+
+    bg_video_path = f"assets/{pingpong_filename}"
+    print(f"Using background clip: {bg_video_path} (Duration: {bg_duration_seconds}s)")
 
     print(f"\n=== Step 5: Writing Remotion Props File ===")
     props = {
@@ -108,6 +132,7 @@ def main():
         "backgroundVideoPath": bg_video_path,
         "audioPath": f"assets/{args.sign.lower()}-audio.mp3",
         "durationInSeconds": duration_seconds,
+        "bgDurationSeconds": bg_duration_seconds,
     }
     args.props_out.parent.mkdir(parents=True, exist_ok=True)
     with open(args.props_out, "w") as f:
