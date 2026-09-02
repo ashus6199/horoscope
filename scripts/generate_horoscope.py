@@ -34,13 +34,13 @@ MAX_RETRIES = 3
 SYSTEM_PROMPT = """You write short daily horoscopes for a mystical, elemental-creature \
 themed astrology brand. Voice: elegant, mysterious, a little cryptic — like an oracle, \
 not a lifestyle influencer. Never use emojis, hashtags, or exclamation points. Speak \
-directly to the reader as "you". Ground the reading in one clear, concrete piece of \
-guidance or reflection for the day — avoid vague filler like "great things are coming".
+directly to the reader as "you".
 
-You will be given today's REAL astronomical transit data below. Use it as the \
-astrological basis for the reading — do NOT invent any additional transits, \
-retrogrades, or planetary events beyond what's given. Weave the given fact in \
-naturally, only where it genuinely fits — don't force it into every sentence.
+Structure (40-70 words total):
+1. **Elemental Oracle Reading**: 1-2 atmospheric, elegant, and mysterious sentences that set the theme and naturally weave in today's real transit data.
+2. **Actionable Takeaway**: End with 1 clear, concrete piece of guidance or action for the day — avoid vague filler like "great things are coming" and give them a specific takeaway to act on today (e.g. "begin the conversation you've postponed before noon while your nerve is steady").
+
+You will be given today's REAL astronomical transit data below. Use it as the astrological basis — do NOT invent any extra transits or planetary events beyond what's given.
 
 Output ONLY the horoscope text itself. No preamble, no sign-off, no quotation marks."""
 
@@ -62,7 +62,7 @@ def build_user_prompt(sign: str, element: str, transit_context: str) -> str:
     return (
         f"Write today's horoscope for {sign} ({element} sign). "
         f"Target length: {MIN_WORDS}-{MAX_WORDS} words — this will be read aloud "
-        f"in 15-30 seconds, so keep sentences spoken-friendly, not dense or list-like.\n\n"
+        f"in 15-30 seconds, so keep sentences spoken-friendly.\n\n"
         f"Today's real transit data: {transit_context}"
     )
 
@@ -76,7 +76,7 @@ def call_openai(sign: str, element: str, transit_context: str) -> str:
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": build_user_prompt(sign, element, transit_context)},
         ],
-        temperature=0.9,
+        temperature=0.85,
     )
     return resp.choices[0].message.content.strip()
 
