@@ -42,8 +42,13 @@ async def synthesize(text: str, voice: str, rate: str, pitch: str, output_path: 
     goes, via edge-tts's WordBoundary events. Returns a list of
     {word, start, end} dicts with start/end in seconds."""
     import edge_tts
+    import re
 
-    communicate = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch)
+    # Replace em-dashes, en-dashes, and double hyphens with spaces so words
+    # aren't glued together (e.g. 'beauty—a' -> 'beauty a')
+    cleaned_text = re.sub(r'[—–-]+', ' ', text)
+
+    communicate = edge_tts.Communicate(cleaned_text, voice, rate=rate, pitch=pitch)
     word_timings: list[dict] = []
 
     with open(output_path, "wb") as f:
@@ -51,10 +56,13 @@ async def synthesize(text: str, voice: str, rate: str, pitch: str, output_path: 
             if chunk["type"] == "audio":
                 f.write(chunk["data"])
             elif chunk["type"] == "WordBoundary":
+                raw_word = chunk["text"].strip("—–- ")
+                if not raw_word:
+                    continue
                 start = chunk["offset"] / HNS_PER_SECOND
                 end = (chunk["offset"] + chunk["duration"]) / HNS_PER_SECOND
                 word_timings.append({
-                    "word": chunk["text"],
+                    "word": raw_word,
                     "start": round(start, 3),
                     "end": round(end, 3),
                 })
@@ -66,9 +74,10 @@ def synthesize_silence_stub(text: str, output_path: Path) -> list[dict]:
     # Dry-run stand-in: silent audio roughly matching expected spoken length
     # (~2.5 words/sec at this rate), so downstream duration + caption-timing
     # logic can be tested without a real network call. Word timings are
-    # evenly spaced across the stub duration — not real speech timing, but
-    # enough to exercise the same schema/props path as production.
-    words = text.split()
+    # evenly spaced across the stub duration.
+    import re
+    cleaned_text = re.sub(r'[—–-]+', ' ', text)
+    words = cleaned_text.split()
     word_count = len(words)
     approx_seconds = max(1.0, word_count / 2.5)
     subprocess.run(
@@ -122,6 +131,17 @@ def main():
         )
 
     duration = get_duration_seconds(args.output)
+
+    # edge-tts reports un-rate-adjusted WordBoundary timestamps. When rate='-8%'
+    # is passed, audio playback is stretched by ~8.7%. We scale timestamps
+    # proportionally to match the true audio duration measured by ffprobe.
+    if word_timings and duration > 0:
+        last_word_end = word_timings[-1]["end"]
+        if last_word_end > 0:
+            scale_factor = duration / last_word_end
+            for wt in word_timings:
+                wt["start"] = round(wt["start"] * scale_factor, 3)
+                wt["end"] = round(wt["end"] * scale_factor, 3)
 
     print(json.dumps({
         "output_path": str(args.output),

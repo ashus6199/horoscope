@@ -34,10 +34,11 @@ type WordTiming = { word: string; start: number; end: number };
 type Chunk = { words: WordTiming[]; start: number; end: number };
 
 function buildFallbackTimings(text: string, durationInSeconds: number): WordTiming[] {
-  const words = text.split(/\s+/).filter(Boolean);
+  const cleaned = text.replace(/[—–-]+/g, " ");
+  const words = cleaned.split(/\s+/).filter(Boolean);
   const perWord = durationInSeconds / Math.max(words.length, 1);
   return words.map((word, i) => ({
-    word,
+    word: word.replace(/^[—–-]+|[—–-]+$/g, ""),
     start: i * perWord,
     end: i * perWord + perWord * 0.85,
   }));
