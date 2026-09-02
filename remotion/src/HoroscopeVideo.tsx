@@ -24,8 +24,6 @@ export const horoscopeVideoSchema = z.object({
   durationInSeconds: z.number(),
   bgDurationSeconds: z.number(),
   dateText: z.string(),
-  // Per-word timestamps (seconds) from generate_tts.py's edge-tts
-  // WordBoundary capture.
   wordTimings: z
     .array(z.object({ word: z.string(), start: z.number(), end: z.number() }))
     .default([]),
@@ -35,7 +33,6 @@ type Props = z.infer<typeof horoscopeVideoSchema>;
 type WordTiming = { word: string; start: number; end: number };
 type Chunk = { words: WordTiming[]; start: number; end: number };
 
-// Fallback timings if wordTimings is empty
 function buildFallbackTimings(text: string, durationInSeconds: number): WordTiming[] {
   const words = text.split(/\s+/).filter(Boolean);
   const perWord = durationInSeconds / Math.max(words.length, 1);
@@ -46,9 +43,9 @@ function buildFallbackTimings(text: string, durationInSeconds: number): WordTimi
   }));
 }
 
-// Groups word timings into short caption cards (~4 words / 2.4s max)
-const MAX_WORDS_PER_CHUNK = 4;
-const MAX_CHUNK_SECONDS = 2.4;
+// Group into short cards (3 words max for tight stacked graphic impact)
+const MAX_WORDS_PER_CHUNK = 3;
+const MAX_CHUNK_SECONDS = 2.2;
 const PAUSE_GAP_SECONDS = 0.35;
 
 function chunkWordTimings(words: WordTiming[]): Chunk[] {
@@ -77,23 +74,13 @@ function chunkWordTimings(words: WordTiming[]): Chunk[] {
   return chunks;
 }
 
-function computeCardFontSize(chunkWords: WordTiming[]): number {
-  const totalChars = chunkWords.reduce((sum, w) => sum + w.word.length, 0);
-  if (totalChars <= 14) return 132;
-  if (totalChars <= 20) return 112;
-  if (totalChars <= 26) return 96;
-  return 82;
-}
-
 const CONTAINER_WIDTH = 860;
 const ORANGE = "#FF7200";
 const WHITE = "#FFFFFF";
-const LINE_HEIGHT = 0.85;
 
-// Individual Word component
-// ALWAYS renders in DOM at its exact final layout position.
-// If its speech start time hasn't arrived (localFrame < 0), opacity is 0.
-// When start time arrives (localFrame >= 0), it pops smoothly into view.
+
+
+// Word Component: Positioned in its fixed staggered row
 const Word: React.FC<{
   word: string;
   frame: number;
@@ -101,38 +88,51 @@ const Word: React.FC<{
   delayFrames: number;
   color: string;
   fontSize: number;
-}> = ({ word, frame, fps, delayFrames, color, fontSize }) => {
+  alignOffset: { paddingLeft: string; scaleFactor: number; marginTop: string };
+}> = ({ word, frame, fps, delayFrames, color, fontSize, alignOffset }) => {
   const localFrame = frame - delayFrames;
   const isVisible = localFrame >= 0;
 
   const progress = spring({
     frame: Math.max(0, localFrame),
     fps,
-    config: { damping: 200, stiffness: 130, mass: 0.6 },
+    config: { damping: 180, stiffness: 140, mass: 0.6 },
     durationInFrames: 12,
   });
 
   const opacity = isVisible ? interpolate(progress, [0, 1], [0, 1], { extrapolateLeft: "clamp" }) : 0;
-  const translateY = isVisible ? interpolate(progress, [0, 1], [18, 0], { extrapolateLeft: "clamp" }) : 0;
-  const scale = isVisible ? interpolate(progress, [0, 1], [1.18, 1], { extrapolateLeft: "clamp" }) : 1;
+  const translateY = isVisible ? interpolate(progress, [0, 1], [22, 0], { extrapolateLeft: "clamp" }) : 0;
+  const scale = isVisible ? interpolate(progress, [0, 1], [1.2, 1], { extrapolateLeft: "clamp" }) : 1;
+
+  const finalFontSize = fontSize * alignOffset.scaleFactor;
 
   return (
-    <span
+    <div
       style={{
-        display: "inline-block",
-        opacity,
-        transform: `translateY(${translateY}px) scale(${scale})`,
-        marginRight: "0.25em",
-        fontSize,
-        fontFamily,
-        fontWeight: 900,
-        letterSpacing: "-0.02em",
-        color,
-        textShadow: "6px 8px 0px rgba(0,0,0,0.35), 0 16px 30px rgba(0,0,0,0.55)",
+        display: "block",
+        paddingLeft: alignOffset.paddingLeft,
+        marginTop: alignOffset.marginTop,
+        lineHeight: 0.72,
       }}
     >
-      {word}
-    </span>
+      <span
+        style={{
+          display: "inline-block",
+          opacity,
+          transform: `translateY(${translateY}px) scale(${scale})`,
+          fontSize: finalFontSize,
+          fontFamily,
+          fontWeight: 900,
+          letterSpacing: "-0.03em",
+          textTransform: "lowercase",
+          color,
+          textShadow:
+            "5px 7px 0px rgba(0,0,0,0.6), 0 14px 28px rgba(0,0,0,0.85)",
+        }}
+      >
+        {word}
+      </span>
+    </div>
   );
 };
 
@@ -165,7 +165,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
   const chunkDurationFrames = Math.max(chunkEndFrame - chunkStartFrame, 1);
   const localFrame = frame - chunkStartFrame;
 
-  // Smooth fade out when the phrase card completes
+  // Group fade-out when phrase ends
   const groupOpacity = interpolate(
     localFrame,
     [0, chunkDurationFrames - 6, chunkDurationFrames],
@@ -173,10 +173,14 @@ export const HoroscopeVideo: React.FC<Props> = ({
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
-  const fontSize = computeCardFontSize(activeChunk.words);
-
-  // Header label opacity
   const labelOpacity = interpolate(frame, [0, 20], [0, 0.85], { extrapolateRight: "clamp" });
+
+  // Staggered layout parameters for 1st, 2nd, 3rd words in a phrase card
+  const lineLayouts = [
+    { paddingLeft: "8%", scaleFactor: 0.95, marginTop: "0px" },     // Line 1: top left (e.g. "it's")
+    { paddingLeft: "30%", scaleFactor: 1.25, marginTop: "-12px" },   // Line 2: middle right, EMPHASIZED big (e.g. "pretty")
+    { paddingLeft: "18%", scaleFactor: 1.05, marginTop: "-12px" },   // Line 3: bottom left (e.g. "simple.")
+  ];
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
@@ -189,15 +193,15 @@ export const HoroscopeVideo: React.FC<Props> = ({
         />
       </Loop>
 
-      {/* Bottom gradient so captions stand out cleanly */}
+      {/* Dark gradient for background contrast */}
       <AbsoluteFill
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0) 45%, rgba(0,0,0,0.55) 62%, rgba(0,0,0,0.92) 78%, #000 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.95) 78%, #000 100%)",
         }}
       />
 
-      {/* Top Sign label */}
+      {/* Header sign label */}
       <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 230 }}>
         <div
           style={{
@@ -215,28 +219,53 @@ export const HoroscopeVideo: React.FC<Props> = ({
         </div>
       </AbsoluteFill>
 
-      {/* Caption container — completely fixed layout upfront for all words of the phrase */}
-      <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 370 }}>
+      {/* Caption container block */}
+      <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 360 }}>
         <div style={{ position: "relative", width: CONTAINER_WIDTH }}>
+          {/* Dark radial glow shade directly behind text for high-contrast pop */}
           <div
             style={{
-              opacity: groupOpacity,
-              lineHeight: LINE_HEIGHT,
-              textAlign: "center",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "110%",
+              height: "130%",
+              borderRadius: "50%",
+              background:
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 80%)",
+              filter: "blur(20px)",
+              pointerEvents: "none",
+            }}
+          />
+
+          {/* Staggered vertical stack layout */}
+          <div
+            style={{
               position: "relative",
+              opacity: groupOpacity,
+              zIndex: 3,
             }}
           >
-            {activeChunk.words.map((w, i) => (
-              <Word
-                key={`${activeIndex}-${i}`}
-                word={w.word}
-                frame={frame}
-                fps={fps}
-                delayFrames={Math.round(w.start * fps)}
-                color={i % 2 === 0 ? WHITE : ORANGE}
-                fontSize={fontSize}
-              />
-            ))}
+            {activeChunk.words.map((w, i) => {
+              const layout = lineLayouts[i % lineLayouts.length];
+              const isEven = i % 2 === 0;
+              const color = isEven ? WHITE : ORANGE;
+              const baseFontSize = 104;
+
+              return (
+                <Word
+                  key={`${activeIndex}-${i}`}
+                  word={w.word}
+                  frame={frame}
+                  fps={fps}
+                  delayFrames={Math.round(w.start * fps)}
+                  color={color}
+                  fontSize={baseFontSize}
+                  alignOffset={layout}
+                />
+              );
+            })}
           </div>
         </div>
       </AbsoluteFill>
