@@ -170,6 +170,11 @@ export const HoroscopeVideo: React.FC<Props> = ({
   }
   const activeChunk = chunks[activeIndex];
 
+  const chunkStartFrame = Math.round(activeChunk.start * fps);
+  const chunkEndFrame = Math.round(activeChunk.end * fps);
+  const chunkDurationFrames = Math.max(chunkEndFrame - chunkStartFrame, 1);
+  const localFrame = frame - chunkStartFrame;
+
   const audioEndFrame = Math.round(durationInSeconds * fps);
   const isAudioFinished = frame >= audioEndFrame;
 
