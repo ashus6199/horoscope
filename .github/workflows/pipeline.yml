@@ -99,9 +99,11 @@ jobs:
             echo "[INFO] INSTAGRAM_ACCESS_TOKEN or INSTAGRAM_USER_ID secrets missing; running publish_instagram in --dry-run mode."
             python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --dry-run
           else
-            # Note: For production publishing, ensure VIDEO_PATH is hosted on a public HTTPS URL accessible by Meta's servers.
-            echo "[INFO] Meta API credentials found. Initiating Reels publishing..."
-            python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --video-url "https://raw.githubusercontent.com/${{ github.repository }}/main/remotion/out/${SIGN_LOWER}_test.mp4"
+            echo "[INFO] Meta API credentials found. Uploading video to public HTTPS endpoint for Meta..."
+            PUBLIC_VIDEO_URL=$(curl -s -F "file=@${VIDEO_PATH}" https://tmpfiles.org/api/v1/upload | jq -r '.data.url' | sed 's/tmpfiles.org\//tmpfiles.org\/dl\//')
+            echo "[INFO] Public Video URL generated: ${PUBLIC_VIDEO_URL}"
+            
+            python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --video-url "${PUBLIC_VIDEO_URL}"
           fi
 
       - name: Upload Rendered Video Artifact
