@@ -29,6 +29,8 @@ on:
 jobs:
   build-and-render:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -86,6 +88,16 @@ jobs:
           SIGN_LOWER=$(echo "${{ inputs.sign || 'sagittarius' }}" | tr '[:upper:]' '[:lower:]')
           npx remotion render src/index.ts HoroscopeVideo "out/${SIGN_LOWER}_test.mp4" --props=props.json
 
+      - name: Create or Update GitHub Release Asset for Meta API
+        if: env.INSTAGRAM_ACCESS_TOKEN != '' && env.INSTAGRAM_USER_ID != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: daily-reels-media
+          name: Daily Reels Media Asset
+          files: remotion/out/*.mp4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Publish to Instagram Reels (Step G)
         env:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
@@ -93,15 +105,13 @@ jobs:
         run: |
           SIGN="${{ inputs.sign || 'Sagittarius' }}"
           SIGN_LOWER=$(echo "$SIGN" | tr '[:upper:]' '[:lower:]')
-          VIDEO_PATH="remotion/out/${SIGN_LOWER}_test.mp4"
           
           if [ -z "$INSTAGRAM_ACCESS_TOKEN" ] || [ -z "$INSTAGRAM_USER_ID" ]; then
             echo "[INFO] INSTAGRAM_ACCESS_TOKEN or INSTAGRAM_USER_ID secrets missing; running publish_instagram in --dry-run mode."
             python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --dry-run
           else
-            echo "[INFO] Meta API credentials found. Uploading video to public HTTPS endpoint for Meta..."
-            PUBLIC_VIDEO_URL=$(curl -s -F "file=@${VIDEO_PATH}" https://tmpfiles.org/api/v1/upload | jq -r '.data.url' | sed 's/tmpfiles.org\//tmpfiles.org\/dl\//')
-            echo "[INFO] Public Video URL generated: ${PUBLIC_VIDEO_URL}"
+            PUBLIC_VIDEO_URL="https://github.com/${{ github.repository }}/releases/download/daily-reels-media/${SIGN_LOWER}_test.mp4"
+            echo "[INFO] Meta API credentials found. Initiating Reels publishing from GitHub CDN: ${PUBLIC_VIDEO_URL}"
             
             python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --video-url "${PUBLIC_VIDEO_URL}"
           fi
