@@ -43,15 +43,18 @@ function buildFallbackTimings(text: string, durationInSeconds: number): WordTimi
   }));
 }
 
-// Group into short cards (3 words max for tight stacked graphic impact)
-const MAX_WORDS_PER_CHUNK = 3;
-const MAX_CHUNK_SECONDS = 2.2;
+// Character-based chunking (~22-25 characters max per card block)
+// This avoids artificial 3-word cutoffs for tiny words ("as the moon")
+// and ensures long words ("earthbound") get their own focused space.
+const MAX_CHARS_PER_CHUNK = 24;
+const MAX_CHUNK_SECONDS = 2.4;
 const PAUSE_GAP_SECONDS = 0.35;
 
 function chunkWordTimings(words: WordTiming[]): Chunk[] {
   if (words.length === 0) return [];
   const chunks: Chunk[] = [];
   let current: WordTiming[] = [words[0]];
+  let currentChars = words[0].word.length;
 
   for (let i = 1; i < words.length; i++) {
     const prev = words[i - 1];
@@ -60,27 +63,45 @@ function chunkWordTimings(words: WordTiming[]): Chunk[] {
     const chunkDuration = word.end - current[0].start;
     const shouldBreak =
       gap > PAUSE_GAP_SECONDS ||
-      current.length >= MAX_WORDS_PER_CHUNK ||
+      currentChars + word.word.length + 1 > MAX_CHARS_PER_CHUNK ||
       chunkDuration > MAX_CHUNK_SECONDS;
 
     if (shouldBreak) {
       chunks.push({ words: current, start: current[0].start, end: current[current.length - 1].end });
       current = [word];
+      currentChars = word.word.length;
     } else {
       current.push(word);
+      currentChars += word.word.length + 1;
     }
   }
   chunks.push({ words: current, start: current[0].start, end: current[current.length - 1].end });
   return chunks;
 }
 
-const CONTAINER_WIDTH = 860;
+// Safely compute font size for a word based on character length
+// Enforces that words NEVER exceed the 820px safe width boundary.
+function computeWordFontSize(word: string, isEmphasized: boolean): number {
+  const baseSize = isEmphasized ? 116 : 94;
+  // Inter 900 bold char width factor is ~0.62 * fontSize
+  const maxSafeSize = Math.floor(820 / Math.max(1, word.length * 0.62));
+  return Math.min(baseSize, Math.max(54, maxSafeSize));
+}
+
+const CONTAINER_WIDTH = 900;
 const ORANGE = "#FF7200";
 const WHITE = "#FFFFFF";
 
+// Balanced center-relative horizontal offsets for graphic staggered feel
+const LINE_OFFSETS = [
+  { translateX: -40 }, // Line 1: slightly left of center
+  { translateX: 40 },  // Line 2: slightly right of center
+  { translateX: -20 }, // Line 3: near center
+  { translateX: 30 },  // Line 4: slightly right
+];
 
-
-// Word Component: Positioned in its fixed staggered row
+// Word Component: Positioned in its stationary layout spot
+// Appears instantly (opacity 1) at exact speech start frame with zero delay or effect.
 const Word: React.FC<{
   word: string;
   frame: number;
@@ -88,46 +109,33 @@ const Word: React.FC<{
   delayFrames: number;
   color: string;
   fontSize: number;
-  alignOffset: { paddingLeft: string; scaleFactor: number; marginTop: string };
-}> = ({ word, frame, fps, delayFrames, color, fontSize, alignOffset }) => {
-  const localFrame = frame - delayFrames;
-  const isVisible = localFrame >= 0;
-
-  const progress = spring({
-    frame: Math.max(0, localFrame),
-    fps,
-    config: { damping: 180, stiffness: 140, mass: 0.6 },
-    durationInFrames: 12,
-  });
-
-  const opacity = isVisible ? interpolate(progress, [0, 1], [0, 1], { extrapolateLeft: "clamp" }) : 0;
-  const translateY = isVisible ? interpolate(progress, [0, 1], [22, 0], { extrapolateLeft: "clamp" }) : 0;
-  const scale = isVisible ? interpolate(progress, [0, 1], [1.2, 1], { extrapolateLeft: "clamp" }) : 1;
-
-  const finalFontSize = fontSize * alignOffset.scaleFactor;
+  offsetX: number;
+  isFirstLine: boolean;
+}> = ({ word, frame, fps, delayFrames, color, fontSize, offsetX, isFirstLine }) => {
+  const isVisible = frame >= delayFrames;
 
   return (
     <div
       style={{
         display: "block",
-        paddingLeft: alignOffset.paddingLeft,
-        marginTop: alignOffset.marginTop,
-        lineHeight: 0.72,
+        textAlign: "center",
+        transform: `translateX(${offsetX}px)`,
+        marginTop: isFirstLine ? "0px" : "-12px",
+        lineHeight: 0.76,
       }}
     >
       <span
         style={{
           display: "inline-block",
-          opacity,
-          transform: `translateY(${translateY}px) scale(${scale})`,
-          fontSize: finalFontSize,
+          opacity: isVisible ? 1 : 0,
+          fontSize,
           fontFamily,
           fontWeight: 900,
           letterSpacing: "-0.03em",
           textTransform: "lowercase",
           color,
           textShadow:
-            "5px 7px 0px rgba(0,0,0,0.6), 0 14px 28px rgba(0,0,0,0.85)",
+            "5px 7px 0px rgba(0,0,0,0.65), 0 14px 28px rgba(0,0,0,0.85)",
         }}
       >
         {word}
@@ -165,7 +173,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
   const chunkDurationFrames = Math.max(chunkEndFrame - chunkStartFrame, 1);
   const localFrame = frame - chunkStartFrame;
 
-  // Group fade-out when phrase ends
+  // Smooth fade-out when phrase ends
   const groupOpacity = interpolate(
     localFrame,
     [0, chunkDurationFrames - 6, chunkDurationFrames],
@@ -174,13 +182,6 @@ export const HoroscopeVideo: React.FC<Props> = ({
   );
 
   const labelOpacity = interpolate(frame, [0, 20], [0, 0.85], { extrapolateRight: "clamp" });
-
-  // Staggered layout parameters for 1st, 2nd, 3rd words in a phrase card
-  const lineLayouts = [
-    { paddingLeft: "8%", scaleFactor: 0.95, marginTop: "0px" },     // Line 1: top left (e.g. "it's")
-    { paddingLeft: "30%", scaleFactor: 1.25, marginTop: "-12px" },   // Line 2: middle right, EMPHASIZED big (e.g. "pretty")
-    { paddingLeft: "18%", scaleFactor: 1.05, marginTop: "-12px" },   // Line 3: bottom left (e.g. "simple.")
-  ];
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
@@ -193,7 +194,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
         />
       </Loop>
 
-      {/* Dark gradient for background contrast */}
+      {/* Dark bottom gradient for background contrast */}
       <AbsoluteFill
         style={{
           background:
@@ -201,7 +202,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
         }}
       />
 
-      {/* Header sign label */}
+      {/* Top Header Sign label */}
       <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 230 }}>
         <div
           style={{
@@ -219,39 +220,50 @@ export const HoroscopeVideo: React.FC<Props> = ({
         </div>
       </AbsoluteFill>
 
-      {/* Caption container block */}
+      {/* Caption container block: Center-aligned on screen, bounded to safe 900px width */}
       <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 360 }}>
-        <div style={{ position: "relative", width: CONTAINER_WIDTH }}>
-          {/* Dark radial glow shade directly behind text for high-contrast pop */}
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            maxWidth: CONTAINER_WIDTH,
+            margin: "0 auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {/* Dark radial glow shade behind text for high contrast pop */}
           <div
             style={{
               position: "absolute",
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: "110%",
-              height: "130%",
+              width: "100%",
+              height: "140%",
               borderRadius: "50%",
               background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 80%)",
-              filter: "blur(20px)",
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.65) 55%, rgba(0,0,0,0) 82%)",
+              filter: "blur(24px)",
               pointerEvents: "none",
             }}
           />
 
-          {/* Staggered vertical stack layout */}
+          {/* Center-balanced staggered vertical stack */}
           <div
             style={{
               position: "relative",
+              width: "100%",
               opacity: groupOpacity,
               zIndex: 3,
             }}
           >
             {activeChunk.words.map((w, i) => {
-              const layout = lineLayouts[i % lineLayouts.length];
-              const isEven = i % 2 === 0;
-              const color = isEven ? WHITE : ORANGE;
-              const baseFontSize = 104;
+              const isEmphasized = i % 2 !== 0;
+              const color = isEmphasized ? ORANGE : WHITE;
+              const fontSize = computeWordFontSize(w.word, isEmphasized);
+              const offset = LINE_OFFSETS[i % LINE_OFFSETS.length];
 
               return (
                 <Word
@@ -261,8 +273,9 @@ export const HoroscopeVideo: React.FC<Props> = ({
                   fps={fps}
                   delayFrames={Math.round(w.start * fps)}
                   color={color}
-                  fontSize={baseFontSize}
-                  alignOffset={layout}
+                  fontSize={fontSize}
+                  offsetX={offset.translateX}
+                  isFirstLine={i === 0}
                 />
               );
             })}
