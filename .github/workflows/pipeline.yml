@@ -86,6 +86,24 @@ jobs:
           SIGN_LOWER=$(echo "${{ inputs.sign || 'sagittarius' }}" | tr '[:upper:]' '[:lower:]')
           npx remotion render src/index.ts HoroscopeVideo "out/${SIGN_LOWER}_test.mp4" --props=props.json
 
+      - name: Publish to Instagram Reels (Step G)
+        env:
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+        run: |
+          SIGN="${{ inputs.sign || 'Sagittarius' }}"
+          SIGN_LOWER=$(echo "$SIGN" | tr '[:upper:]' '[:lower:]')
+          VIDEO_PATH="remotion/out/${SIGN_LOWER}_test.mp4"
+          
+          if [ -z "$INSTAGRAM_ACCESS_TOKEN" ] || [ -z "$INSTAGRAM_USER_ID" ]; then
+            echo "[INFO] INSTAGRAM_ACCESS_TOKEN or INSTAGRAM_USER_ID secrets missing; running publish_instagram in --dry-run mode."
+            python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --dry-run
+          else
+            # Note: For production publishing, ensure VIDEO_PATH is hosted on a public HTTPS URL accessible by Meta's servers.
+            echo "[INFO] Meta API credentials found. Initiating Reels publishing..."
+            python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --video-url "https://raw.githubusercontent.com/${{ github.repository }}/main/remotion/out/${SIGN_LOWER}_test.mp4"
+          fi
+
       - name: Upload Rendered Video Artifact
         uses: actions/upload-artifact@v4
         with:
