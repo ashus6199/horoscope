@@ -82,7 +82,9 @@ def main():
     tts_output_json = run_command(tts_cmd, cwd=repo_root)
     tts_data = json.loads(tts_output_json)
     duration_seconds = tts_data["duration_seconds"]
+    word_timings = tts_data.get("word_timings", [])
     print(f"Generated TTS audio: {audio_output_path} (Duration: {duration_seconds}s)")
+    print(f"Captured {len(word_timings)} word timings for caption sync")
 
     print(f"\n=== Step 4: Staging Assets ===")
     staged_audio_path = assets_dir / f"{args.sign.lower()}-audio.mp3"
@@ -176,6 +178,7 @@ def main():
         "durationInSeconds": duration_seconds,
         "bgDurationSeconds": bg_duration_seconds,
         "dateText": date_text,
+        "wordTimings": word_timings,
     }
     args.props_out.parent.mkdir(parents=True, exist_ok=True)
     with open(args.props_out, "w") as f:

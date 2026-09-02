@@ -10,7 +10,7 @@ Usage:
 import argparse
 import json
 import re
-from datetime import date
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -74,14 +74,19 @@ def main():
     }
 
     if args.mark_used:
-        today = date.today().isoformat()
-        chosen_clip["last_used"] = today
+        # Full timestamp (not just a date) so multiple runs on the same
+        # calendar day still sort in the correct order. With date-only
+        # granularity, two clips used on the same day tie on last_used and
+        # the "most recent" pick becomes ambiguous — which is exactly what
+        # breaks repeated same-day test runs of the workflow.
+        now_iso = datetime.now(timezone.utc).isoformat()
+        chosen_clip["last_used"] = now_iso
 
         # update manifest
         found = False
         for c in manifest.get("clips", []):
             if c.get("id") == chosen_id:
-                c["last_used"] = today
+                c["last_used"] = now_iso
                 found = True
 
         if not found:

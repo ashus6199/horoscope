@@ -12,6 +12,11 @@ const defaultProps = {
   backgroundVideoPath: "assets/placeholder-bg.mp4",
   audioPath: "assets/placeholder-audio.mp3",
   durationInSeconds: 20,
+  bgDurationSeconds: 8,
+  dateText: "01 September 2026",
+  // Sample timings only, for Studio preview without real props — real
+  // renders always get this from generate_tts.py via run_pipeline.py.
+  wordTimings: [],
 };
 
 const FPS = 30;

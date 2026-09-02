@@ -1,9 +1,336 @@
 {
   "signName": "Sagittarius",
   "captionText": "The fire in you is restless today, Sagittarius. Something you have been circling for weeks is finally asking for a decision, not more thought. Trust the instinct that arrives before the doubt does. A conversation you have been avoiding will be easier than you expect \u2014 begin it before noon, while your nerve is still steady and the day has not yet worn you down.",
-  "backgroundVideoPath": "assets/loop_fire_001.mp4",
+  "backgroundVideoPath": "assets/loop_fire_002.mp4",
   "audioPath": "assets/sagittarius-audio.mp3",
   "durationInSeconds": 26.064,
-  "bgDurationSeconds": 9.067,
-  "dateText": "01 September 2026"
+  "bgDurationSeconds": 9.084,
+  "dateText": "02 September 2026",
+  "wordTimings": [
+    {
+      "word": "The",
+      "start": 0.0,
+      "end": 0.34
+    },
+    {
+      "word": "fire",
+      "start": 0.4,
+      "end": 0.74
+    },
+    {
+      "word": "in",
+      "start": 0.8,
+      "end": 1.14
+    },
+    {
+      "word": "you",
+      "start": 1.2,
+      "end": 1.54
+    },
+    {
+      "word": "is",
+      "start": 1.6,
+      "end": 1.94
+    },
+    {
+      "word": "restless",
+      "start": 2.0,
+      "end": 2.34
+    },
+    {
+      "word": "today,",
+      "start": 2.4,
+      "end": 2.74
+    },
+    {
+      "word": "Sagittarius.",
+      "start": 2.8,
+      "end": 3.14
+    },
+    {
+      "word": "Something",
+      "start": 3.2,
+      "end": 3.54
+    },
+    {
+      "word": "you",
+      "start": 3.6,
+      "end": 3.94
+    },
+    {
+      "word": "have",
+      "start": 4.0,
+      "end": 4.34
+    },
+    {
+      "word": "been",
+      "start": 4.4,
+      "end": 4.74
+    },
+    {
+      "word": "circling",
+      "start": 4.8,
+      "end": 5.14
+    },
+    {
+      "word": "for",
+      "start": 5.2,
+      "end": 5.54
+    },
+    {
+      "word": "weeks",
+      "start": 5.6,
+      "end": 5.94
+    },
+    {
+      "word": "is",
+      "start": 6.0,
+      "end": 6.34
+    },
+    {
+      "word": "finally",
+      "start": 6.4,
+      "end": 6.74
+    },
+    {
+      "word": "asking",
+      "start": 6.8,
+      "end": 7.14
+    },
+    {
+      "word": "for",
+      "start": 7.2,
+      "end": 7.54
+    },
+    {
+      "word": "a",
+      "start": 7.6,
+      "end": 7.94
+    },
+    {
+      "word": "decision,",
+      "start": 8.0,
+      "end": 8.34
+    },
+    {
+      "word": "not",
+      "start": 8.4,
+      "end": 8.74
+    },
+    {
+      "word": "more",
+      "start": 8.8,
+      "end": 9.14
+    },
+    {
+      "word": "thought.",
+      "start": 9.2,
+      "end": 9.54
+    },
+    {
+      "word": "Trust",
+      "start": 9.6,
+      "end": 9.94
+    },
+    {
+      "word": "the",
+      "start": 10.0,
+      "end": 10.34
+    },
+    {
+      "word": "instinct",
+      "start": 10.4,
+      "end": 10.74
+    },
+    {
+      "word": "that",
+      "start": 10.8,
+      "end": 11.14
+    },
+    {
+      "word": "arrives",
+      "start": 11.2,
+      "end": 11.54
+    },
+    {
+      "word": "before",
+      "start": 11.6,
+      "end": 11.94
+    },
+    {
+      "word": "the",
+      "start": 12.0,
+      "end": 12.34
+    },
+    {
+      "word": "doubt",
+      "start": 12.4,
+      "end": 12.74
+    },
+    {
+      "word": "does.",
+      "start": 12.8,
+      "end": 13.14
+    },
+    {
+      "word": "A",
+      "start": 13.2,
+      "end": 13.54
+    },
+    {
+      "word": "conversation",
+      "start": 13.6,
+      "end": 13.94
+    },
+    {
+      "word": "you",
+      "start": 14.0,
+      "end": 14.34
+    },
+    {
+      "word": "have",
+      "start": 14.4,
+      "end": 14.74
+    },
+    {
+      "word": "been",
+      "start": 14.8,
+      "end": 15.14
+    },
+    {
+      "word": "avoiding",
+      "start": 15.2,
+      "end": 15.54
+    },
+    {
+      "word": "will",
+      "start": 15.6,
+      "end": 15.94
+    },
+    {
+      "word": "be",
+      "start": 16.0,
+      "end": 16.34
+    },
+    {
+      "word": "easier",
+      "start": 16.4,
+      "end": 16.74
+    },
+    {
+      "word": "than",
+      "start": 16.8,
+      "end": 17.14
+    },
+    {
+      "word": "you",
+      "start": 17.2,
+      "end": 17.54
+    },
+    {
+      "word": "expect",
+      "start": 17.6,
+      "end": 17.94
+    },
+    {
+      "word": "\u2014",
+      "start": 18.0,
+      "end": 18.34
+    },
+    {
+      "word": "begin",
+      "start": 18.4,
+      "end": 18.74
+    },
+    {
+      "word": "it",
+      "start": 18.8,
+      "end": 19.14
+    },
+    {
+      "word": "before",
+      "start": 19.2,
+      "end": 19.54
+    },
+    {
+      "word": "noon,",
+      "start": 19.6,
+      "end": 19.94
+    },
+    {
+      "word": "while",
+      "start": 20.0,
+      "end": 20.34
+    },
+    {
+      "word": "your",
+      "start": 20.4,
+      "end": 20.74
+    },
+    {
+      "word": "nerve",
+      "start": 20.8,
+      "end": 21.14
+    },
+    {
+      "word": "is",
+      "start": 21.2,
+      "end": 21.54
+    },
+    {
+      "word": "still",
+      "start": 21.6,
+      "end": 21.94
+    },
+    {
+      "word": "steady",
+      "start": 22.0,
+      "end": 22.34
+    },
+    {
+      "word": "and",
+      "start": 22.4,
+      "end": 22.74
+    },
+    {
+      "word": "the",
+      "start": 22.8,
+      "end": 23.14
+    },
+    {
+      "word": "day",
+      "start": 23.2,
+      "end": 23.54
+    },
+    {
+      "word": "has",
+      "start": 23.6,
+      "end": 23.94
+    },
+    {
+      "word": "not",
+      "start": 24.0,
+      "end": 24.34
+    },
+    {
+      "word": "yet",
+      "start": 24.4,
+      "end": 24.74
+    },
+    {
+      "word": "worn",
+      "start": 24.8,
+      "end": 25.14
+    },
+    {
+      "word": "you",
+      "start": 25.2,
+      "end": 25.54
+    },
+    {
+      "word": "down.",
+      "start": 25.6,
+      "end": 25.94
+    }
+  ]
 }
