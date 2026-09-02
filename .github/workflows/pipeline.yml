@@ -123,7 +123,7 @@ jobs:
             python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --dry-run
           else
             echo "[INFO] Meta API credentials found. Initiating Direct Binary Resumable Upload to Meta (rupload.facebook.com)..."
-            python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --video-path "$VIDEO_PATH"
+            python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --video-path "$VIDEO_PATH" --publish-story
           fi
 
       - name: Upload Rendered Video Artifact

@@ -89,7 +89,7 @@ def publish_container(ig_user_id: str, access_token: str, container_id: str) -> 
 def publish_reel_resumable(ig_user_id: str, access_token: str, video_path: Path, caption: str) -> Dict[str, Any]:
     """
     Bulletproof Direct Binary Resumable Upload Protocol (rupload.facebook.com).
-    Streams video binary bytes directly to Meta's servers without any external host dependency.
+    Streams video binary bytes directly to Meta's servers with frame 0 set as cover thumbnail.
     """
     if not video_path.exists():
         raise FileNotFoundError(f"Video file does not exist: {video_path}")
@@ -97,11 +97,13 @@ def publish_reel_resumable(ig_user_id: str, access_token: str, video_path: Path,
     file_size = video_path.stat().st_size
     print(f"[INFO] Initiating Direct Resumable Upload for {video_path.name} ({file_size} bytes)...", file=sys.stderr)
 
-    # Step 1: Initialize Resumable Session
+    # Step 1: Initialize Resumable Session with frame 0 cover thumbnail
     init_endpoint = f"{GRAPH_BASE_URL}/{ig_user_id}/media"
     init_payload = {
         "media_type": "REELS",
         "upload_type": "resumable",
+        "thumb_offset": "0",  # Sets the very first frame (0ms) as the Reel thumbnail
+        "share_to_feed": "true",
         "caption": caption,
         "access_token": access_token,
     }
@@ -145,6 +147,50 @@ def publish_reel_resumable(ig_user_id: str, access_token: str, video_path: Path,
     return result
 
 
+def publish_story_resumable(ig_user_id: str, access_token: str, video_path: Path) -> Dict[str, Any]:
+    """Uploads and publishes video as an Instagram Story."""
+    if not video_path.exists():
+        raise FileNotFoundError(f"Video file does not exist: {video_path}")
+
+    file_size = video_path.stat().st_size
+    print(f"[INFO] Initiating Instagram Story Upload for {video_path.name}...", file=sys.stderr)
+
+    init_endpoint = f"{GRAPH_BASE_URL}/{ig_user_id}/media"
+    init_payload = {
+        "media_type": "STORIES",
+        "upload_type": "resumable",
+        "access_token": access_token,
+    }
+    init_res = make_request(init_endpoint, method="POST", data=init_payload)
+    container_id = init_res.get("id")
+    upload_uri = init_res.get("uri", f"https://rupload.facebook.com/ig-api-upload/v20.0/{container_id}")
+
+    if not container_id:
+        raise RuntimeError(f"Failed to initialize Story container: {init_res}")
+
+    with open(video_path, "rb") as f:
+        video_bytes = f.read()
+
+    req = urllib.request.Request(upload_uri, data=video_bytes, method="POST")
+    req.add_header("Authorization", f"OAuth {access_token}")
+    req.add_header("offset", "0")
+    req.add_header("file_size", str(file_size))
+    req.add_header("Content-Type", "application/octet-stream")
+
+    try:
+        with urllib.request.urlopen(req) as resp:
+            upload_res = json.loads(resp.read().decode("utf-8"))
+            print(f"[INFO] Story binary upload response: {upload_res}", file=sys.stderr)
+    except urllib.error.HTTPError as e:
+        err_body = e.read().decode("utf-8")
+        raise RuntimeError(f"Meta rupload Story upload failed (HTTP {e.code}): {err_body}")
+
+    time.sleep(5)
+    poll_container_status(container_id, access_token)
+    result = publish_container(ig_user_id, access_token, container_id)
+    return result
+
+
 def publish_reel_url(ig_user_id: str, access_token: str, video_url: str, caption: str) -> Dict[str, Any]:
     """Fallback flow for public HTTPS URLs."""
     endpoint = f"{GRAPH_BASE_URL}/{ig_user_id}/media"
@@ -174,6 +220,7 @@ def main():
     parser.add_argument("--ig-user-id", default=os.environ.get("INSTAGRAM_USER_ID"), help="Instagram Business Account ID")
     parser.add_argument("--access-token", default=os.environ.get("INSTAGRAM_ACCESS_TOKEN"), help="Meta Graph API Access Token")
     parser.add_argument("--jitter-max-seconds", type=int, default=0, help="Random delay in seconds before publishing (anti-bot protection)")
+    parser.add_argument("--publish-story", action="store_true", help="Also publish video as an Instagram Story")
     parser.add_argument("--dry-run", action="store_true", help="Simulate publishing without calling Meta Graph API")
     args = parser.parse_args()
 
@@ -183,6 +230,7 @@ def main():
             "video": str(args.video_path or args.video_url or "remotion/out/sagittarius_test.mp4"),
             "caption": args.caption,
             "media_id": "dry_run_media_12345",
+            "story_id": "dry_run_story_67890" if args.publish_story else None,
             "message": "Dry-run mode enabled; skipped Meta Graph API call."
         }
         print(json.dumps(mock_result, indent=2))
@@ -207,6 +255,11 @@ def main():
             pub_result = publish_reel_resumable(args.ig_user_id, args.access_token, args.video_path, args.caption)
         else:
             pub_result = publish_reel_url(args.ig_user_id, args.access_token, args.video_url, args.caption)
+
+        if args.publish_story and args.video_path and args.video_path.exists():
+            print("[INFO] Also publishing video as Instagram Story...", file=sys.stderr)
+            story_res = publish_story_resumable(args.ig_user_id, args.access_token, args.video_path)
+            pub_result["story_id"] = story_res.get("media_id")
 
         pub_result["status"] = "success"
         print(json.dumps(pub_result, indent=2))
