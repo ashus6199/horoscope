@@ -86,17 +86,28 @@ jobs:
           cd remotion
           mkdir -p out
           SIGN_LOWER=$(echo "${{ inputs.sign || 'sagittarius' }}" | tr '[:upper:]' '[:lower:]')
-          npx remotion render src/index.ts HoroscopeVideo "out/${SIGN_LOWER}_test.mp4" --props=props.json
+          npx remotion render src/index.ts HoroscopeVideo "out/${SIGN_LOWER}_raw.mp4" --props=props.json
 
-      - name: Create or Update GitHub Release Asset for Meta API
-        if: env.INSTAGRAM_ACCESS_TOKEN != '' && env.INSTAGRAM_USER_ID != ''
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: daily-reels-media
-          name: Daily Reels Media Asset
-          files: remotion/out/*.mp4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Re-mux for Faststart & Verify (Step F.5)
+        run: |
+          SIGN_LOWER=$(echo "${{ inputs.sign || 'sagittarius' }}" | tr '[:upper:]' '[:lower:]')
+          RAW_PATH="remotion/out/${SIGN_LOWER}_raw.mp4"
+          FINAL_PATH="remotion/out/${SIGN_LOWER}_test.mp4"
+
+          echo "[INFO] Re-muxing with moov atom at front (faststart)..."
+          ffmpeg -y -i "$RAW_PATH" -c copy -movflags +faststart "$FINAL_PATH"
+
+          echo "[INFO] Verifying output stream/container info..."
+          ffprobe -v error \
+            -show_entries stream=codec_name,codec_type,pix_fmt,avg_frame_rate \
+            -show_entries format=duration,size \
+            -of default=noprint_wrappers=1 "$FINAL_PATH"
+
+          DURATION=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$FINAL_PATH")
+          echo "[INFO] Final duration: ${DURATION}s"
+          python3 -c "import sys; sys.exit(0 if float('$DURATION') >= 3.0 else 1)" || (echo "::error::Video duration ${DURATION}s is below Meta's 3-second Reels minimum." && exit 1)
+
+          rm -f "$RAW_PATH"
 
       - name: Publish to Instagram Reels (Step G)
         env:
@@ -105,15 +116,14 @@ jobs:
         run: |
           SIGN="${{ inputs.sign || 'Sagittarius' }}"
           SIGN_LOWER=$(echo "$SIGN" | tr '[:upper:]' '[:lower:]')
-          
+          VIDEO_PATH="remotion/out/${SIGN_LOWER}_test.mp4"
+
           if [ -z "$INSTAGRAM_ACCESS_TOKEN" ] || [ -z "$INSTAGRAM_USER_ID" ]; then
             echo "[INFO] INSTAGRAM_ACCESS_TOKEN or INSTAGRAM_USER_ID secrets missing; running publish_instagram in --dry-run mode."
             python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --dry-run
           else
-            PUBLIC_VIDEO_URL="https://github.com/${{ github.repository }}/releases/download/daily-reels-media/${SIGN_LOWER}_test.mp4"
-            echo "[INFO] Meta API credentials found. Initiating Reels publishing from GitHub CDN: ${PUBLIC_VIDEO_URL}"
-            
-            python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --video-url "${PUBLIC_VIDEO_URL}"
+            echo "[INFO] Meta API credentials found. Initiating Direct Binary Resumable Upload to Meta (rupload.facebook.com)..."
+            python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --video-path "$VIDEO_PATH"
           fi
 
       - name: Upload Rendered Video Artifact

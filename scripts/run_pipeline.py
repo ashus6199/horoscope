@@ -215,7 +215,19 @@ def main():
 
     print(f"Running: {' '.join(render_cmd)}")
     subprocess.run(render_cmd, cwd=remotion_dir, check=True)
-    print(f"Render completed successfully! Output: {out_video_path}")
+    # NOTE: Unreachable when --skip-render is passed in CI; kept for standalone local CLI runs.
+    # Re-mux with -movflags +faststart to ensure moov atom is at the front of the MP4 container for Meta API Reels spec
+    faststart_path = out_video_path.parent / f"{args.sign.lower()}_faststart.mp4"
+    faststart_cmd = [
+        ffmpeg_bin or "ffmpeg", "-y",
+        "-i", str(out_video_path),
+        "-c", "copy",
+        "-movflags", "+faststart",
+        str(faststart_path)
+    ]
+    print(f"Re-muxing for faststart: {' '.join(faststart_cmd)}")
+    subprocess.run(faststart_cmd, check=True)
+    print(f"Faststart video ready: {faststart_path}")
 
     if args.publish_ig:
         print(f"\n=== Step 7: Publishing to Instagram Reels ===")
@@ -225,6 +237,7 @@ def main():
         pub_cmd = [
             sys.executable, str(scripts_dir / "publish_instagram.py"),
             "--caption", ig_caption,
+            "--video-path", str(faststart_path),
         ]
         if not args.dry_run:
             pub_cmd.extend(["--jitter-max-seconds", "300"])
