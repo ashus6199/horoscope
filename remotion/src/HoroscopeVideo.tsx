@@ -170,16 +170,24 @@ export const HoroscopeVideo: React.FC<Props> = ({
   }
   const activeChunk = chunks[activeIndex];
 
-  const chunkStartFrame = Math.round(activeChunk.start * fps);
-  const chunkEndFrame = Math.round(activeChunk.end * fps);
-  const chunkDurationFrames = Math.max(chunkEndFrame - chunkStartFrame, 1);
-  const localFrame = frame - chunkStartFrame;
+  const audioEndFrame = Math.round(durationInSeconds * fps);
+  const isAudioFinished = frame >= audioEndFrame;
 
-  // Smooth fade-out when phrase ends
-  const groupOpacity = interpolate(
+  // Smooth fade-out when phrase ends or audio completes
+  const phraseFadeOut = interpolate(
     localFrame,
     [0, chunkDurationFrames - 6, chunkDurationFrames],
     [1, 1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+
+  const captionOpacity = isAudioFinished ? 0 : phraseFadeOut;
+
+  // Outro CTA card fade in when spoken reading finishes
+  const outroOpacity = interpolate(
+    frame,
+    [audioEndFrame - 10, audioEndFrame + 10],
+    [0, 1],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
@@ -196,11 +204,11 @@ export const HoroscopeVideo: React.FC<Props> = ({
         />
       </Loop>
 
-      {/* Dark bottom gradient for background contrast */}
+      {/* Dark bottom gradient for background contrast — pushed down so video remains clear */}
       <AbsoluteFill
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,0.75) 55%, rgba(0,0,0,0.98) 75%, #000 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45) 75%, rgba(0,0,0,0.85) 90%, #000 100%)",
         }}
       />
 
@@ -222,70 +230,119 @@ export const HoroscopeVideo: React.FC<Props> = ({
         </div>
       </AbsoluteFill>
 
-      {/* Caption container block: Center-aligned on screen, bounded to safe 900px width */}
-      <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 360 }}>
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            maxWidth: CONTAINER_WIDTH,
-            margin: "0 auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          {/* Dark radial glow shade behind text for high contrast pop */}
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "115%",
-              height: "145%",
-              borderRadius: "50%",
-              background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0) 85%)",
-              filter: "blur(18px)",
-              pointerEvents: "none",
-            }}
-          />
-
-          {/* Center-balanced staggered vertical stack */}
+      {/* Caption container block (Active during voiceover reading) */}
+      {!isAudioFinished && (
+        <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 360 }}>
           <div
             style={{
               position: "relative",
               width: "100%",
-              opacity: groupOpacity,
-              zIndex: 3,
+              maxWidth: CONTAINER_WIDTH,
+              margin: "0 auto",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            {activeChunk.words.map((w, i) => {
-              const isEmphasized = i % 2 !== 0;
-              const color = isEmphasized ? ORANGE : WHITE;
-              const fontSize = computeWordFontSize(w.word, isEmphasized);
-              const offset = LINE_OFFSETS[i % LINE_OFFSETS.length];
+            {/* Dark radial glow shade behind text for high contrast pop */}
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "115%",
+                height: "145%",
+                borderRadius: "50%",
+                background:
+                  "radial-gradient(ellipse at center, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0) 85%)",
+                filter: "blur(18px)",
+                pointerEvents: "none",
+              }}
+            />
 
-              return (
-                <Word
-                  key={`${activeIndex}-${i}`}
-                  word={w.word}
-                  frame={frame}
-                  fps={fps}
-                  delayFrames={Math.round(w.start * fps)}
-                  color={color}
-                  fontSize={fontSize}
-                  offsetX={offset.translateX}
-                  isFirstLine={i === 0}
-                />
-              );
-            })}
+            {/* Center-balanced staggered vertical stack */}
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                opacity: captionOpacity,
+                zIndex: 3,
+              }}
+            >
+              {activeChunk.words.map((w, i) => {
+                const isEmphasized = i % 2 !== 0;
+                const color = isEmphasized ? ORANGE : WHITE;
+                const fontSize = computeWordFontSize(w.word, isEmphasized);
+                const offset = LINE_OFFSETS[i % LINE_OFFSETS.length];
+
+                return (
+                  <Word
+                    key={`${activeIndex}-${i}`}
+                    word={w.word}
+                    frame={frame}
+                    fps={fps}
+                    delayFrames={Math.round(w.start * fps)}
+                    color={color}
+                    fontSize={fontSize}
+                    offsetX={offset.translateX}
+                    isFirstLine={i === 0}
+                  />
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </AbsoluteFill>
+        </AbsoluteFill>
+      )}
 
-      <Sequence from={0} durationInFrames={durationInFrames}>
+      {/* Silent Outro Call-To-Action Card (Appears after audio finishes) */}
+      {frame >= audioEndFrame - 15 && (
+        <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 360 }}>
+          <div
+            style={{
+              opacity: outroOpacity,
+              textAlign: "center",
+              width: "100%",
+              maxWidth: 860,
+              padding: "36px 40px",
+              borderRadius: 24,
+              background: "rgba(0, 0, 0, 0.82)",
+              backdropFilter: "blur(16px)",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.85)",
+              zIndex: 10,
+            }}
+          >
+            <div
+              style={{
+                fontFamily,
+                fontSize: 42,
+                fontWeight: 800,
+                color: WHITE,
+                lineHeight: 1.35,
+                marginBottom: 16,
+              }}
+            >
+              Daily horoscope uploaded on our story.
+            </div>
+            <div
+              style={{
+                fontFamily,
+                fontSize: 46,
+                fontWeight: 900,
+                color: ORANGE,
+                letterSpacing: "0.02em",
+                textTransform: "uppercase",
+                textShadow: "0 4px 18px rgba(255,114,0,0.45)",
+              }}
+            >
+              Follow for more.
+            </div>
+          </div>
+        </AbsoluteFill>
+      )}
+
+      <Sequence from={0} durationInFrames={audioEndFrame}>
         <Audio src={staticFile(audioPath)} />
       </Sequence>
     </AbsoluteFill>

@@ -31,12 +31,10 @@ export const RemotionRoot: React.FC = () => {
       height={1920}
       schema={horoscopeVideoSchema}
       defaultProps={defaultProps}
-      // Duration is derived from the audio length passed in props (not
-      // hardcoded) — this is what lets the same composition handle a 16s
-      // reading and a 29s reading without any code changes. Story 2.2 AC.
+      // Total duration = spoken audio duration + 3.0s silent outro CTA card
       calculateMetadata={({ props }) => {
         return {
-          durationInFrames: Math.round(props.durationInSeconds * FPS),
+          durationInFrames: Math.round((props.durationInSeconds + 3.0) * FPS),
         };
       }}
     />
