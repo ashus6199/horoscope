@@ -8,7 +8,6 @@ import {
   useCurrentFrame,
   useVideoConfig,
   interpolate,
-  spring,
   Sequence,
 } from "remotion";
 import { loadFont } from "@remotion/google-fonts/Inter";
@@ -45,8 +44,8 @@ function buildFallbackTimings(text: string, durationInSeconds: number): WordTimi
 }
 
 // Character-based chunking (~22-25 characters max per card block)
-// This avoids artificial 3-word cutoffs for tiny words ("as the moon")
-// and ensures long words ("earthbound") get their own focused space.
+// Strictly breaks on sentence-ending punctuation (. ! ?) so a new sentence
+// ALWAYS starts fresh on its own card block and never mixes with previous sentences.
 const MAX_CHARS_PER_CHUNK = 24;
 const MAX_CHUNK_SECONDS = 2.4;
 const PAUSE_GAP_SECONDS = 0.35;
@@ -62,7 +61,12 @@ function chunkWordTimings(words: WordTiming[]): Chunk[] {
     const word = words[i];
     const gap = word.start - prev.end;
     const chunkDuration = word.end - current[0].start;
+
+    // Check if the previous word ended a sentence (. ! ? or ;)
+    const isPrevSentenceEnd = /[.!?]$/.test(prev.word.trim());
+
     const shouldBreak =
+      isPrevSentenceEnd ||
       gap > PAUSE_GAP_SECONDS ||
       currentChars + word.word.length + 1 > MAX_CHARS_PER_CHUNK ||
       chunkDuration > MAX_CHUNK_SECONDS;
@@ -81,10 +85,8 @@ function chunkWordTimings(words: WordTiming[]): Chunk[] {
 }
 
 // Safely compute font size for a word based on character length
-// Enforces that words NEVER exceed the 820px safe width boundary.
 function computeWordFontSize(word: string, isEmphasized: boolean): number {
   const baseSize = isEmphasized ? 116 : 94;
-  // Inter 900 bold char width factor is ~0.62 * fontSize
   const maxSafeSize = Math.floor(820 / Math.max(1, word.length * 0.62));
   return Math.min(baseSize, Math.max(54, maxSafeSize));
 }
@@ -95,14 +97,14 @@ const WHITE = "#FFFFFF";
 
 // Balanced center-relative horizontal offsets for graphic staggered feel
 const LINE_OFFSETS = [
-  { translateX: -40 }, // Line 1: slightly left of center
-  { translateX: 40 },  // Line 2: slightly right of center
-  { translateX: -20 }, // Line 3: near center
-  { translateX: 30 },  // Line 4: slightly right
+  { translateX: -40 },
+  { translateX: 40 },
+  { translateX: -20 },
+  { translateX: 30 },
 ];
 
 // Word Component: Positioned in its stationary layout spot
-// Appears instantly (opacity 1) at exact speech start frame with zero delay or effect.
+// Appears instantly at exact speech start frame. First word of a sentence/card is capitalized.
 const Word: React.FC<{
   word: string;
   frame: number;
@@ -114,6 +116,11 @@ const Word: React.FC<{
   isFirstLine: boolean;
 }> = ({ word, frame, fps, delayFrames, color, fontSize, offsetX, isFirstLine }) => {
   const isVisible = frame >= delayFrames;
+
+  // Capitalize first letter of the first word in a card/sentence
+  const formattedWord = isFirstLine
+    ? word.charAt(0).toUpperCase() + word.slice(1)
+    : word;
 
   return (
     <div
@@ -133,13 +140,12 @@ const Word: React.FC<{
           fontFamily,
           fontWeight: 900,
           letterSpacing: "-0.03em",
-          textTransform: "lowercase",
           color,
           textShadow:
-            "5px 7px 0px rgba(0,0,0,0.65), 0 14px 28px rgba(0,0,0,0.85)",
+            "6px 8px 0px rgba(0,0,0,0.85), 0 16px 32px rgba(0,0,0,0.95)",
         }}
       >
-        {word}
+        {formattedWord}
       </span>
     </div>
   );
@@ -199,7 +205,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
       <AbsoluteFill
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.95) 78%, #000 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,0.75) 55%, rgba(0,0,0,0.98) 75%, #000 100%)",
         }}
       />
 
@@ -241,12 +247,12 @@ export const HoroscopeVideo: React.FC<Props> = ({
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: "100%",
-              height: "140%",
+              width: "115%",
+              height: "145%",
               borderRadius: "50%",
               background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.65) 55%, rgba(0,0,0,0) 82%)",
-              filter: "blur(24px)",
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0) 85%)",
+              filter: "blur(18px)",
               pointerEvents: "none",
             }}
           />
