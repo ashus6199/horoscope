@@ -32,6 +32,8 @@ def main():
     parser.add_argument("--mark-used", action="store_true", help="Mark selected clip as used in manifest")
     parser.add_argument("--dry-run", action="store_true", help="Use dry-run/mock responses")
     parser.add_argument("--skip-render", action="store_true", help="Prepare assets and props but skip Remotion render step")
+    parser.add_argument("--publish-ig", action="store_true", help="Publish rendered video to Instagram Reels")
+    parser.add_argument("--video-url", help="Public video HTTPS URL for Instagram publishing (required if --publish-ig)")
     parser.add_argument("--output-dir", type=Path, default=Path("output"))
     parser.add_argument("--props-out", type=Path, default=Path("remotion/props.json"))
     args = parser.parse_args()
@@ -214,6 +216,26 @@ def main():
     print(f"Running: {' '.join(render_cmd)}")
     subprocess.run(render_cmd, cwd=remotion_dir, check=True)
     print(f"Render completed successfully! Output: {out_video_path}")
+
+    if args.publish_ig:
+        print(f"\n=== Step 7: Publishing to Instagram Reels ===")
+        teaser_sentence = caption_text.split('.')[0].strip() + '.' if '.' in caption_text else caption_text
+        ig_caption = f"{teaser_sentence} ✨\n\n#horoscope #{args.sign.lower()} #astrology #zodiac"
+        
+        pub_cmd = [
+            sys.executable, str(scripts_dir / "publish_instagram.py"),
+            "--caption", ig_caption,
+        ]
+        if not args.dry_run:
+            pub_cmd.extend(["--jitter-max-seconds", "300"])
+        if args.video_url:
+            pub_cmd.extend(["--video-url", args.video_url])
+        if args.dry_run:
+            pub_cmd.append("--dry-run")
+
+        print(f"Executing: {' '.join(pub_cmd)}")
+        pub_out = run_command(pub_cmd, cwd=repo_root)
+        print(f"Publishing Output:\n{pub_out}")
 
 
 if __name__ == "__main__":

@@ -209,11 +209,11 @@ export const HoroscopeVideo: React.FC<Props> = ({
         />
       </Loop>
 
-      {/* Dark bottom gradient for background contrast — pushed down so video remains clear */}
+      {/* Dark bottom gradient for background contrast — balanced at 48% */}
       <AbsoluteFill
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45) 75%, rgba(0,0,0,0.85) 90%, #000 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0) 48%, rgba(0,0,0,0.55) 68%, rgba(0,0,0,0.9) 88%, #000 100%)",
         }}
       />
 
