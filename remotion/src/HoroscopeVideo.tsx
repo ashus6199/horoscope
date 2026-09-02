@@ -104,7 +104,7 @@ const LINE_OFFSETS = [
 ];
 
 // Word Component: Positioned in its stationary layout spot
-// Appears instantly at exact speech start frame. First word of a sentence/card is capitalized.
+// Appears instantly at exact speech start frame with standard English grammar capitalization.
 const Word: React.FC<{
   word: string;
   frame: number;
@@ -116,11 +116,6 @@ const Word: React.FC<{
   isFirstLine: boolean;
 }> = ({ word, frame, fps, delayFrames, color, fontSize, offsetX, isFirstLine }) => {
   const isVisible = frame >= delayFrames;
-
-  // Capitalize first letter of the first word in a card/sentence
-  const formattedWord = isFirstLine
-    ? word.charAt(0).toUpperCase() + word.slice(1)
-    : word;
 
   return (
     <div
@@ -145,7 +140,7 @@ const Word: React.FC<{
             "6px 8px 0px rgba(0,0,0,0.85), 0 16px 32px rgba(0,0,0,0.95)",
         }}
       >
-        {formattedWord}
+        {word}
       </span>
     </div>
   );
