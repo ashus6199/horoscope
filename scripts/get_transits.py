@@ -61,18 +61,16 @@ def aspect_between(a: str, b: str) -> str:
     return ASPECT_BY_DISTANCE[sign_distance(a, b)]
 
 
-def compatibility_for_moon(moon_sign: str) -> dict:
-    """For today's Moon sign, bucket all 12 signs by their whole-sign aspect
-    to it, then deterministically pick one 'easier' sign (trine preferred
-    over sextile) and one 'harder' sign (opposition preferred over square —
-    opposition is always unique, so no tie-break needed there) for use in
-    the daily compatibility beat. Ties within a bucket break on zodiac order
-    so the same inputs always produce the same output."""
+def compatibility_for_sign(sign: str) -> dict:
+    """For a given target account sign (e.g. Sagittarius), bucket all other 11 signs
+    by their whole-sign aspect to it, then deterministically pick one 'easier' sign
+    (trine preferred over sextile) and one 'harder' sign (opposition preferred over
+    square) for use in the daily compatibility beat."""
     buckets = {"trine": [], "sextile": [], "square": [], "opposition": []}
     for s in SIGNS:
-        if s == moon_sign:
+        if s == sign:
             continue
-        asp = aspect_between(moon_sign, s)
+        asp = aspect_between(sign, s)
         if asp in buckets:
             buckets[asp].append(s)
 
@@ -99,7 +97,7 @@ def own_aspect_to_moon(sign: str, moon_sign: str) -> str:
     return aspect_between(sign, moon_sign)
 
 
-def get_transits() -> dict:
+def get_transits(sign: str = None) -> dict:
     now = ephem.now()
     yesterday = ephem.Date(now - 1)
 
@@ -131,18 +129,24 @@ def get_transits() -> dict:
         if d < 0:
             retrogrades.append(name)
 
-    return {
+    result = {
         "moon_sign": moon_sign,
         "moon_phase_pct": phase_pct,
         "moon_phase_label": phase_label,
         "moon_age_days": moon_age_days,
         "retrogrades": retrogrades,  # empty list if nothing is retrograde today
-        "compatibility": compatibility_for_moon(moon_sign),
     }
+    if sign:
+        result["compatibility"] = compatibility_for_sign(sign)
+    return result
 
 
 def main():
-    print(json.dumps(get_transits(), indent=2))
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--sign", default=None, help="Target account sign for sign-centric compatibility")
+    args = parser.parse_args()
+    print(json.dumps(get_transits(args.sign), indent=2))
 
 
 if __name__ == "__main__":

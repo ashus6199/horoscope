@@ -30,27 +30,25 @@ MAX_CARD_WORDS = 45
 MAX_RETRIES = 3
 
 SYSTEM_PROMPT = """You write daily horoscope cards for a data-driven astrology brand aimed at \
-Gen Z. Voice: blunt, specific, a little dry — like a smart friend telling you something true, \
-not a fortune cookie. Never use emojis, exclamation points, or vague filler like "great things \
-are coming". Never manufacture urgency (no "before it's too late", no specific clock times, no \
-"this window closes") — the audience finds that manipulative and it costs trust. Speak directly \
-to the reader as "you".
+Gen Z. Voice: blunt, specific, direct, a little dry — like a smart friend giving practical guidance, \
+not a fortune cookie. Never use emojis, exclamation points, or vague filler like "reflection and letting go", \
+"feeling emotional adjustments", or "great things are coming". Never manufacture urgency (no "before it's too late", \
+no specific clock times, no "this window closes") — the audience finds that manipulative and it costs trust. \
+Speak directly to the reader as "you".
 
 You will be given today's REAL astronomical transit data and a REAL computed compatibility \
-result below. Use only what's given — do not invent any transit, aspect, or planetary event \
+result for the target sign below. Use only what's given — do not invent any transit, aspect, or planetary event \
 beyond it.
 
 Output a JSON object with exactly these fields:
 - "hook" (5-10 words): states today's real transit fact plainly. Not mystical, just true.
-- "context" (8-15 words): one sentence on what that placement tends to mean, grounded in the \
-given data.
-- "sharp_line" (6-14 words): the standalone, most quotable line of the four — a specific, \
-observational statement about today, not an instruction or command. This is the one line meant \
-to be screenshotted alone, so it must work with zero other context. Do not phrase it as advice \
-("you should...") — phrase it as an observation about the day.
-- "compatibility_line" (10-20 words): uses the given harmonious_pick and friction_pick signs \
-to say which sign's energy is landing easier today and which is landing harder. Grounded only \
-in the given aspect data.
+- "context" (8-15 words): one sentence on what that placement means specifically for the target sign's energy today.
+- "sharp_line" (6-14 words): THE ACTIONABLE TAKEAWAY. A sharp, concrete, actionable directive or practical advice \
+for the target sign today — tell the reader specifically what practical move to make or what trap to avoid. Must be \
+grounded and specific, never vague emotional fluff.
+- "compatibility_line" (10-20 words): states how the target sign interacts with the given harmonious_pick sign \
+(which aligns smoothly with the target sign) and friction_pick sign (which creates tension/static for the target sign). \
+Must speak directly from the target sign's perspective (e.g., "Aries energy aligns smoothly with you today, while Gemini's pace creates static.").
 - "caption" (40-70 words): the longer, more atmospheric flavor text for the post caption — this \
 is where mystical, evocative language belongs (it does not belong in the card lines above). \
 End it with 3-5 lowercase hashtags relevant to the sign and today's transit, space-separated, \
@@ -61,6 +59,8 @@ Output ONLY the JSON object. No markdown fences, no preamble."""
 
 def build_transit_context(moon_sign, moon_phase_label, retrogrades, sign, compatibility) -> str:
     facts = []
+    if sign:
+        facts.append(f"Target Sign: {sign}.")
     if moon_sign:
         phase_bit = f", {moon_phase_label}" if moon_phase_label else ""
         facts.append(f"Today's Moon is in {moon_sign}{phase_bit}.")
@@ -69,11 +69,11 @@ def build_transit_context(moon_sign, moon_phase_label, retrogrades, sign, compat
         facts.append(f"{', '.join(retrogrades)} {verb} currently retrograde.")
     if moon_sign and sign:
         own_aspect = aspect_between(sign, moon_sign)
-        facts.append(f"Today's Moon forms a {own_aspect} to {sign} (this account's own sign).")
+        facts.append(f"Today's Moon forms a {own_aspect} to {sign}.")
     if compatibility and compatibility.get("harmonious_pick"):
-        facts.append(f"harmonious_pick: {compatibility['harmonious_pick']}")
+        facts.append(f"harmonious_pick (aligns smoothly with {sign}): {compatibility['harmonious_pick']}")
     if compatibility and compatibility.get("friction_pick"):
-        facts.append(f"friction_pick: {compatibility['friction_pick']}")
+        facts.append(f"friction_pick (creates tension for {sign}): {compatibility['friction_pick']}")
     if not facts:
         return "No specific transit data available today — write a grounded reading without referencing any transit."
     return " ".join(facts)
@@ -105,9 +105,9 @@ def mock_response(sign: str, element: str, transit_context: str) -> dict:
     # Used only with --dry-run, to exercise validation/retry logic offline.
     return {
         "hook": f"Today's Moon sits in Taurus, waning.",
-        "context": "Earth energy this steady doesn't rush. It just keeps going.",
-        "sharp_line": f"Finishing something today will feel better than starting it, {sign}.",
-        "compatibility_line": "Virgo's steadiness might land easier than usual today. Scorpio's intensity could feel like static.",
+        "context": f"This steady earth placement grounds your restless {element} energy today.",
+        "sharp_line": f"Finish one open project before starting anything new, {sign}.",
+        "compatibility_line": "Aries energy aligns smoothly with you today. Gemini's pace might create static.",
         "caption": (
             f"Under a waning Taurus moon, the {element} in you meets earth that refuses to "
             f"hurry. What already has momentum wants your attention now, not the next spark. "
