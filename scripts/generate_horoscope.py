@@ -50,11 +50,12 @@ Use only what's given — do not invent any transit or aspect beyond it.
 Output a JSON object with exactly these fields:
 - "card_hook" (5-8 words): concise on-screen card text stating the real transit fact in curious language.
 - "spoken_hook" (10-16 words): natural conversational voiceover introducing today's astronomical transit for the viewer (do NOT state the sign name).
-- "card_context" (6-12 words): concise on-screen card text with Moon energy + concrete power focus or power color.
+- "power_focus" (2-5 words): the concrete power focus for today (e.g., "Finish open tasks", "Set boundaries early").
+- "power_color" (1-2 words): the power color to wear/harness today (e.g., "Forest green", "Deep navy").
 - "spoken_context" (12-20 words): natural conversational voiceover explaining the Moon's influence and practical focus/power color.
-- "card_sharp_line" (6-12 words): concise on-screen quote card text for DOs and DON'Ts (e.g., "Do: Ship Monday's project | Don't: Re-open old arguments").
+- "sharp_do" (3-7 words): the specific DO action for today (e.g., "Ship Monday's project").
+- "sharp_dont" (3-7 words): the specific DON'T action for today (e.g., "Re-open old arguments").
 - "spoken_sharp_line" (12-22 words): natural conversational voiceover giving the specific practical advice/directive in a warm narrative voice.
-- "card_compatibility_line" (6-12 words): concise on-screen scannable guide (e.g., "Best energy: Aries | Handle with care: Gemini").
 - "spoken_compatibility_line" (12-20 words): natural conversational voiceover explaining which sign to connect with and which to handle with care.
 - "caption" (40-70 words): atmospheric post caption text with 3-5 lowercase hashtags at the end.
 
@@ -108,13 +109,14 @@ def call_openai(sign: str, element: str, transit_context: str) -> dict:
 def mock_response(sign: str, element: str, transit_context: str) -> dict:
     # Used only with --dry-run, to exercise validation/retry logic offline.
     return {
-        "card_hook": f"Taurus Waning Moon tests your {element} fire today.",
+        "card_hook": f"Waning Moon in Taurus tests your {element} energy.",
         "spoken_hook": "Today's waning Moon in Taurus forms a challenging angle to your sun.",
-        "card_context": "Steady earth grounds your pace. Power focus: finish open tasks | Color: forest green.",
+        "power_focus": "Finish open tasks",
+        "power_color": "Forest green",
         "spoken_context": "This steady earth placement is asking you to ground your restless energy today. Focus on clearing your open tasks and wear forest green.",
-        "card_sharp_line": "Do: Ship Monday's project. Don't: Re-open old arguments.",
+        "sharp_do": "Ship Monday's project",
+        "sharp_dont": "Re-open old arguments",
         "spoken_sharp_line": "Whatever project you started earlier this week, push to finish it today. And if old disagreements bubble up, don't re-open them.",
-        "card_compatibility_line": "Best energy: Aries | Handle with care: Gemini",
         "spoken_compatibility_line": "You will vibe best with Aries energy today to amplify your momentum, but handle Gemini with extra care to avoid static.",
         "caption": (
             f"Under a waning Taurus moon, the {element} in you meets earth that refuses to "

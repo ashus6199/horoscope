@@ -68,13 +68,27 @@ def main():
         horoscope_cmd.append("--dry-run")
     horoscope_output_json = run_command(horoscope_cmd, cwd=repo_root)
     horoscope_data = json.loads(horoscope_output_json)
-    
-    beat_keys = ["hook", "context", "sharp_line", "compatibility_line"]
-    spoken_parts = []
-    for k in beat_keys:
-        val = horoscope_data.get(f"spoken_{k}") or horoscope_data.get(k) or ""
-        if val:
-            spoken_parts.append(val)
+
+    # Extract transit metadata from the horoscope JSON output
+    transit_ctx = horoscope_data.get("transit_context", "")
+    # Re-run get_transits.py to get structured transit data for Remotion props
+    transit_meta = {"moonSign": "", "moonPhase": "", "bestSign": "", "cautionSign": ""}
+    try:
+        transit_cmd = [sys.executable, str(scripts_dir / "get_transits.py"), "--sign", args.sign]
+        transit_json = run_command(transit_cmd, cwd=repo_root)
+        transit_data = json.loads(transit_json)
+        transit_meta["moonSign"] = transit_data.get("moon_sign", "")
+        transit_meta["moonPhase"] = transit_data.get("moon_phase_label", "")
+        compat = transit_data.get("compatibility", {})
+        transit_meta["bestSign"] = compat.get("harmonious_pick", "")
+        transit_meta["cautionSign"] = compat.get("friction_pick", "")
+    except Exception as e:
+        print(f"[WARNING] Could not extract transit metadata ({e})", file=sys.stderr)
+
+    # Build spoken script from 4 spoken beats
+    spoken_beat_keys = ["spoken_hook", "spoken_context", "spoken_sharp_line", "spoken_compatibility_line"]
+    spoken_parts = [horoscope_data.get(k, "") for k in spoken_beat_keys]
+    spoken_parts = [p for p in spoken_parts if p]
 
     spoken_text = " ".join(spoken_parts)
     post_caption = horoscope_data.get("caption", spoken_text)
@@ -104,43 +118,88 @@ def main():
 
     norm_timings = [norm(wt.get("word", "")) for wt in word_timings]
 
-    card_blocks = []
-    w_cursor = 0
-    prev_end = 0.0
-
-    for key in beat_keys:
-        card_text = horoscope_data.get(f"card_{key}") or horoscope_data.get(key) or ""
-        spoken_val = horoscope_data.get(f"spoken_{key}") or horoscope_data.get(key) or ""
-        if not card_text:
-            continue
-
-        spoken_words = [norm(w) for w in re.sub(r'[—–-]+', ' ', spoken_val).split() if norm(w)]
+    # Map each spoken beat to exact word-boundary timestamps
+    def find_beat_timing(spoken_text_val, w_cursor_start, prev_end_val):
+        spoken_words = [norm(w) for w in re.sub(r'[—–-]+', ' ', spoken_text_val).split() if norm(w)]
         count = len(spoken_words)
-
-        start_idx = w_cursor
+        start_idx = w_cursor_start
         if spoken_words:
             first_word = spoken_words[0]
-            for search_i in range(w_cursor, min(w_cursor + 15, len(norm_timings))):
+            for search_i in range(w_cursor_start, min(w_cursor_start + 15, len(norm_timings))):
                 if norm_timings[search_i] == first_word:
                     start_idx = search_i
                     break
-
         end_idx = min(start_idx + count, len(word_timings))
         block_words = word_timings[start_idx : end_idx]
-        w_cursor = max(end_idx, start_idx + 1)
-
-        start = block_words[0]["start"] if block_words else prev_end
+        new_cursor = max(end_idx, start_idx + 1)
+        start = block_words[0]["start"] if block_words else prev_end_val
         end = block_words[-1]["end"] if block_words else start + 2.0
-        prev_end = end
+        return start, end, block_words, new_cursor
 
+    w_cursor = 0
+    prev_end = 0.0
+    card_blocks = []
+
+    # --- Card 1: Hook (moon transit) ---
+    spoken_hook = horoscope_data.get("spoken_hook", "")
+    if spoken_hook:
+        start, end, bw, w_cursor = find_beat_timing(spoken_hook, w_cursor, prev_end)
+        prev_end = end
         card_blocks.append({
-            "key": key,
-            "text": card_text,
-            "spokenText": spoken_val,
-            "start": start,
-            "end": end,
-            "isSharpLine": (key == "sharp_line"),
-            "words": block_words,
+            "key": "hook",
+            "text": horoscope_data.get("card_hook", ""),
+            "spokenText": spoken_hook,
+            "start": start, "end": end,
+            "isSharpLine": False,
+            "words": bw,
+        })
+
+    # --- Card 2: Context (power focus + color) ---
+    spoken_context = horoscope_data.get("spoken_context", "")
+    if spoken_context:
+        start, end, bw, w_cursor = find_beat_timing(spoken_context, w_cursor, prev_end)
+        prev_end = end
+        card_blocks.append({
+            "key": "context",
+            "text": horoscope_data.get("power_focus", ""),
+            "powerFocus": horoscope_data.get("power_focus", ""),
+            "powerColor": horoscope_data.get("power_color", ""),
+            "spokenText": spoken_context,
+            "start": start, "end": end,
+            "isSharpLine": False,
+            "words": bw,
+        })
+
+    # --- Card 3: Sharp line (do / don't) ---
+    spoken_sharp = horoscope_data.get("spoken_sharp_line", "")
+    if spoken_sharp:
+        start, end, bw, w_cursor = find_beat_timing(spoken_sharp, w_cursor, prev_end)
+        prev_end = end
+        card_blocks.append({
+            "key": "sharp_line",
+            "text": horoscope_data.get("sharp_do", ""),
+            "sharpDo": horoscope_data.get("sharp_do", ""),
+            "sharpDont": horoscope_data.get("sharp_dont", ""),
+            "spokenText": spoken_sharp,
+            "start": start, "end": end,
+            "isSharpLine": True,
+            "words": bw,
+        })
+
+    # --- Card 4: Compatibility (best + caution signs) ---
+    spoken_compat = horoscope_data.get("spoken_compatibility_line", "")
+    if spoken_compat:
+        start, end, bw, w_cursor = find_beat_timing(spoken_compat, w_cursor, prev_end)
+        prev_end = end
+        card_blocks.append({
+            "key": "compatibility_line",
+            "text": transit_meta["bestSign"],
+            "bestSign": transit_meta["bestSign"],
+            "cautionSign": transit_meta["cautionSign"],
+            "spokenText": spoken_compat,
+            "start": start, "end": end,
+            "isSharpLine": False,
+            "words": bw,
         })
 
     print(f"\n=== Step 4: Staging Assets ===")
@@ -231,6 +290,10 @@ def main():
         "signName": args.sign,
         "captionText": post_caption,
         "spokenText": spoken_text,
+        "moonSign": transit_meta["moonSign"],
+        "moonPhase": transit_meta["moonPhase"],
+        "bestSign": transit_meta["bestSign"],
+        "cautionSign": transit_meta["cautionSign"],
         "cardBlocks": card_blocks,
         "backgroundVideoPath": bg_video_path,
         "audioPath": f"assets/{args.sign.lower()}-audio.mp3",
