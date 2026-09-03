@@ -40,6 +40,65 @@ def moon_phase_label(illumination_pct: float, waxing: bool) -> str:
     return "waxing" if waxing else "waning"
 
 
+# Whole-sign aspects: how many signs apart two signs are determines the
+# aspect between them. This is a fixed, internally-consistent astrological
+# convention (unlike "lucky colors", which contradict each other across
+# sources) — same rule for every sign, every day.
+ASPECT_BY_DISTANCE = {
+    0: "conjunction", 1: "semisextile", 2: "sextile", 3: "square",
+    4: "trine", 5: "quincunx", 6: "opposition",
+}
+HARMONIOUS_ASPECTS = {"trine", "sextile"}
+FRICTION_ASPECTS = {"square", "opposition"}
+
+
+def sign_distance(a: str, b: str) -> int:
+    d = abs(SIGNS.index(a) - SIGNS.index(b))
+    return min(d, 12 - d)
+
+
+def aspect_between(a: str, b: str) -> str:
+    return ASPECT_BY_DISTANCE[sign_distance(a, b)]
+
+
+def compatibility_for_moon(moon_sign: str) -> dict:
+    """For today's Moon sign, bucket all 12 signs by their whole-sign aspect
+    to it, then deterministically pick one 'easier' sign (trine preferred
+    over sextile) and one 'harder' sign (opposition preferred over square —
+    opposition is always unique, so no tie-break needed there) for use in
+    the daily compatibility beat. Ties within a bucket break on zodiac order
+    so the same inputs always produce the same output."""
+    buckets = {"trine": [], "sextile": [], "square": [], "opposition": []}
+    for s in SIGNS:
+        if s == moon_sign:
+            continue
+        asp = aspect_between(moon_sign, s)
+        if asp in buckets:
+            buckets[asp].append(s)
+
+    def pick(*bucket_names):
+        for name in bucket_names:
+            if buckets[name]:
+                return sorted(buckets[name], key=SIGNS.index)[0]
+        return None
+
+    return {
+        "harmonious_pick": pick("trine", "sextile"),
+        "friction_pick": pick("opposition", "square"),
+        "trine": buckets["trine"],
+        "sextile": buckets["sextile"],
+        "square": buckets["square"],
+        "opposition": buckets["opposition"],
+    }
+
+
+def own_aspect_to_moon(sign: str, moon_sign: str) -> str:
+    """The single aspect between a given account's own sign and today's Moon
+    sign — this is the personalized line, separate from the general
+    harmonious/friction picks above."""
+    return aspect_between(sign, moon_sign)
+
+
 def get_transits() -> dict:
     now = ephem.now()
     yesterday = ephem.Date(now - 1)
@@ -48,11 +107,14 @@ def get_transits() -> dict:
     moon_lon = ecliptic_longitude(ephem.Moon, now)
     moon_sign = longitude_to_sign(moon_lon)
 
-    moon_lon_yesterday = ecliptic_longitude(ephem.Moon, yesterday)
-    delta = moon_lon - moon_lon_yesterday
-    if delta < -180:
-        delta += 360
-    waxing = delta > 0 and moon.phase < 50 or moon.phase >= 50 and delta > 0
+    # Waxing/waning is about position in the ~29.53-day synodic cycle, not
+    # day-over-day ecliptic longitude change (the Moon's longitude increases
+    # almost every day regardless of phase, so that check was nearly always
+    # true — it was misreporting "waxing" through the second half of the
+    # cycle). Age since the last new moon < half the cycle == waxing.
+    prev_new_moon = ephem.previous_new_moon(now)
+    moon_age_days = round(float(now - prev_new_moon), 2)
+    waxing = moon_age_days < 14.765
 
     phase_pct = round(moon.phase, 1)
     phase_label = moon_phase_label(phase_pct, waxing)
@@ -73,7 +135,9 @@ def get_transits() -> dict:
         "moon_sign": moon_sign,
         "moon_phase_pct": phase_pct,
         "moon_phase_label": phase_label,
+        "moon_age_days": moon_age_days,
         "retrogrades": retrogrades,  # empty list if nothing is retrograde today
+        "compatibility": compatibility_for_moon(moon_sign),
     }
 
 

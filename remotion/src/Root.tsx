@@ -4,19 +4,53 @@ import React from "react";
 
 // Default props used only for local preview in the Remotion Studio.
 // Real renders always pass real props via --props (see render command),
-// including the actual audio duration measured by generate_tts.py.
+// including actual audio duration and card block timings from run_pipeline.py.
 const defaultProps = {
   signName: "Sagittarius",
   captionText:
-    "The fire in you is restless today. Trust the instinct that arrives before the doubt does.",
+    "Under a waning Taurus moon, the fire in you meets earth that refuses to hurry. #sagittarius",
+  spokenText:
+    "Today's Moon sits in Taurus, waning. Earth energy this steady doesn't rush. Finishing something today will feel better than starting it, Sagittarius. Virgo's steadiness might land easier than usual today.",
   backgroundVideoPath: "assets/placeholder-bg.mp4",
   audioPath: "assets/placeholder-audio.mp3",
   durationInSeconds: 20,
   bgDurationSeconds: 8,
-  dateText: "01 September 2026",
-  // Sample timings only, for Studio preview without real props — real
-  // renders always get this from generate_tts.py via run_pipeline.py.
+  dateText: "03 September 2026",
   wordTimings: [],
+  cardBlocks: [
+    {
+      key: "hook",
+      text: "Today's Moon sits in Taurus, waning.",
+      start: 0.5,
+      end: 3.5,
+      isSharpLine: false,
+      words: [],
+    },
+    {
+      key: "context",
+      text: "Earth energy this steady doesn't rush. It just keeps going.",
+      start: 3.8,
+      end: 7.5,
+      isSharpLine: false,
+      words: [],
+    },
+    {
+      key: "sharp_line",
+      text: "Finishing something today will feel better than starting it, Sagittarius.",
+      start: 7.8,
+      end: 12.5,
+      isSharpLine: true,
+      words: [],
+    },
+    {
+      key: "compatibility_line",
+      text: "Virgo's steadiness might land easier than usual today. Scorpio's intensity could feel like static.",
+      start: 12.8,
+      end: 17.5,
+      isSharpLine: false,
+      words: [],
+    },
+  ],
 };
 
 const FPS = 30;

@@ -2,7 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
-  OffthreadVideo,
+  Video,
   Loop,
   staticFile,
   useCurrentFrame,
@@ -13,182 +13,68 @@ import {
 import { loadFont } from "@remotion/google-fonts/Inter";
 import { z } from "zod";
 
-const { fontFamily } = loadFont("normal", { weights: ["800", "900"] });
+const { fontFamily } = loadFont("normal", { weights: ["600", "800", "900"] });
+
+const wordTimingSchema = z.object({ word: z.string(), start: z.number(), end: z.number() });
+
+const cardBlockSchema = z.object({
+  key: z.string(),
+  text: z.string(),
+  start: z.number(),
+  end: z.number(),
+  isSharpLine: z.boolean().default(false),
+  words: z.array(wordTimingSchema).default([]),
+});
 
 export const horoscopeVideoSchema = z.object({
   signName: z.string(),
   captionText: z.string(),
+  spokenText: z.string().optional(),
   backgroundVideoPath: z.string(),
   audioPath: z.string(),
   durationInSeconds: z.number(),
   bgDurationSeconds: z.number(),
   dateText: z.string(),
-  wordTimings: z
-    .array(z.object({ word: z.string(), start: z.number(), end: z.number() }))
-    .default([]),
+  wordTimings: z.array(wordTimingSchema).default([]),
+  cardBlocks: z.array(cardBlockSchema).default([]),
 });
 
 type Props = z.infer<typeof horoscopeVideoSchema>;
-type WordTiming = { word: string; start: number; end: number };
-type Chunk = { words: WordTiming[]; start: number; end: number };
 
-function buildFallbackTimings(text: string, durationInSeconds: number): WordTiming[] {
-  const cleaned = text.replace(/[—–-]+/g, " ");
-  const words = cleaned.split(/\s+/).filter(Boolean);
-  const perWord = durationInSeconds / Math.max(words.length, 1);
-  return words.map((word, i) => ({
-    word: word.replace(/^[—–-]+|[—–-]+$/g, ""),
-    start: i * perWord,
-    end: i * perWord + perWord * 0.85,
-  }));
-}
-
-// Character-based chunking (~22-25 characters max per card block)
-// Strictly breaks on sentence-ending punctuation (. ! ?) so a new sentence
-// ALWAYS starts fresh on its own card block and never mixes with previous sentences.
-const MAX_CHARS_PER_CHUNK = 24;
-const MAX_CHUNK_SECONDS = 2.4;
-const PAUSE_GAP_SECONDS = 0.35;
-
-function chunkWordTimings(words: WordTiming[]): Chunk[] {
-  if (words.length === 0) return [];
-  const chunks: Chunk[] = [];
-  let current: WordTiming[] = [words[0]];
-  let currentChars = words[0].word.length;
-
-  for (let i = 1; i < words.length; i++) {
-    const prev = words[i - 1];
-    const word = words[i];
-    const gap = word.start - prev.end;
-    const chunkDuration = word.end - current[0].start;
-
-    // Check if the previous word ended a sentence (. ! ? or ;)
-    const isPrevSentenceEnd = /[.!?]$/.test(prev.word.trim());
-
-    const shouldBreak =
-      isPrevSentenceEnd ||
-      gap > PAUSE_GAP_SECONDS ||
-      currentChars + word.word.length + 1 > MAX_CHARS_PER_CHUNK ||
-      chunkDuration > MAX_CHUNK_SECONDS;
-
-    if (shouldBreak) {
-      chunks.push({ words: current, start: current[0].start, end: current[current.length - 1].end });
-      current = [word];
-      currentChars = word.word.length;
-    } else {
-      current.push(word);
-      currentChars += word.word.length + 1;
-    }
-  }
-  chunks.push({ words: current, start: current[0].start, end: current[current.length - 1].end });
-  return chunks;
-}
-
-// Safely compute font size for a word based on character length
-function computeWordFontSize(word: string, isEmphasized: boolean): number {
-  const baseSize = isEmphasized ? 116 : 94;
-  const maxSafeSize = Math.floor(820 / Math.max(1, word.length * 0.62));
-  return Math.min(baseSize, Math.max(54, maxSafeSize));
-}
-
-const CONTAINER_WIDTH = 900;
 const ORANGE = "#FF7200";
 const WHITE = "#FFFFFF";
-
-// Balanced center-relative horizontal offsets for graphic staggered feel
-const LINE_OFFSETS = [
-  { translateX: -40 },
-  { translateX: 40 },
-  { translateX: -20 },
-  { translateX: 30 },
-];
-
-// Word Component: Positioned in its stationary layout spot
-// Appears instantly at exact speech start frame with standard English grammar capitalization.
-const Word: React.FC<{
-  word: string;
-  frame: number;
-  fps: number;
-  delayFrames: number;
-  color: string;
-  fontSize: number;
-  offsetX: number;
-  isFirstLine: boolean;
-}> = ({ word, frame, fps, delayFrames, color, fontSize, offsetX, isFirstLine }) => {
-  const isVisible = frame >= delayFrames;
-
-  return (
-    <div
-      style={{
-        display: "block",
-        textAlign: "center",
-        transform: `translateX(${offsetX}px)`,
-        marginTop: isFirstLine ? "0px" : "-12px",
-        lineHeight: 0.76,
-      }}
-    >
-      <span
-        style={{
-          display: "inline-block",
-          opacity: isVisible ? 1 : 0,
-          fontSize,
-          fontFamily,
-          fontWeight: 900,
-          letterSpacing: "-0.03em",
-          color,
-          textShadow:
-            "6px 8px 0px rgba(0,0,0,0.85), 0 16px 32px rgba(0,0,0,0.95)",
-        }}
-      >
-        {word}
-      </span>
-    </div>
-  );
-};
+const LIGHT_GOLD = "#E8D9C0";
 
 export const HoroscopeVideo: React.FC<Props> = ({
   signName,
   captionText,
+  spokenText,
   backgroundVideoPath,
   audioPath,
   durationInSeconds,
   bgDurationSeconds,
   dateText,
   wordTimings,
+  cardBlocks,
 }) => {
   const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
-  const nowSeconds = frame / fps;
-
-  const words = wordTimings.length > 0 ? wordTimings : buildFallbackTimings(captionText, durationInSeconds);
-  const chunks = chunkWordTimings(words);
-
-  let activeIndex = chunks.findIndex((c) => nowSeconds >= c.start && nowSeconds < c.end);
-  if (activeIndex === -1) {
-    activeIndex = chunks.findIndex((c) => nowSeconds < c.start);
-    if (activeIndex === -1) activeIndex = chunks.length - 1;
-  }
-  const activeChunk = chunks[activeIndex];
-
-  const chunkStartFrame = Math.round(activeChunk.start * fps);
-  const chunkEndFrame = Math.round(activeChunk.end * fps);
-  const chunkDurationFrames = Math.max(chunkEndFrame - chunkStartFrame, 1);
-  const localFrame = frame - chunkStartFrame;
+  const { fps } = useVideoConfig();
 
   const audioEndFrame = Math.round(durationInSeconds * fps);
   const isAudioFinished = frame >= audioEndFrame;
 
-  // Smooth fade-out when phrase ends or audio completes
-  const phraseFadeOut = interpolate(
-    localFrame,
-    [0, chunkDurationFrames - 6, chunkDurationFrames],
-    [1, 1, 0],
+  // Header fade-in
+  const labelOpacity = interpolate(frame, [0, 20], [0, 0.85], { extrapolateRight: "clamp" });
+
+  // Fade out card stack when spoken voiceover finishes
+  const stackFadeOut = interpolate(
+    frame,
+    [audioEndFrame - 15, audioEndFrame],
+    [1, 0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
-  const captionOpacity = isAudioFinished ? 0 : phraseFadeOut;
-
-  // Outro CTA card fade in when spoken reading finishes
+  // Outro CTA card fade in
   const outroOpacity = interpolate(
     frame,
     [audioEndFrame - 10, audioEndFrame + 10],
@@ -196,12 +82,11 @@ export const HoroscopeVideo: React.FC<Props> = ({
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
-  const labelOpacity = interpolate(frame, [0, 20], [0, 0.85], { extrapolateRight: "clamp" });
-
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
+      {/* Background Seamless Loop */}
       <Loop durationInFrames={Math.round((bgDurationSeconds / 0.8) * fps)}>
-        <OffthreadVideo
+        <Video
           src={staticFile(backgroundVideoPath)}
           playbackRate={0.8}
           volume={0.3}
@@ -209,16 +94,16 @@ export const HoroscopeVideo: React.FC<Props> = ({
         />
       </Loop>
 
-      {/* Dark bottom gradient for background contrast — balanced at 48% */}
+      {/* Dark bottom gradient for readability */}
       <AbsoluteFill
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0) 48%, rgba(0,0,0,0.55) 68%, rgba(0,0,0,0.9) 88%, #000 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.92) 88%, #000 100%)",
         }}
       />
 
-      {/* Top Header Sign label */}
-      <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 230 }}>
+      {/* Top Header: Sign Name & Date */}
+      <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 180 }}>
         <div
           style={{
             opacity: labelOpacity,
@@ -226,7 +111,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
             fontSize: 48,
             letterSpacing: 6,
             textTransform: "uppercase",
-            color: "#e8d9c0",
+            color: LIGHT_GOLD,
             textAlign: "center",
           }}
         >
@@ -235,97 +120,124 @@ export const HoroscopeVideo: React.FC<Props> = ({
         </div>
       </AbsoluteFill>
 
-      {/* Caption container block (Active during voiceover reading) */}
+      {/* Progressive Disclosure Cumulative Card Stack */}
       {!isAudioFinished && (
-        <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 360 }}>
+        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", paddingTop: 260, paddingBottom: 200, paddingLeft: 60, paddingRight: 60 }}>
           <div
             style={{
-              position: "relative",
               width: "100%",
-              maxWidth: CONTAINER_WIDTH,
-              margin: "0 auto",
+              maxWidth: 920,
+              opacity: stackFadeOut,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              gap: 20,
             }}
           >
-            {/* Dark radial glow shade behind text for high contrast pop */}
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "115%",
-                height: "145%",
-                borderRadius: "50%",
-                background:
-                  "radial-gradient(ellipse at center, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0) 85%)",
-                filter: "blur(18px)",
-                pointerEvents: "none",
-              }}
-            />
+            {cardBlocks.map((block, idx) => {
+              const startFrame = Math.round(block.start * fps);
+              if (frame < startFrame) return null; // Not yet revealed
 
-            {/* Center-balanced staggered vertical stack */}
-            <div
-              style={{
-                position: "relative",
-                width: "100%",
-                opacity: captionOpacity,
-                zIndex: 3,
-              }}
-            >
-              {activeChunk.words.map((w, i) => {
-                const isEmphasized = i % 2 !== 0;
-                const color = isEmphasized ? ORANGE : WHITE;
-                const fontSize = computeWordFontSize(w.word, isEmphasized);
-                const offset = LINE_OFFSETS[i % LINE_OFFSETS.length];
+              const blockLocalFrame = frame - startFrame;
+              // Smooth 8-frame fade & entrance slide
+              const opacity = interpolate(blockLocalFrame, [0, 8], [0, 1], { extrapolateRight: "clamp" });
+              const translateY = interpolate(blockLocalFrame, [0, 8], [12, 0], { extrapolateRight: "clamp" });
 
+              if (block.isSharpLine) {
+                // Quote Card treatment for sharp_line
                 return (
-                  <Word
-                    key={`${activeIndex}-${i}`}
-                    word={w.word}
-                    frame={frame}
-                    fps={fps}
-                    delayFrames={Math.round(w.start * fps)}
-                    color={color}
-                    fontSize={fontSize}
-                    offsetX={offset.translateX}
-                    isFirstLine={i === 0}
-                  />
+                  <div
+                    key={block.key || idx}
+                    style={{
+                      opacity,
+                      transform: `translateY(${translateY}px)`,
+                      background: "rgba(255, 114, 0, 0.16)",
+                      backdropFilter: "blur(16px)",
+                      borderLeft: `6px solid ${ORANGE}`,
+                      borderTop: "1px solid rgba(255, 114, 0, 0.3)",
+                      borderRight: "1px solid rgba(255, 114, 0, 0.3)",
+                      borderBottom: "1px solid rgba(255, 114, 0, 0.3)",
+                      borderRadius: "0 18px 18px 0",
+                      padding: "24px 30px",
+                      boxShadow: "0 12px 36px rgba(0,0,0,0.6)",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontFamily,
+                        fontSize: 38,
+                        fontWeight: 900,
+                        lineHeight: 1.35,
+                        color: WHITE,
+                        letterSpacing: "-0.01em",
+                        textShadow: "0 2px 10px rgba(0,0,0,0.9)",
+                      }}
+                    >
+                      "{block.text}"
+                    </div>
+                  </div>
                 );
-              })}
-            </div>
+              }
+
+              // Standard Progressive Card Block (Hook, Context, Compatibility)
+              return (
+                <div
+                  key={block.key || idx}
+                  style={{
+                    opacity,
+                    transform: `translateY(${translateY}px)`,
+                    background: "rgba(0, 0, 0, 0.72)",
+                    backdropFilter: "blur(14px)",
+                    border: "1px solid rgba(255, 255, 255, 0.12)",
+                    borderRadius: 16,
+                    padding: "20px 28px",
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily,
+                      fontSize: 32,
+                      fontWeight: 600,
+                      lineHeight: 1.4,
+                      color: block.key === "hook" ? LIGHT_GOLD : WHITE,
+                      opacity: block.key === "compatibility_line" ? 0.9 : 1,
+                    }}
+                  >
+                    {block.text}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </AbsoluteFill>
       )}
 
-      {/* Silent Outro Call-To-Action Card (Appears after audio finishes) */}
+      {/* Outro Call-To-Action Card (Appears after voiceover finishes) */}
       {frame >= audioEndFrame - 15 && (
-        <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 360 }}>
+        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
           <div
             style={{
               opacity: outroOpacity,
               textAlign: "center",
               width: "100%",
               maxWidth: 860,
-              padding: "36px 40px",
+              padding: "44px 48px",
               borderRadius: 24,
-              background: "rgba(0, 0, 0, 0.82)",
-              backdropFilter: "blur(16px)",
-              border: "1px solid rgba(255, 255, 255, 0.15)",
-              boxShadow: "0 20px 50px rgba(0,0,0,0.85)",
+              background: "rgba(0, 0, 0, 0.88)",
+              backdropFilter: "blur(20px)",
+              border: "1px solid rgba(255, 255, 255, 0.18)",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.9)",
               zIndex: 10,
             }}
           >
             <div
               style={{
                 fontFamily,
-                fontSize: 42,
+                fontSize: 44,
                 fontWeight: 800,
                 color: WHITE,
                 lineHeight: 1.35,
-                marginBottom: 16,
+                marginBottom: 20,
               }}
             >
               Daily horoscope uploaded on our story.
@@ -333,12 +245,12 @@ export const HoroscopeVideo: React.FC<Props> = ({
             <div
               style={{
                 fontFamily,
-                fontSize: 46,
+                fontSize: 48,
                 fontWeight: 900,
                 color: ORANGE,
                 letterSpacing: "0.02em",
                 textTransform: "uppercase",
-                textShadow: "0 4px 18px rgba(255,114,0,0.45)",
+                textShadow: "0 4px 20px rgba(255,114,0,0.5)",
               }}
             >
               Follow for more.

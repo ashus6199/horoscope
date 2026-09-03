@@ -68,15 +68,20 @@ def main():
         horoscope_cmd.append("--dry-run")
     horoscope_output_json = run_command(horoscope_cmd, cwd=repo_root)
     horoscope_data = json.loads(horoscope_output_json)
-    caption_text = horoscope_data["text"]
-    print(f"Text ({horoscope_data.get('word_count')} words): {caption_text}")
+    
+    field_keys = ["hook", "context", "sharp_line", "compatibility_line"]
+    card_parts = [horoscope_data[k] for k in field_keys if k in horoscope_data]
+    spoken_text = " ".join(card_parts)
+    post_caption = horoscope_data.get("caption", spoken_text)
+    print(f"Spoken Text ({horoscope_data.get('word_count')} words): {spoken_text}")
+    print(f"Post Caption: {post_caption}")
 
     print(f"\n=== Step 3: Generating TTS Audio ===")
     audio_filename = f"{args.sign.lower()}.mp3"
     audio_output_path = args.output_dir / audio_filename
     tts_cmd = [
         sys.executable, str(scripts_dir / "generate_tts.py"),
-        "--text", caption_text,
+        "--text", spoken_text,
         "--output", str(audio_output_path),
     ]
     if args.dry_run:
@@ -87,6 +92,29 @@ def main():
     word_timings = tts_data.get("word_timings", [])
     print(f"Generated TTS audio: {audio_output_path} (Duration: {duration_seconds}s)")
     print(f"Captured {len(word_timings)} word timings for caption sync")
+
+    import re
+    card_blocks = []
+    w_idx = 0
+    for key in field_keys:
+        val = horoscope_data.get(key, "")
+        if not val:
+            continue
+        words_in_field = re.sub(r'[—–-]+', ' ', val).split()
+        count = len(words_in_field)
+        block_words = word_timings[w_idx : min(w_idx + count, len(word_timings))]
+        w_idx += count
+
+        start = block_words[0]["start"] if block_words else 0.0
+        end = block_words[-1]["end"] if block_words else start + 1.0
+        card_blocks.append({
+            "key": key,
+            "text": val,
+            "start": start,
+            "end": end,
+            "isSharpLine": (key == "sharp_line"),
+            "words": block_words,
+        })
 
     print(f"\n=== Step 4: Staging Assets ===")
     staged_audio_path = assets_dir / f"{args.sign.lower()}-audio.mp3"
@@ -174,7 +202,9 @@ def main():
     print(f"\n=== Step 5: Writing Remotion Props File ===")
     props = {
         "signName": args.sign,
-        "captionText": caption_text,
+        "captionText": post_caption,
+        "spokenText": spoken_text,
+        "cardBlocks": card_blocks,
         "backgroundVideoPath": bg_video_path,
         "audioPath": f"assets/{args.sign.lower()}-audio.mp3",
         "durationInSeconds": duration_seconds,
@@ -231,8 +261,7 @@ def main():
 
     if args.publish_ig:
         print(f"\n=== Step 7: Publishing to Instagram Reels ===")
-        teaser_sentence = caption_text.split('.')[0].strip() + '.' if '.' in caption_text else caption_text
-        ig_caption = f"{teaser_sentence} ✨\n\n#horoscope #{args.sign.lower()} #astrology #zodiac"
+        ig_caption = post_caption
         
         pub_cmd = [
             sys.executable, str(scripts_dir / "publish_instagram.py"),
