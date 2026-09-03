@@ -35,6 +35,8 @@ You will output TWO parallel layers:
 2. Natural, conversational SPOKEN VOICEOVER NARRATION (spoken by TTS like a warm, smart friend in a podcast or conversation).
 
 Voice for spoken narration: direct, conversational, narrative, smart-friend tone. \
+CRITICAL RULE: NEVER speak the sign name (e.g. NEVER say "Sagittarius", "Leo", "Aries") in the spoken voiceover! \
+The sign name is already rendered in large text on the video header. Speak directly to the viewer as "you", "your sun", or "your energy". \
 Never sound like reading out bullet points or raw labels (e.g. NEVER speak "Do: ... Don't: ..." or "Best energy: ..."). \
 Instead, speak naturally in full sentences (e.g., "Whatever path you've chosen, take a second to re-evaluate it today...", \
 "You'll vibe best with Aries energy today to amplify your momentum...").
@@ -47,7 +49,7 @@ Use only what's given — do not invent any transit or aspect beyond it.
 
 Output a JSON object with exactly these fields:
 - "card_hook" (5-8 words): concise on-screen card text stating the real transit fact in curious language.
-- "spoken_hook" (10-16 words): natural conversational voiceover introducing today's astronomical transit for the target sign.
+- "spoken_hook" (10-16 words): natural conversational voiceover introducing today's astronomical transit for the viewer (do NOT state the sign name).
 - "card_context" (6-12 words): concise on-screen card text with Moon energy + concrete power focus or power color.
 - "spoken_context" (12-20 words): natural conversational voiceover explaining the Moon's influence and practical focus/power color.
 - "card_sharp_line" (6-12 words): concise on-screen quote card text for DOs and DON'Ts (e.g., "Do: Ship Monday's project | Don't: Re-open old arguments").
@@ -62,7 +64,7 @@ Output ONLY the JSON object. No markdown fences, no preamble."""
 def build_transit_context(moon_sign, moon_phase_label, retrogrades, sign, compatibility) -> str:
     facts = []
     if sign:
-        facts.append(f"Target Sign: {sign}.")
+        facts.append(f"Target Account Sign: {sign}.")
     if moon_sign:
         phase_bit = f", {moon_phase_label}" if moon_phase_label else ""
         facts.append(f"Today's Moon is in {moon_sign}{phase_bit}.")
@@ -71,11 +73,11 @@ def build_transit_context(moon_sign, moon_phase_label, retrogrades, sign, compat
         facts.append(f"{', '.join(retrogrades)} {verb} currently retrograde.")
     if moon_sign and sign:
         own_aspect = aspect_between(sign, moon_sign)
-        facts.append(f"Today's Moon forms a {own_aspect} to {sign}.")
+        facts.append(f"Today's Moon forms a {own_aspect} aspect to this sun sign.")
     if compatibility and compatibility.get("harmonious_pick"):
-        facts.append(f"harmonious_pick (aligns smoothly with {sign}): {compatibility['harmonious_pick']}")
+        facts.append(f"harmonious_pick (aligns smoothly with this sun sign): {compatibility['harmonious_pick']}")
     if compatibility and compatibility.get("friction_pick"):
-        facts.append(f"friction_pick (creates tension for {sign}): {compatibility['friction_pick']}")
+        facts.append(f"friction_pick (creates tension for this sun sign): {compatibility['friction_pick']}")
     if not facts:
         return "No specific transit data available today — write a grounded reading without referencing any transit."
     return " ".join(facts)
@@ -106,8 +108,8 @@ def call_openai(sign: str, element: str, transit_context: str) -> dict:
 def mock_response(sign: str, element: str, transit_context: str) -> dict:
     # Used only with --dry-run, to exercise validation/retry logic offline.
     return {
-        "card_hook": f"Taurus Waning Moon tests your {sign} fire today.",
-        "spoken_hook": f"Today's waning Moon in Taurus forms a challenging angle to your {sign} sun.",
+        "card_hook": f"Taurus Waning Moon tests your {element} fire today.",
+        "spoken_hook": "Today's waning Moon in Taurus forms a challenging angle to your sun.",
         "card_context": "Steady earth grounds your pace. Power focus: finish open tasks | Color: forest green.",
         "spoken_context": "This steady earth placement is asking you to ground your restless energy today. Focus on clearing your open tasks and wear forest green.",
         "card_sharp_line": "Do: Ship Monday's project. Don't: Re-open old arguments.",

@@ -1,14 +1,14 @@
 {
   "signName": "Sagittarius",
   "captionText": "Under a waning Taurus moon, the fire in you meets earth that refuses to hurry. What already has momentum wants your attention now, not the next spark. #sagittarius #dailyhoroscope #moonintaurus",
-  "spokenText": "Today's waning Moon in Taurus forms a challenging angle to your Sagittarius sun. This steady earth placement is asking you to ground your restless energy today. Focus on clearing your open tasks and wear forest green. Whatever project you started earlier this week, push to finish it today. And if old disagreements bubble up, don't re-open them. You will vibe best with Aries energy today to amplify your momentum, but handle Gemini with extra care to avoid static.",
+  "spokenText": "Today's waning Moon in Taurus forms a challenging angle to your sun. This steady earth placement is asking you to ground your restless energy today. Focus on clearing your open tasks and wear forest green. Whatever project you started earlier this week, push to finish it today. And if old disagreements bubble up, don't re-open them. You will vibe best with Aries energy today to amplify your momentum, but handle Gemini with extra care to avoid static.",
   "cardBlocks": [
     {
       "key": "hook",
-      "text": "Taurus Waning Moon tests your Sagittarius fire today.",
-      "spokenText": "Today's waning Moon in Taurus forms a challenging angle to your Sagittarius sun.",
+      "text": "Taurus Waning Moon tests your fire fire today.",
+      "spokenText": "Today's waning Moon in Taurus forms a challenging angle to your sun.",
       "start": 0.0,
-      "end": 5.159,
+      "end": 4.756,
       "isSharpLine": false,
       "words": [
         {
@@ -29,7 +29,7 @@
         {
           "word": "in",
           "start": 1.204,
-          "end": 1.546
+          "end": 1.545
         },
         {
           "word": "Taurus",
@@ -39,42 +39,37 @@
         {
           "word": "forms",
           "start": 2.007,
-          "end": 2.349
+          "end": 2.348
         },
         {
           "word": "a",
-          "start": 2.409,
+          "start": 2.408,
           "end": 2.75
         },
         {
           "word": "challenging",
           "start": 2.81,
-          "end": 3.152
+          "end": 3.151
         },
         {
           "word": "angle",
-          "start": 3.212,
-          "end": 3.553
+          "start": 3.211,
+          "end": 3.552
         },
         {
           "word": "to",
-          "start": 3.613,
+          "start": 3.612,
           "end": 3.954
         },
         {
           "word": "your",
-          "start": 4.015,
-          "end": 4.356
-        },
-        {
-          "word": "Sagittarius",
-          "start": 4.416,
-          "end": 4.757
+          "start": 4.014,
+          "end": 4.355
         },
         {
           "word": "sun.",
-          "start": 4.818,
-          "end": 5.159
+          "start": 4.415,
+          "end": 4.756
         }
       ]
     },
@@ -82,124 +77,124 @@
       "key": "context",
       "text": "Steady earth grounds your pace. Power focus: finish open tasks | Color: forest green.",
       "spokenText": "This steady earth placement is asking you to ground your restless energy today. Focus on clearing your open tasks and wear forest green.",
-      "start": 5.219,
-      "end": 14.393,
+      "start": 4.817,
+      "end": 13.988,
       "isSharpLine": false,
       "words": [
         {
           "word": "This",
-          "start": 5.219,
-          "end": 5.56
+          "start": 4.817,
+          "end": 5.158
         },
         {
           "word": "steady",
-          "start": 5.621,
-          "end": 5.962
+          "start": 5.218,
+          "end": 5.559
         },
         {
           "word": "earth",
-          "start": 6.022,
-          "end": 6.363
+          "start": 5.619,
+          "end": 5.961
         },
         {
           "word": "placement",
-          "start": 6.424,
-          "end": 6.765
+          "start": 6.021,
+          "end": 6.362
         },
         {
           "word": "is",
-          "start": 6.825,
-          "end": 7.166
+          "start": 6.422,
+          "end": 6.763
         },
         {
           "word": "asking",
-          "start": 7.226,
-          "end": 7.568
+          "start": 6.824,
+          "end": 7.165
         },
         {
           "word": "you",
-          "start": 7.628,
-          "end": 7.969
+          "start": 7.225,
+          "end": 7.566
         },
         {
           "word": "to",
-          "start": 8.029,
-          "end": 8.371
+          "start": 7.626,
+          "end": 7.968
         },
         {
           "word": "ground",
-          "start": 8.431,
-          "end": 8.772
+          "start": 8.028,
+          "end": 8.369
         },
         {
           "word": "your",
-          "start": 8.832,
-          "end": 9.174
+          "start": 8.429,
+          "end": 8.77
         },
         {
           "word": "restless",
-          "start": 9.234,
-          "end": 9.575
+          "start": 8.831,
+          "end": 9.172
         },
         {
           "word": "energy",
-          "start": 9.635,
-          "end": 9.977
+          "start": 9.232,
+          "end": 9.573
         },
         {
           "word": "today.",
-          "start": 10.037,
-          "end": 10.378
+          "start": 9.633,
+          "end": 9.974
         },
         {
           "word": "Focus",
-          "start": 10.438,
-          "end": 10.78
+          "start": 10.035,
+          "end": 10.376
         },
         {
           "word": "on",
-          "start": 10.84,
-          "end": 11.181
+          "start": 10.436,
+          "end": 10.777
         },
         {
           "word": "clearing",
-          "start": 11.241,
-          "end": 11.582
+          "start": 10.837,
+          "end": 11.179
         },
         {
           "word": "your",
-          "start": 11.643,
-          "end": 11.984
+          "start": 11.239,
+          "end": 11.58
         },
         {
           "word": "open",
-          "start": 12.044,
-          "end": 12.385
+          "start": 11.64,
+          "end": 11.981
         },
         {
           "word": "tasks",
-          "start": 12.446,
-          "end": 12.787
+          "start": 12.042,
+          "end": 12.383
         },
         {
           "word": "and",
-          "start": 12.847,
-          "end": 13.188
+          "start": 12.443,
+          "end": 12.784
         },
         {
           "word": "wear",
-          "start": 13.249,
-          "end": 13.59
+          "start": 12.844,
+          "end": 13.186
         },
         {
           "word": "forest",
-          "start": 13.65,
-          "end": 13.991
+          "start": 13.246,
+          "end": 13.587
         },
         {
           "word": "green.",
-          "start": 14.051,
-          "end": 14.393
+          "start": 13.647,
+          "end": 13.988
         }
       ]
     },
@@ -207,119 +202,119 @@
       "key": "sharp_line",
       "text": "Do: Ship Monday's project. Don't: Re-open old arguments.",
       "spokenText": "Whatever project you started earlier this week, push to finish it today. And if old disagreements bubble up, don't re-open them.",
-      "start": 14.453,
-      "end": 23.225,
+      "start": 14.049,
+      "end": 22.819,
       "isSharpLine": true,
       "words": [
         {
           "word": "Whatever",
-          "start": 14.453,
-          "end": 14.794
+          "start": 14.049,
+          "end": 14.39
         },
         {
           "word": "project",
-          "start": 14.854,
-          "end": 15.196
+          "start": 14.45,
+          "end": 14.791
         },
         {
           "word": "you",
-          "start": 15.256,
-          "end": 15.597
+          "start": 14.851,
+          "end": 15.193
         },
         {
           "word": "started",
-          "start": 15.657,
-          "end": 15.999
+          "start": 15.253,
+          "end": 15.594
         },
         {
           "word": "earlier",
-          "start": 16.059,
-          "end": 16.4
+          "start": 15.654,
+          "end": 15.995
         },
         {
           "word": "this",
-          "start": 16.46,
-          "end": 16.802
+          "start": 16.055,
+          "end": 16.397
         },
         {
           "word": "week,",
-          "start": 16.862,
-          "end": 17.203
+          "start": 16.457,
+          "end": 16.798
         },
         {
           "word": "push",
-          "start": 17.263,
-          "end": 17.605
+          "start": 16.858,
+          "end": 17.199
         },
         {
           "word": "to",
-          "start": 17.665,
-          "end": 18.006
+          "start": 17.26,
+          "end": 17.601
         },
         {
           "word": "finish",
-          "start": 18.066,
-          "end": 18.407
+          "start": 17.661,
+          "end": 18.002
         },
         {
           "word": "it",
-          "start": 18.468,
-          "end": 18.809
+          "start": 18.062,
+          "end": 18.404
         },
         {
           "word": "today.",
-          "start": 18.869,
-          "end": 19.21
+          "start": 18.464,
+          "end": 18.805
         },
         {
           "word": "And",
-          "start": 19.271,
-          "end": 19.612
+          "start": 18.865,
+          "end": 19.206
         },
         {
           "word": "if",
-          "start": 19.672,
-          "end": 20.013
+          "start": 19.267,
+          "end": 19.608
         },
         {
           "word": "old",
-          "start": 20.074,
-          "end": 20.415
+          "start": 19.668,
+          "end": 20.009
         },
         {
           "word": "disagreements",
-          "start": 20.475,
-          "end": 20.816
+          "start": 20.069,
+          "end": 20.411
         },
         {
           "word": "bubble",
-          "start": 20.876,
-          "end": 21.218
+          "start": 20.471,
+          "end": 20.812
         },
         {
           "word": "up,",
-          "start": 21.278,
-          "end": 21.619
+          "start": 20.872,
+          "end": 21.213
         },
         {
           "word": "don't",
-          "start": 21.679,
-          "end": 22.021
+          "start": 21.274,
+          "end": 21.615
         },
         {
           "word": "re",
-          "start": 22.081,
-          "end": 22.422
+          "start": 21.675,
+          "end": 22.016
         },
         {
           "word": "open",
-          "start": 22.482,
-          "end": 22.824
+          "start": 22.076,
+          "end": 22.417
         },
         {
           "word": "them.",
-          "start": 22.884,
-          "end": 23.225
+          "start": 22.478,
+          "end": 22.819
         }
       ]
     },
@@ -327,121 +322,121 @@
       "key": "compatibility_line",
       "text": "Best energy: Aries | Handle with care: Gemini",
       "spokenText": "You will vibe best with Aries energy today to amplify your momentum, but handle Gemini with extra care to avoid static.",
-      "start": 23.285,
-      "end": 31.656,
+      "start": 22.879,
+      "end": 31.248,
       "isSharpLine": false,
       "words": [
         {
           "word": "You",
-          "start": 23.285,
-          "end": 23.627
+          "start": 22.879,
+          "end": 23.22
         },
         {
           "word": "will",
-          "start": 23.687,
-          "end": 24.028
+          "start": 23.28,
+          "end": 23.622
         },
         {
           "word": "vibe",
-          "start": 24.088,
-          "end": 24.43
+          "start": 23.682,
+          "end": 24.023
         },
         {
           "word": "best",
-          "start": 24.49,
-          "end": 24.831
+          "start": 24.083,
+          "end": 24.424
         },
         {
           "word": "with",
-          "start": 24.891,
-          "end": 25.232
+          "start": 24.485,
+          "end": 24.826
         },
         {
           "word": "Aries",
-          "start": 25.293,
-          "end": 25.634
+          "start": 24.886,
+          "end": 25.227
         },
         {
           "word": "energy",
-          "start": 25.694,
-          "end": 26.035
+          "start": 25.287,
+          "end": 25.629
         },
         {
           "word": "today",
-          "start": 26.096,
-          "end": 26.437
+          "start": 25.689,
+          "end": 26.03
         },
         {
           "word": "to",
-          "start": 26.497,
-          "end": 26.838
+          "start": 26.09,
+          "end": 26.431
         },
         {
           "word": "amplify",
-          "start": 26.899,
-          "end": 27.24
+          "start": 26.492,
+          "end": 26.833
         },
         {
           "word": "your",
-          "start": 27.3,
-          "end": 27.641
+          "start": 26.893,
+          "end": 27.234
         },
         {
           "word": "momentum,",
-          "start": 27.702,
-          "end": 28.043
+          "start": 27.294,
+          "end": 27.636
         },
         {
           "word": "but",
-          "start": 28.103,
-          "end": 28.444
+          "start": 27.696,
+          "end": 28.037
         },
         {
           "word": "handle",
-          "start": 28.504,
-          "end": 28.846
+          "start": 28.097,
+          "end": 28.438
         },
         {
           "word": "Gemini",
-          "start": 28.906,
-          "end": 29.247
+          "start": 28.498,
+          "end": 28.84
         },
         {
           "word": "with",
-          "start": 29.307,
-          "end": 29.649
+          "start": 28.9,
+          "end": 29.241
         },
         {
           "word": "extra",
-          "start": 29.709,
-          "end": 30.05
+          "start": 29.301,
+          "end": 29.642
         },
         {
           "word": "care",
-          "start": 30.11,
-          "end": 30.452
+          "start": 29.703,
+          "end": 30.044
         },
         {
           "word": "to",
-          "start": 30.512,
-          "end": 30.853
+          "start": 30.104,
+          "end": 30.445
         },
         {
           "word": "avoid",
-          "start": 30.913,
-          "end": 31.255
+          "start": 30.505,
+          "end": 30.847
         },
         {
           "word": "static.",
-          "start": 31.315,
-          "end": 31.656
+          "start": 30.907,
+          "end": 31.248
         }
       ]
     }
   ],
   "backgroundVideoPath": "assets/loop_fire_002.mp4",
   "audioPath": "assets/sagittarius-audio.mp3",
-  "durationInSeconds": 31.656,
+  "durationInSeconds": 31.248,
   "bgDurationSeconds": 9.084,
   "dateText": "03 September 2026",
   "wordTimings": [
@@ -463,7 +458,7 @@
     {
       "word": "in",
       "start": 1.204,
-      "end": 1.546
+      "end": 1.545
     },
     {
       "word": "Taurus",
@@ -473,372 +468,367 @@
     {
       "word": "forms",
       "start": 2.007,
-      "end": 2.349
+      "end": 2.348
     },
     {
       "word": "a",
-      "start": 2.409,
+      "start": 2.408,
       "end": 2.75
     },
     {
       "word": "challenging",
       "start": 2.81,
-      "end": 3.152
+      "end": 3.151
     },
     {
       "word": "angle",
-      "start": 3.212,
-      "end": 3.553
+      "start": 3.211,
+      "end": 3.552
     },
     {
       "word": "to",
-      "start": 3.613,
+      "start": 3.612,
       "end": 3.954
     },
     {
       "word": "your",
-      "start": 4.015,
-      "end": 4.356
-    },
-    {
-      "word": "Sagittarius",
-      "start": 4.416,
-      "end": 4.757
+      "start": 4.014,
+      "end": 4.355
     },
     {
       "word": "sun.",
-      "start": 4.818,
-      "end": 5.159
+      "start": 4.415,
+      "end": 4.756
     },
     {
       "word": "This",
-      "start": 5.219,
-      "end": 5.56
+      "start": 4.817,
+      "end": 5.158
     },
     {
       "word": "steady",
-      "start": 5.621,
-      "end": 5.962
+      "start": 5.218,
+      "end": 5.559
     },
     {
       "word": "earth",
-      "start": 6.022,
-      "end": 6.363
+      "start": 5.619,
+      "end": 5.961
     },
     {
       "word": "placement",
-      "start": 6.424,
-      "end": 6.765
+      "start": 6.021,
+      "end": 6.362
     },
     {
       "word": "is",
-      "start": 6.825,
-      "end": 7.166
+      "start": 6.422,
+      "end": 6.763
     },
     {
       "word": "asking",
-      "start": 7.226,
-      "end": 7.568
+      "start": 6.824,
+      "end": 7.165
     },
     {
       "word": "you",
-      "start": 7.628,
-      "end": 7.969
+      "start": 7.225,
+      "end": 7.566
     },
     {
       "word": "to",
-      "start": 8.029,
-      "end": 8.371
+      "start": 7.626,
+      "end": 7.968
     },
     {
       "word": "ground",
-      "start": 8.431,
-      "end": 8.772
+      "start": 8.028,
+      "end": 8.369
     },
     {
       "word": "your",
-      "start": 8.832,
-      "end": 9.174
+      "start": 8.429,
+      "end": 8.77
     },
     {
       "word": "restless",
-      "start": 9.234,
-      "end": 9.575
+      "start": 8.831,
+      "end": 9.172
     },
     {
       "word": "energy",
-      "start": 9.635,
-      "end": 9.977
+      "start": 9.232,
+      "end": 9.573
     },
     {
       "word": "today.",
-      "start": 10.037,
-      "end": 10.378
+      "start": 9.633,
+      "end": 9.974
     },
     {
       "word": "Focus",
-      "start": 10.438,
-      "end": 10.78
+      "start": 10.035,
+      "end": 10.376
     },
     {
       "word": "on",
-      "start": 10.84,
-      "end": 11.181
+      "start": 10.436,
+      "end": 10.777
     },
     {
       "word": "clearing",
-      "start": 11.241,
-      "end": 11.582
+      "start": 10.837,
+      "end": 11.179
     },
     {
       "word": "your",
-      "start": 11.643,
-      "end": 11.984
+      "start": 11.239,
+      "end": 11.58
     },
     {
       "word": "open",
-      "start": 12.044,
-      "end": 12.385
+      "start": 11.64,
+      "end": 11.981
     },
     {
       "word": "tasks",
-      "start": 12.446,
-      "end": 12.787
+      "start": 12.042,
+      "end": 12.383
     },
     {
       "word": "and",
-      "start": 12.847,
-      "end": 13.188
+      "start": 12.443,
+      "end": 12.784
     },
     {
       "word": "wear",
-      "start": 13.249,
-      "end": 13.59
+      "start": 12.844,
+      "end": 13.186
     },
     {
       "word": "forest",
-      "start": 13.65,
-      "end": 13.991
+      "start": 13.246,
+      "end": 13.587
     },
     {
       "word": "green.",
-      "start": 14.051,
-      "end": 14.393
+      "start": 13.647,
+      "end": 13.988
     },
     {
       "word": "Whatever",
-      "start": 14.453,
-      "end": 14.794
+      "start": 14.049,
+      "end": 14.39
     },
     {
       "word": "project",
-      "start": 14.854,
-      "end": 15.196
+      "start": 14.45,
+      "end": 14.791
     },
     {
       "word": "you",
-      "start": 15.256,
-      "end": 15.597
+      "start": 14.851,
+      "end": 15.193
     },
     {
       "word": "started",
-      "start": 15.657,
-      "end": 15.999
+      "start": 15.253,
+      "end": 15.594
     },
     {
       "word": "earlier",
-      "start": 16.059,
-      "end": 16.4
+      "start": 15.654,
+      "end": 15.995
     },
     {
       "word": "this",
-      "start": 16.46,
-      "end": 16.802
+      "start": 16.055,
+      "end": 16.397
     },
     {
       "word": "week,",
-      "start": 16.862,
-      "end": 17.203
+      "start": 16.457,
+      "end": 16.798
     },
     {
       "word": "push",
-      "start": 17.263,
-      "end": 17.605
+      "start": 16.858,
+      "end": 17.199
     },
     {
       "word": "to",
-      "start": 17.665,
-      "end": 18.006
+      "start": 17.26,
+      "end": 17.601
     },
     {
       "word": "finish",
-      "start": 18.066,
-      "end": 18.407
+      "start": 17.661,
+      "end": 18.002
     },
     {
       "word": "it",
-      "start": 18.468,
-      "end": 18.809
+      "start": 18.062,
+      "end": 18.404
     },
     {
       "word": "today.",
-      "start": 18.869,
-      "end": 19.21
+      "start": 18.464,
+      "end": 18.805
     },
     {
       "word": "And",
-      "start": 19.271,
-      "end": 19.612
+      "start": 18.865,
+      "end": 19.206
     },
     {
       "word": "if",
-      "start": 19.672,
-      "end": 20.013
+      "start": 19.267,
+      "end": 19.608
     },
     {
       "word": "old",
-      "start": 20.074,
-      "end": 20.415
+      "start": 19.668,
+      "end": 20.009
     },
     {
       "word": "disagreements",
-      "start": 20.475,
-      "end": 20.816
+      "start": 20.069,
+      "end": 20.411
     },
     {
       "word": "bubble",
-      "start": 20.876,
-      "end": 21.218
+      "start": 20.471,
+      "end": 20.812
     },
     {
       "word": "up,",
-      "start": 21.278,
-      "end": 21.619
+      "start": 20.872,
+      "end": 21.213
     },
     {
       "word": "don't",
-      "start": 21.679,
-      "end": 22.021
+      "start": 21.274,
+      "end": 21.615
     },
     {
       "word": "re",
-      "start": 22.081,
-      "end": 22.422
+      "start": 21.675,
+      "end": 22.016
     },
     {
       "word": "open",
-      "start": 22.482,
-      "end": 22.824
+      "start": 22.076,
+      "end": 22.417
     },
     {
       "word": "them.",
-      "start": 22.884,
-      "end": 23.225
+      "start": 22.478,
+      "end": 22.819
     },
     {
       "word": "You",
-      "start": 23.285,
-      "end": 23.627
+      "start": 22.879,
+      "end": 23.22
     },
     {
       "word": "will",
-      "start": 23.687,
-      "end": 24.028
+      "start": 23.28,
+      "end": 23.622
     },
     {
       "word": "vibe",
-      "start": 24.088,
-      "end": 24.43
+      "start": 23.682,
+      "end": 24.023
     },
     {
       "word": "best",
-      "start": 24.49,
-      "end": 24.831
+      "start": 24.083,
+      "end": 24.424
     },
     {
       "word": "with",
-      "start": 24.891,
-      "end": 25.232
+      "start": 24.485,
+      "end": 24.826
     },
     {
       "word": "Aries",
-      "start": 25.293,
-      "end": 25.634
+      "start": 24.886,
+      "end": 25.227
     },
     {
       "word": "energy",
-      "start": 25.694,
-      "end": 26.035
+      "start": 25.287,
+      "end": 25.629
     },
     {
       "word": "today",
-      "start": 26.096,
-      "end": 26.437
+      "start": 25.689,
+      "end": 26.03
     },
     {
       "word": "to",
-      "start": 26.497,
-      "end": 26.838
+      "start": 26.09,
+      "end": 26.431
     },
     {
       "word": "amplify",
-      "start": 26.899,
-      "end": 27.24
+      "start": 26.492,
+      "end": 26.833
     },
     {
       "word": "your",
-      "start": 27.3,
-      "end": 27.641
+      "start": 26.893,
+      "end": 27.234
     },
     {
       "word": "momentum,",
-      "start": 27.702,
-      "end": 28.043
+      "start": 27.294,
+      "end": 27.636
     },
     {
       "word": "but",
-      "start": 28.103,
-      "end": 28.444
+      "start": 27.696,
+      "end": 28.037
     },
     {
       "word": "handle",
-      "start": 28.504,
-      "end": 28.846
+      "start": 28.097,
+      "end": 28.438
     },
     {
       "word": "Gemini",
-      "start": 28.906,
-      "end": 29.247
+      "start": 28.498,
+      "end": 28.84
     },
     {
       "word": "with",
-      "start": 29.307,
-      "end": 29.649
+      "start": 28.9,
+      "end": 29.241
     },
     {
       "word": "extra",
-      "start": 29.709,
-      "end": 30.05
+      "start": 29.301,
+      "end": 29.642
     },
     {
       "word": "care",
-      "start": 30.11,
-      "end": 30.452
+      "start": 29.703,
+      "end": 30.044
     },
     {
       "word": "to",
-      "start": 30.512,
-      "end": 30.853
+      "start": 30.104,
+      "end": 30.445
     },
     {
       "word": "avoid",
-      "start": 30.913,
-      "end": 31.255
+      "start": 30.505,
+      "end": 30.847
     },
     {
       "word": "static.",
-      "start": 31.315,
-      "end": 31.656
+      "start": 30.907,
+      "end": 31.248
     }
   ]
 }

@@ -99,19 +99,35 @@ def main():
     print(f"Captured {len(word_timings)} word timings for caption sync")
 
     import re
+    def norm(w):
+        return re.sub(r'[^a-z0-9]', '', w.lower())
+
+    norm_timings = [norm(wt.get("word", "")) for wt in word_timings]
+
     card_blocks = []
-    w_idx = 0
+    w_cursor = 0
     prev_end = 0.0
+
     for key in beat_keys:
         card_text = horoscope_data.get(f"card_{key}") or horoscope_data.get(key) or ""
         spoken_val = horoscope_data.get(f"spoken_{key}") or horoscope_data.get(key) or ""
         if not card_text:
             continue
 
-        spoken_words = re.sub(r'[—–-]+', ' ', spoken_val).split()
+        spoken_words = [norm(w) for w in re.sub(r'[—–-]+', ' ', spoken_val).split() if norm(w)]
         count = len(spoken_words)
-        block_words = word_timings[w_idx : min(w_idx + count, len(word_timings))]
-        w_idx += count
+
+        start_idx = w_cursor
+        if spoken_words:
+            first_word = spoken_words[0]
+            for search_i in range(w_cursor, min(w_cursor + 15, len(norm_timings))):
+                if norm_timings[search_i] == first_word:
+                    start_idx = search_i
+                    break
+
+        end_idx = min(start_idx + count, len(word_timings))
+        block_words = word_timings[start_idx : end_idx]
+        w_cursor = max(end_idx, start_idx + 1)
 
         start = block_words[0]["start"] if block_words else prev_end
         end = block_words[-1]["end"] if block_words else start + 2.0
