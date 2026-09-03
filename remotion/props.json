@@ -1,420 +1,500 @@
 {
   "signName": "Sagittarius",
   "captionText": "Under a waning Taurus moon, the fire in you meets earth that refuses to hurry. What already has momentum wants your attention now, not the next spark. #sagittarius #dailyhoroscope #moonintaurus",
-  "spokenText": "Today's Moon sits in Taurus, waning. This steady earth placement grounds your restless fire energy today. Finish one open project before starting anything new, Sagittarius. Aries energy aligns smoothly with you today. Gemini's pace might create static.",
+  "spokenText": "Taurus Waning Moon tests your Sagittarius fire today. Steady earth grounds your pace. Power focus: finish open tasks | Color: forest green. Do: Ship the project you started Monday. Don't: Re-open resolved arguments. Best energy: Aries (trine alignment). Handle with care: Gemini (opposition static).",
   "cardBlocks": [
     {
       "key": "hook",
-      "text": "Today's Moon sits in Taurus, waning.",
+      "text": "Taurus Waning Moon tests your Sagittarius fire today.",
       "start": 0.0,
-      "end": 2.358,
+      "end": 3.159,
       "isSharpLine": false,
       "words": [
         {
-          "word": "Today's",
+          "word": "Taurus",
           "start": 0.0,
-          "end": 0.343
+          "end": 0.342
+        },
+        {
+          "word": "Waning",
+          "start": 0.402,
+          "end": 0.744
         },
         {
           "word": "Moon",
-          "start": 0.403,
-          "end": 0.746
+          "start": 0.805,
+          "end": 1.147
         },
         {
-          "word": "sits",
-          "start": 0.806,
-          "end": 1.149
+          "word": "tests",
+          "start": 1.207,
+          "end": 1.549
         },
         {
-          "word": "in",
-          "start": 1.209,
-          "end": 1.552
+          "word": "your",
+          "start": 1.61,
+          "end": 1.952
         },
         {
-          "word": "Taurus,",
-          "start": 1.613,
-          "end": 1.955
+          "word": "Sagittarius",
+          "start": 2.012,
+          "end": 2.354
         },
         {
-          "word": "waning.",
-          "start": 2.016,
-          "end": 2.358
+          "word": "fire",
+          "start": 2.414,
+          "end": 2.756
+        },
+        {
+          "word": "today.",
+          "start": 2.817,
+          "end": 3.159
         }
       ]
     },
     {
       "key": "context",
-      "text": "This steady earth placement grounds your restless fire energy today.",
-      "start": 2.419,
-      "end": 6.39,
+      "text": "Steady earth grounds your pace. Power focus: finish open tasks | Color: forest green.",
+      "start": 3.219,
+      "end": 8.793,
       "isSharpLine": false,
       "words": [
         {
-          "word": "This",
-          "start": 2.419,
-          "end": 2.762
-        },
-        {
-          "word": "steady",
-          "start": 2.822,
-          "end": 3.165
+          "word": "Steady",
+          "start": 3.219,
+          "end": 3.561
         },
         {
           "word": "earth",
-          "start": 3.225,
-          "end": 3.568
-        },
-        {
-          "word": "placement",
-          "start": 3.628,
-          "end": 3.971
+          "start": 3.622,
+          "end": 3.964
         },
         {
           "word": "grounds",
-          "start": 4.031,
-          "end": 4.374
+          "start": 4.024,
+          "end": 4.366
         },
         {
           "word": "your",
-          "start": 4.435,
-          "end": 4.777
+          "start": 4.426,
+          "end": 4.769
         },
         {
-          "word": "restless",
-          "start": 4.838,
-          "end": 5.18
+          "word": "pace.",
+          "start": 4.829,
+          "end": 5.171
         },
         {
-          "word": "fire",
-          "start": 5.241,
-          "end": 5.584
+          "word": "Power",
+          "start": 5.231,
+          "end": 5.573
         },
         {
-          "word": "energy",
-          "start": 5.644,
-          "end": 5.987
+          "word": "focus:",
+          "start": 5.634,
+          "end": 5.976
         },
         {
-          "word": "today.",
-          "start": 6.047,
-          "end": 6.39
+          "word": "finish",
+          "start": 6.036,
+          "end": 6.378
+        },
+        {
+          "word": "open",
+          "start": 6.439,
+          "end": 6.781
+        },
+        {
+          "word": "tasks",
+          "start": 6.841,
+          "end": 7.183
+        },
+        {
+          "word": "|",
+          "start": 7.243,
+          "end": 7.585
+        },
+        {
+          "word": "Color:",
+          "start": 7.646,
+          "end": 7.988
+        },
+        {
+          "word": "forest",
+          "start": 8.048,
+          "end": 8.39
+        },
+        {
+          "word": "green.",
+          "start": 8.451,
+          "end": 8.793
         }
       ]
     },
     {
       "key": "sharp_line",
-      "text": "Finish one open project before starting anything new, Sagittarius.",
-      "start": 6.45,
-      "end": 10.018,
+      "text": "Do: Ship the project you started Monday. Don't: Re-open resolved arguments.",
+      "start": 8.853,
+      "end": 13.622,
       "isSharpLine": true,
       "words": [
         {
-          "word": "Finish",
-          "start": 6.45,
-          "end": 6.793
+          "word": "Do:",
+          "start": 8.853,
+          "end": 9.195
         },
         {
-          "word": "one",
-          "start": 6.854,
-          "end": 7.196
+          "word": "Ship",
+          "start": 9.255,
+          "end": 9.597
         },
         {
-          "word": "open",
-          "start": 7.257,
-          "end": 7.599
+          "word": "the",
+          "start": 9.658,
+          "end": 10.0
         },
         {
           "word": "project",
-          "start": 7.66,
-          "end": 8.002
+          "start": 10.06,
+          "end": 10.402
         },
         {
-          "word": "before",
-          "start": 8.063,
-          "end": 8.406
+          "word": "you",
+          "start": 10.463,
+          "end": 10.805
         },
         {
-          "word": "starting",
-          "start": 8.466,
-          "end": 8.809
+          "word": "started",
+          "start": 10.865,
+          "end": 11.207
         },
         {
-          "word": "anything",
-          "start": 8.869,
-          "end": 9.212
+          "word": "Monday.",
+          "start": 11.267,
+          "end": 11.609
         },
         {
-          "word": "new,",
-          "start": 9.272,
-          "end": 9.615
+          "word": "Don't:",
+          "start": 11.67,
+          "end": 12.012
         },
         {
-          "word": "Sagittarius.",
-          "start": 9.676,
-          "end": 10.018
+          "word": "Re",
+          "start": 12.072,
+          "end": 12.414
+        },
+        {
+          "word": "open",
+          "start": 12.475,
+          "end": 12.817
+        },
+        {
+          "word": "resolved",
+          "start": 12.877,
+          "end": 13.219
+        },
+        {
+          "word": "arguments.",
+          "start": 13.279,
+          "end": 13.622
         }
       ]
     },
     {
       "key": "compatibility_line",
-      "text": "Aries energy aligns smoothly with you today. Gemini's pace might create static.",
-      "start": 10.079,
-      "end": 14.856,
+      "text": "Best energy: Aries (trine alignment). Handle with care: Gemini (opposition static).",
+      "start": 13.682,
+      "end": 18.048,
       "isSharpLine": false,
       "words": [
         {
+          "word": "Best",
+          "start": 13.682,
+          "end": 14.024
+        },
+        {
+          "word": "energy:",
+          "start": 14.084,
+          "end": 14.426
+        },
+        {
           "word": "Aries",
-          "start": 10.079,
-          "end": 10.421
+          "start": 14.487,
+          "end": 14.829
         },
         {
-          "word": "energy",
-          "start": 10.482,
-          "end": 10.825
+          "word": "(trine",
+          "start": 14.889,
+          "end": 15.231
         },
         {
-          "word": "aligns",
-          "start": 10.885,
-          "end": 11.228
+          "word": "alignment).",
+          "start": 15.292,
+          "end": 15.634
         },
         {
-          "word": "smoothly",
-          "start": 11.288,
-          "end": 11.631
+          "word": "Handle",
+          "start": 15.694,
+          "end": 16.036
         },
         {
           "word": "with",
-          "start": 11.691,
-          "end": 12.034
+          "start": 16.096,
+          "end": 16.438
         },
         {
-          "word": "you",
-          "start": 12.094,
-          "end": 12.437
+          "word": "care:",
+          "start": 16.499,
+          "end": 16.841
         },
         {
-          "word": "today.",
-          "start": 12.498,
-          "end": 12.84
+          "word": "Gemini",
+          "start": 16.901,
+          "end": 17.243
         },
         {
-          "word": "Gemini's",
-          "start": 12.901,
-          "end": 13.243
+          "word": "(opposition",
+          "start": 17.304,
+          "end": 17.646
         },
         {
-          "word": "pace",
-          "start": 13.304,
-          "end": 13.647
-        },
-        {
-          "word": "might",
-          "start": 13.707,
-          "end": 14.05
-        },
-        {
-          "word": "create",
-          "start": 14.11,
-          "end": 14.453
-        },
-        {
-          "word": "static.",
-          "start": 14.513,
-          "end": 14.856
+          "word": "static).",
+          "start": 17.706,
+          "end": 18.048
         }
       ]
     }
   ],
   "backgroundVideoPath": "assets/loop_fire_002.mp4",
   "audioPath": "assets/sagittarius-audio.mp3",
-  "durationInSeconds": 14.856,
+  "durationInSeconds": 18.048,
   "bgDurationSeconds": 9.084,
   "dateText": "03 September 2026",
   "wordTimings": [
     {
-      "word": "Today's",
+      "word": "Taurus",
       "start": 0.0,
-      "end": 0.343
+      "end": 0.342
+    },
+    {
+      "word": "Waning",
+      "start": 0.402,
+      "end": 0.744
     },
     {
       "word": "Moon",
-      "start": 0.403,
-      "end": 0.746
+      "start": 0.805,
+      "end": 1.147
     },
     {
-      "word": "sits",
-      "start": 0.806,
-      "end": 1.149
-    },
-    {
-      "word": "in",
-      "start": 1.209,
-      "end": 1.552
-    },
-    {
-      "word": "Taurus,",
-      "start": 1.613,
-      "end": 1.955
-    },
-    {
-      "word": "waning.",
-      "start": 2.016,
-      "end": 2.358
-    },
-    {
-      "word": "This",
-      "start": 2.419,
-      "end": 2.762
-    },
-    {
-      "word": "steady",
-      "start": 2.822,
-      "end": 3.165
-    },
-    {
-      "word": "earth",
-      "start": 3.225,
-      "end": 3.568
-    },
-    {
-      "word": "placement",
-      "start": 3.628,
-      "end": 3.971
-    },
-    {
-      "word": "grounds",
-      "start": 4.031,
-      "end": 4.374
+      "word": "tests",
+      "start": 1.207,
+      "end": 1.549
     },
     {
       "word": "your",
-      "start": 4.435,
-      "end": 4.777
+      "start": 1.61,
+      "end": 1.952
     },
     {
-      "word": "restless",
-      "start": 4.838,
-      "end": 5.18
+      "word": "Sagittarius",
+      "start": 2.012,
+      "end": 2.354
     },
     {
       "word": "fire",
-      "start": 5.241,
-      "end": 5.584
-    },
-    {
-      "word": "energy",
-      "start": 5.644,
-      "end": 5.987
+      "start": 2.414,
+      "end": 2.756
     },
     {
       "word": "today.",
-      "start": 6.047,
-      "end": 6.39
+      "start": 2.817,
+      "end": 3.159
     },
     {
-      "word": "Finish",
-      "start": 6.45,
-      "end": 6.793
+      "word": "Steady",
+      "start": 3.219,
+      "end": 3.561
     },
     {
-      "word": "one",
-      "start": 6.854,
-      "end": 7.196
+      "word": "earth",
+      "start": 3.622,
+      "end": 3.964
+    },
+    {
+      "word": "grounds",
+      "start": 4.024,
+      "end": 4.366
+    },
+    {
+      "word": "your",
+      "start": 4.426,
+      "end": 4.769
+    },
+    {
+      "word": "pace.",
+      "start": 4.829,
+      "end": 5.171
+    },
+    {
+      "word": "Power",
+      "start": 5.231,
+      "end": 5.573
+    },
+    {
+      "word": "focus:",
+      "start": 5.634,
+      "end": 5.976
+    },
+    {
+      "word": "finish",
+      "start": 6.036,
+      "end": 6.378
     },
     {
       "word": "open",
-      "start": 7.257,
-      "end": 7.599
+      "start": 6.439,
+      "end": 6.781
+    },
+    {
+      "word": "tasks",
+      "start": 6.841,
+      "end": 7.183
+    },
+    {
+      "word": "|",
+      "start": 7.243,
+      "end": 7.585
+    },
+    {
+      "word": "Color:",
+      "start": 7.646,
+      "end": 7.988
+    },
+    {
+      "word": "forest",
+      "start": 8.048,
+      "end": 8.39
+    },
+    {
+      "word": "green.",
+      "start": 8.451,
+      "end": 8.793
+    },
+    {
+      "word": "Do:",
+      "start": 8.853,
+      "end": 9.195
+    },
+    {
+      "word": "Ship",
+      "start": 9.255,
+      "end": 9.597
+    },
+    {
+      "word": "the",
+      "start": 9.658,
+      "end": 10.0
     },
     {
       "word": "project",
-      "start": 7.66,
-      "end": 8.002
-    },
-    {
-      "word": "before",
-      "start": 8.063,
-      "end": 8.406
-    },
-    {
-      "word": "starting",
-      "start": 8.466,
-      "end": 8.809
-    },
-    {
-      "word": "anything",
-      "start": 8.869,
-      "end": 9.212
-    },
-    {
-      "word": "new,",
-      "start": 9.272,
-      "end": 9.615
-    },
-    {
-      "word": "Sagittarius.",
-      "start": 9.676,
-      "end": 10.018
-    },
-    {
-      "word": "Aries",
-      "start": 10.079,
-      "end": 10.421
-    },
-    {
-      "word": "energy",
-      "start": 10.482,
-      "end": 10.825
-    },
-    {
-      "word": "aligns",
-      "start": 10.885,
-      "end": 11.228
-    },
-    {
-      "word": "smoothly",
-      "start": 11.288,
-      "end": 11.631
-    },
-    {
-      "word": "with",
-      "start": 11.691,
-      "end": 12.034
+      "start": 10.06,
+      "end": 10.402
     },
     {
       "word": "you",
-      "start": 12.094,
-      "end": 12.437
+      "start": 10.463,
+      "end": 10.805
     },
     {
-      "word": "today.",
-      "start": 12.498,
-      "end": 12.84
+      "word": "started",
+      "start": 10.865,
+      "end": 11.207
     },
     {
-      "word": "Gemini's",
-      "start": 12.901,
-      "end": 13.243
+      "word": "Monday.",
+      "start": 11.267,
+      "end": 11.609
     },
     {
-      "word": "pace",
-      "start": 13.304,
-      "end": 13.647
+      "word": "Don't:",
+      "start": 11.67,
+      "end": 12.012
     },
     {
-      "word": "might",
-      "start": 13.707,
-      "end": 14.05
+      "word": "Re",
+      "start": 12.072,
+      "end": 12.414
     },
     {
-      "word": "create",
-      "start": 14.11,
-      "end": 14.453
+      "word": "open",
+      "start": 12.475,
+      "end": 12.817
     },
     {
-      "word": "static.",
-      "start": 14.513,
-      "end": 14.856
+      "word": "resolved",
+      "start": 12.877,
+      "end": 13.219
+    },
+    {
+      "word": "arguments.",
+      "start": 13.279,
+      "end": 13.622
+    },
+    {
+      "word": "Best",
+      "start": 13.682,
+      "end": 14.024
+    },
+    {
+      "word": "energy:",
+      "start": 14.084,
+      "end": 14.426
+    },
+    {
+      "word": "Aries",
+      "start": 14.487,
+      "end": 14.829
+    },
+    {
+      "word": "(trine",
+      "start": 14.889,
+      "end": 15.231
+    },
+    {
+      "word": "alignment).",
+      "start": 15.292,
+      "end": 15.634
+    },
+    {
+      "word": "Handle",
+      "start": 15.694,
+      "end": 16.036
+    },
+    {
+      "word": "with",
+      "start": 16.096,
+      "end": 16.438
+    },
+    {
+      "word": "care:",
+      "start": 16.499,
+      "end": 16.841
+    },
+    {
+      "word": "Gemini",
+      "start": 16.901,
+      "end": 17.243
+    },
+    {
+      "word": "(opposition",
+      "start": 17.304,
+      "end": 17.646
+    },
+    {
+      "word": "static).",
+      "start": 17.706,
+      "end": 18.048
     }
   ]
 }

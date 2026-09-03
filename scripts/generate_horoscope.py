@@ -29,30 +29,21 @@ MIN_CARD_WORDS = 15
 MAX_CARD_WORDS = 45
 MAX_RETRIES = 3
 
-SYSTEM_PROMPT = """You write daily horoscope cards for a data-driven astrology brand aimed at \
-Gen Z. Voice: blunt, specific, direct, a little dry — like a smart friend giving practical guidance, \
-not a fortune cookie. Never use emojis, exclamation points, or vague filler like "reflection and letting go", \
-"feeling emotional adjustments", or "great things are coming". Never manufacture urgency (no "before it's too late", \
-no specific clock times, no "this window closes") — the audience finds that manipulative and it costs trust. \
+SYSTEM_PROMPT = """You write daily horoscope cards for a data-driven Gen-Z astrology brand. \
+Voice: direct, punchy, energetic, smart-friend tone. Never sound like a fortune cookie or corporate lecture. \
+Never use emojis, exclamation points, or vague filler like "reflection and letting go", "reassess your priorities", \
+"feeling emotional adjustments", or "great things are coming". Never manufacture clock urgency ("before it's too late"). \
 Speak directly to the reader as "you".
 
-You will be given today's REAL astronomical transit data and a REAL computed compatibility \
-result for the target sign below. Use only what's given — do not invent any transit, aspect, or planetary event \
-beyond it.
+You will be given today's REAL astronomical transit data and REAL whole-sign aspect compatibility for the target sign. \
+Use only what's given — do not invent any transit, aspect, or planetary event beyond it.
 
 Output a JSON object with exactly these fields:
-- "hook" (5-10 words): states today's real transit fact plainly. Not mystical, just true.
-- "context" (8-15 words): one sentence on what that placement means specifically for the target sign's energy today.
-- "sharp_line" (6-14 words): THE ACTIONABLE TAKEAWAY. A sharp, concrete, actionable directive or practical advice \
-for the target sign today — tell the reader specifically what practical move to make or what trap to avoid. Must be \
-grounded and specific, never vague emotional fluff.
-- "compatibility_line" (10-20 words): states how the target sign interacts with the given harmonious_pick sign \
-(which aligns smoothly with the target sign) and friction_pick sign (which creates tension/static for the target sign). \
-Must speak directly from the target sign's perspective (e.g., "Aries energy aligns smoothly with you today, while Gemini's pace creates static.").
-- "caption" (40-70 words): the longer, more atmospheric flavor text for the post caption — this \
-is where mystical, evocative language belongs (it does not belong in the card lines above). \
-End it with 3-5 lowercase hashtags relevant to the sign and today's transit, space-separated, \
-as part of this same string.
+- "hook" (5-10 words): state today's real astronomical transit in curious, dynamic language. Anchor to the real planet/moon sign/phase.
+- "context" (8-15 words): explain what the transit means for the target sign's energy today + include a concrete power focus or power color to wear/harness today (e.g., "Power focus: finish open tasks | Color: forest green").
+- "sharp_line" (6-14 words): THE ACTIONABLE TAKEAWAY (The Quote Card). State a concrete, positive DO and DON'T for the target sign today (e.g., "Do: Ship the project you started Monday. Don't: Re-open resolved arguments."). Must be specific and actionable, never vague or preachy.
+- "compatibility_line" (10-20 words): a punchy, scannable compatibility guide using the given harmonious_pick and friction_pick signs (e.g., "Best energy: Aries (trine alignment). Handle with care: Gemini (opposition static).").
+- "caption" (40-70 words): evocative flavor text for the post caption. End it with 3-5 lowercase hashtags relevant to the sign and today's transit, space-separated, as part of this same string.
 
 Output ONLY the JSON object. No markdown fences, no preamble."""
 
@@ -104,10 +95,10 @@ def call_openai(sign: str, element: str, transit_context: str) -> dict:
 def mock_response(sign: str, element: str, transit_context: str) -> dict:
     # Used only with --dry-run, to exercise validation/retry logic offline.
     return {
-        "hook": f"Today's Moon sits in Taurus, waning.",
-        "context": f"This steady earth placement grounds your restless {element} energy today.",
-        "sharp_line": f"Finish one open project before starting anything new, {sign}.",
-        "compatibility_line": "Aries energy aligns smoothly with you today. Gemini's pace might create static.",
+        "hook": f"Taurus Waning Moon tests your {sign} fire today.",
+        "context": "Steady earth grounds your pace. Power focus: finish open tasks | Color: forest green.",
+        "sharp_line": "Do: Ship the project you started Monday. Don't: Re-open resolved arguments.",
+        "compatibility_line": "Best energy: Aries (trine alignment). Handle with care: Gemini (opposition static).",
         "caption": (
             f"Under a waning Taurus moon, the {element} in you meets earth that refuses to "
             f"hurry. What already has momentum wants your attention now, not the next spark. "
