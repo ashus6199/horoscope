@@ -48,7 +48,7 @@ async def synthesize(text: str, voice: str, rate: str, pitch: str, output_path: 
     # aren't glued together (e.g. 'beauty—a' -> 'beauty a')
     cleaned_text = re.sub(r'[—–-]+', ' ', text)
 
-    communicate = edge_tts.Communicate(cleaned_text, voice, rate=rate, pitch=pitch)
+    communicate = edge_tts.Communicate(cleaned_text, voice, rate=rate, pitch=pitch, boundary="WordBoundary")
     word_timings: list[dict] = []
 
     with open(output_path, "wb") as f:
