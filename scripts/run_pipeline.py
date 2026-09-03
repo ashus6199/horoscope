@@ -69,11 +69,16 @@ def main():
     horoscope_output_json = run_command(horoscope_cmd, cwd=repo_root)
     horoscope_data = json.loads(horoscope_output_json)
     
-    field_keys = ["hook", "context", "sharp_line", "compatibility_line"]
-    card_parts = [horoscope_data[k] for k in field_keys if k in horoscope_data]
-    spoken_text = " ".join(card_parts)
+    beat_keys = ["hook", "context", "sharp_line", "compatibility_line"]
+    spoken_parts = []
+    for k in beat_keys:
+        val = horoscope_data.get(f"spoken_{k}") or horoscope_data.get(k) or ""
+        if val:
+            spoken_parts.append(val)
+
+    spoken_text = " ".join(spoken_parts)
     post_caption = horoscope_data.get("caption", spoken_text)
-    print(f"Spoken Text ({horoscope_data.get('word_count')} words): {spoken_text}")
+    print(f"Spoken Script ({horoscope_data.get('word_count')} words):\n{spoken_text}")
     print(f"Post Caption: {post_caption}")
 
     print(f"\n=== Step 3: Generating TTS Audio ===")
@@ -96,20 +101,26 @@ def main():
     import re
     card_blocks = []
     w_idx = 0
-    for key in field_keys:
-        val = horoscope_data.get(key, "")
-        if not val:
+    prev_end = 0.0
+    for key in beat_keys:
+        card_text = horoscope_data.get(f"card_{key}") or horoscope_data.get(key) or ""
+        spoken_val = horoscope_data.get(f"spoken_{key}") or horoscope_data.get(key) or ""
+        if not card_text:
             continue
-        words_in_field = re.sub(r'[—–-]+', ' ', val).split()
-        count = len(words_in_field)
+
+        spoken_words = re.sub(r'[—–-]+', ' ', spoken_val).split()
+        count = len(spoken_words)
         block_words = word_timings[w_idx : min(w_idx + count, len(word_timings))]
         w_idx += count
 
-        start = block_words[0]["start"] if block_words else 0.0
-        end = block_words[-1]["end"] if block_words else start + 1.0
+        start = block_words[0]["start"] if block_words else prev_end
+        end = block_words[-1]["end"] if block_words else start + 2.0
+        prev_end = end
+
         card_blocks.append({
             "key": key,
-            "text": val,
+            "text": card_text,
+            "spokenText": spoken_val,
             "start": start,
             "end": end,
             "isSharpLine": (key == "sharp_line"),

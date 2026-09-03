@@ -20,6 +20,7 @@ const wordTimingSchema = z.object({ word: z.string(), start: z.number(), end: z.
 const cardBlockSchema = z.object({
   key: z.string(),
   text: z.string(),
+  spokenText: z.string().optional(),
   start: z.number(),
   end: z.number(),
   isSharpLine: z.boolean().default(false),
@@ -82,6 +83,9 @@ export const HoroscopeVideo: React.FC<Props> = ({
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
+  // Ensure we always have 4 card slots
+  const slots = Array.from({ length: 4 }).map((_, idx) => cardBlocks[idx] || null);
+
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
       {/* Background Seamless Loop */}
@@ -98,7 +102,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
       <AbsoluteFill
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.92) 88%, #000 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0) 25%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.92) 85%, #000 100%)",
         }}
       />
 
@@ -120,7 +124,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
         </div>
       </AbsoluteFill>
 
-      {/* Progressive Disclosure Cumulative Card Stack */}
+      {/* Progressive Disclosure Card Stack with Skeleton Loaders */}
       {!isAudioFinished && (
         <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", paddingTop: 260, paddingBottom: 200, paddingLeft: 60, paddingRight: 60 }}>
           <div
@@ -133,78 +137,121 @@ export const HoroscopeVideo: React.FC<Props> = ({
               gap: 20,
             }}
           >
-            {cardBlocks.map((block, idx) => {
+            {slots.map((block, idx) => {
+              if (!block) return null;
+
               const startFrame = Math.round(block.start * fps);
-              if (frame < startFrame) return null; // Not yet revealed
+              const isRevealed = frame >= startFrame;
 
-              const blockLocalFrame = frame - startFrame;
-              // Smooth 8-frame fade & entrance slide
-              const opacity = interpolate(blockLocalFrame, [0, 8], [0, 1], { extrapolateRight: "clamp" });
-              const translateY = interpolate(blockLocalFrame, [0, 8], [12, 0], { extrapolateRight: "clamp" });
+              if (isRevealed) {
+                const blockLocalFrame = frame - startFrame;
+                // Smooth 8-frame fade & entrance slide
+                const opacity = interpolate(blockLocalFrame, [0, 8], [0, 1], { extrapolateRight: "clamp" });
+                const translateY = interpolate(blockLocalFrame, [0, 8], [12, 0], { extrapolateRight: "clamp" });
 
-              if (block.isSharpLine) {
-                // Quote Card treatment for sharp_line
+                if (block.isSharpLine) {
+                  // Quote Card treatment for sharp_line
+                  return (
+                    <div
+                      key={block.key || idx}
+                      style={{
+                        opacity,
+                        transform: `translateY(${translateY}px)`,
+                        background: "rgba(255, 114, 0, 0.16)",
+                        backdropFilter: "blur(16px)",
+                        borderLeft: `6px solid ${ORANGE}`,
+                        borderTop: "1px solid rgba(255, 114, 0, 0.3)",
+                        borderRight: "1px solid rgba(255, 114, 0, 0.3)",
+                        borderBottom: "1px solid rgba(255, 114, 0, 0.3)",
+                        borderRadius: "0 18px 18px 0",
+                        padding: "24px 30px",
+                        boxShadow: "0 12px 36px rgba(0,0,0,0.6)",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontFamily,
+                          fontSize: 36,
+                          fontWeight: 900,
+                          lineHeight: 1.35,
+                          color: WHITE,
+                          letterSpacing: "-0.01em",
+                          textShadow: "0 2px 10px rgba(0,0,0,0.9)",
+                        }}
+                      >
+                        "{block.text}"
+                      </div>
+                    </div>
+                  );
+                }
+
+                // Standard Unlocked Progressive Card Block (Hook, Context, Compatibility)
                 return (
                   <div
                     key={block.key || idx}
                     style={{
                       opacity,
                       transform: `translateY(${translateY}px)`,
-                      background: "rgba(255, 114, 0, 0.16)",
-                      backdropFilter: "blur(16px)",
-                      borderLeft: `6px solid ${ORANGE}`,
-                      borderTop: "1px solid rgba(255, 114, 0, 0.3)",
-                      borderRight: "1px solid rgba(255, 114, 0, 0.3)",
-                      borderBottom: "1px solid rgba(255, 114, 0, 0.3)",
-                      borderRadius: "0 18px 18px 0",
-                      padding: "24px 30px",
-                      boxShadow: "0 12px 36px rgba(0,0,0,0.6)",
+                      background: "rgba(0, 0, 0, 0.74)",
+                      backdropFilter: "blur(14px)",
+                      border: "1px solid rgba(255, 255, 255, 0.14)",
+                      borderRadius: 16,
+                      padding: "20px 28px",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
                     }}
                   >
                     <div
                       style={{
                         fontFamily,
-                        fontSize: 38,
-                        fontWeight: 900,
-                        lineHeight: 1.35,
-                        color: WHITE,
-                        letterSpacing: "-0.01em",
-                        textShadow: "0 2px 10px rgba(0,0,0,0.9)",
+                        fontSize: 32,
+                        fontWeight: 600,
+                        lineHeight: 1.4,
+                        color: block.key === "hook" ? LIGHT_GOLD : WHITE,
+                        opacity: block.key === "compatibility_line" ? 0.9 : 1,
                       }}
                     >
-                      "{block.text}"
+                      {block.text}
                     </div>
                   </div>
                 );
               }
 
-              // Standard Progressive Card Block (Hook, Context, Compatibility)
+              // Skeleton Loader Placeholder Card for unrevealed slots
+              const pulseOpacity = 0.22 + 0.14 * Math.sin((frame / 10) + idx * 1.5);
+
               return (
                 <div
-                  key={block.key || idx}
+                  key={`skeleton-${idx}`}
                   style={{
-                    opacity,
-                    transform: `translateY(${translateY}px)`,
-                    background: "rgba(0, 0, 0, 0.72)",
-                    backdropFilter: "blur(14px)",
-                    border: "1px solid rgba(255, 255, 255, 0.12)",
+                    opacity: 0.85,
+                    background: "rgba(0, 0, 0, 0.42)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(255, 255, 255, 0.08)",
                     borderRadius: 16,
-                    padding: "20px 28px",
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
+                    padding: "22px 28px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 12,
+                    boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
                   }}
                 >
                   <div
                     style={{
-                      fontFamily,
-                      fontSize: 32,
-                      fontWeight: 600,
-                      lineHeight: 1.4,
-                      color: block.key === "hook" ? LIGHT_GOLD : WHITE,
-                      opacity: block.key === "compatibility_line" ? 0.9 : 1,
+                      height: 20,
+                      borderRadius: 6,
+                      width: idx % 2 === 0 ? "72%" : "64%",
+                      background: `rgba(255, 255, 255, ${pulseOpacity})`,
+                      boxShadow: "0 0 12px rgba(255, 255, 255, 0.15)",
                     }}
-                  >
-                    {block.text}
-                  </div>
+                  />
+                  <div
+                    style={{
+                      height: 14,
+                      borderRadius: 4,
+                      width: idx % 2 === 0 ? "40%" : "52%",
+                      background: `rgba(255, 255, 255, ${pulseOpacity * 0.6})`,
+                    }}
+                  />
                 </div>
               );
             })}

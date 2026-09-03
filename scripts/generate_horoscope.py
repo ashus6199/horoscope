@@ -25,25 +25,36 @@ except ImportError:
 
 from get_transits import aspect_between
 
-MIN_CARD_WORDS = 15
-MAX_CARD_WORDS = 45
+MIN_SPOKEN_WORDS = 35
+MAX_SPOKEN_WORDS = 90
 MAX_RETRIES = 3
 
-SYSTEM_PROMPT = """You write daily horoscope cards for a data-driven Gen-Z astrology brand. \
-Voice: direct, punchy, energetic, smart-friend tone. Never sound like a fortune cookie or corporate lecture. \
-Never use emojis, exclamation points, or vague filler like "reflection and letting go", "reassess your priorities", \
-"feeling emotional adjustments", or "great things are coming". Never manufacture clock urgency ("before it's too late"). \
-Speak directly to the reader as "you".
+SYSTEM_PROMPT = """You write daily horoscope videos for a data-driven Gen-Z astrology brand. \
+You will output TWO parallel layers:
+1. Concise, scannable ON-SCREEN CARD TEXT (summarized for quick reading on video cards).
+2. Natural, conversational SPOKEN VOICEOVER NARRATION (spoken by TTS like a warm, smart friend in a podcast or conversation).
+
+Voice for spoken narration: direct, conversational, narrative, smart-friend tone. \
+Never sound like reading out bullet points or raw labels (e.g. NEVER speak "Do: ... Don't: ..." or "Best energy: ..."). \
+Instead, speak naturally in full sentences (e.g., "Whatever path you've chosen, take a second to re-evaluate it today...", \
+"You'll vibe best with Aries energy today to amplify your momentum...").
+
+Never use emojis, exclamation points, or vague filler like "reflection and letting go" or "feeling emotional adjustments". \
+Never manufacture clock urgency ("before it's too late").
 
 You will be given today's REAL astronomical transit data and REAL whole-sign aspect compatibility for the target sign. \
-Use only what's given — do not invent any transit, aspect, or planetary event beyond it.
+Use only what's given — do not invent any transit or aspect beyond it.
 
 Output a JSON object with exactly these fields:
-- "hook" (5-10 words): state today's real astronomical transit in curious, dynamic language. Anchor to the real planet/moon sign/phase.
-- "context" (8-15 words): explain what the transit means for the target sign's energy today + include a concrete power focus or power color to wear/harness today (e.g., "Power focus: finish open tasks | Color: forest green").
-- "sharp_line" (6-14 words): THE ACTIONABLE TAKEAWAY (The Quote Card). State a concrete, positive DO and DON'T for the target sign today (e.g., "Do: Ship the project you started Monday. Don't: Re-open resolved arguments."). Must be specific and actionable, never vague or preachy.
-- "compatibility_line" (10-20 words): a punchy, scannable compatibility guide using the given harmonious_pick and friction_pick signs (e.g., "Best energy: Aries (trine alignment). Handle with care: Gemini (opposition static).").
-- "caption" (40-70 words): evocative flavor text for the post caption. End it with 3-5 lowercase hashtags relevant to the sign and today's transit, space-separated, as part of this same string.
+- "card_hook" (5-8 words): concise on-screen card text stating the real transit fact in curious language.
+- "spoken_hook" (10-16 words): natural conversational voiceover introducing today's astronomical transit for the target sign.
+- "card_context" (6-12 words): concise on-screen card text with Moon energy + concrete power focus or power color.
+- "spoken_context" (12-20 words): natural conversational voiceover explaining the Moon's influence and practical focus/power color.
+- "card_sharp_line" (6-12 words): concise on-screen quote card text for DOs and DON'Ts (e.g., "Do: Ship Monday's project | Don't: Re-open old arguments").
+- "spoken_sharp_line" (12-22 words): natural conversational voiceover giving the specific practical advice/directive in a warm narrative voice.
+- "card_compatibility_line" (6-12 words): concise on-screen scannable guide (e.g., "Best energy: Aries | Handle with care: Gemini").
+- "spoken_compatibility_line" (12-20 words): natural conversational voiceover explaining which sign to connect with and which to handle with care.
+- "caption" (40-70 words): atmospheric post caption text with 3-5 lowercase hashtags at the end.
 
 Output ONLY the JSON object. No markdown fences, no preamble."""
 
@@ -95,10 +106,14 @@ def call_openai(sign: str, element: str, transit_context: str) -> dict:
 def mock_response(sign: str, element: str, transit_context: str) -> dict:
     # Used only with --dry-run, to exercise validation/retry logic offline.
     return {
-        "hook": f"Taurus Waning Moon tests your {sign} fire today.",
-        "context": "Steady earth grounds your pace. Power focus: finish open tasks | Color: forest green.",
-        "sharp_line": "Do: Ship the project you started Monday. Don't: Re-open resolved arguments.",
-        "compatibility_line": "Best energy: Aries (trine alignment). Handle with care: Gemini (opposition static).",
+        "card_hook": f"Taurus Waning Moon tests your {sign} fire today.",
+        "spoken_hook": f"Today's waning Moon in Taurus forms a challenging angle to your {sign} sun.",
+        "card_context": "Steady earth grounds your pace. Power focus: finish open tasks | Color: forest green.",
+        "spoken_context": "This steady earth placement is asking you to ground your restless energy today. Focus on clearing your open tasks and wear forest green.",
+        "card_sharp_line": "Do: Ship Monday's project. Don't: Re-open old arguments.",
+        "spoken_sharp_line": "Whatever project you started earlier this week, push to finish it today. And if old disagreements bubble up, don't re-open them.",
+        "card_compatibility_line": "Best energy: Aries | Handle with care: Gemini",
+        "spoken_compatibility_line": "You will vibe best with Aries energy today to amplify your momentum, but handle Gemini with extra care to avoid static.",
         "caption": (
             f"Under a waning Taurus moon, the {element} in you meets earth that refuses to "
             f"hurry. What already has momentum wants your attention now, not the next spark. "
@@ -107,8 +122,11 @@ def mock_response(sign: str, element: str, transit_context: str) -> dict:
     }
 
 
-def card_word_count(result: dict) -> int:
-    return sum(len(result.get(k, "").split()) for k in ("hook", "context", "sharp_line", "compatibility_line"))
+def spoken_word_count(result: dict) -> int:
+    return sum(
+        len(result.get(k, "").split())
+        for k in ("spoken_hook", "spoken_context", "spoken_sharp_line", "spoken_compatibility_line")
+    )
 
 
 def generate(sign: str, element: str, transit_context: str, dry_run: bool) -> dict:
@@ -117,23 +135,23 @@ def generate(sign: str, element: str, transit_context: str, dry_run: bool) -> di
     last_result = None
     for attempt in range(1, MAX_RETRIES + 1):
         result = fetch(sign, element, transit_context)
-        word_count = card_word_count(result)
+        word_count = spoken_word_count(result)
         last_result = result
-        if MIN_CARD_WORDS <= word_count <= MAX_CARD_WORDS:
+        if MIN_SPOKEN_WORDS <= word_count <= MAX_SPOKEN_WORDS:
             result["sign"] = sign
             result["element"] = element
             result["word_count"] = word_count
             return result
         print(
-            f"[attempt {attempt}] card word_count={word_count} outside "
-            f"[{MIN_CARD_WORDS},{MAX_CARD_WORDS}], retrying...",
+            f"[attempt {attempt}] spoken word_count={word_count} outside "
+            f"[{MIN_SPOKEN_WORDS},{MAX_SPOKEN_WORDS}], retrying...",
             file=sys.stderr,
         )
 
     last_result["sign"] = sign
     last_result["element"] = element
-    last_result["word_count"] = card_word_count(last_result)
-    last_result["warning"] = "card word count out of target band after max retries"
+    last_result["word_count"] = spoken_word_count(last_result)
+    last_result["warning"] = "spoken word count out of target band after max retries"
     return last_result
 
 
