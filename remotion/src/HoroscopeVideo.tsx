@@ -601,12 +601,12 @@ export const HoroscopeVideo: React.FC<Props> = ({
       />
 
       {/* Top Header: Sign Name & Date */}
-      <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 150 }}>
+      <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 130 }}>
         <div
           style={{
             opacity: labelOpacity,
             fontFamily: "Georgia, serif",
-            fontSize: 46,
+            fontSize: 48,
             letterSpacing: 6,
             textTransform: "uppercase",
             color: LIGHT_GOLD,
@@ -614,13 +614,13 @@ export const HoroscopeVideo: React.FC<Props> = ({
           }}
         >
           <div>{signName}</div>
-          <div style={{ fontSize: 22, letterSpacing: 4, marginTop: 10, opacity: 0.7 }}>{dateText}</div>
+          <div style={{ fontSize: 30, fontWeight: 700, letterSpacing: 4, marginTop: 10, color: LIGHT_GOLD, opacity: 0.9 }}>{dateText}</div>
         </div>
       </AbsoluteFill>
 
       {/* Progressive Disclosure Card Stack with Skeleton Loaders */}
       {!isAudioFinished && (
-        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", paddingTop: 230, paddingBottom: 160, paddingLeft: 60, paddingRight: 60 }}>
+        <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 290, paddingLeft: 60, paddingRight: 60 }}>
           <div
             style={{
               width: "100%",
@@ -628,7 +628,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
               opacity: stackFadeOut,
               display: "flex",
               flexDirection: "column",
-              gap: 14,
+              gap: 12,
             }}
           >
             {slots.map((block, idx) => {
