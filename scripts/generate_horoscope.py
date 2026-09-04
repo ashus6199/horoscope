@@ -84,7 +84,7 @@ Output a JSON object with exactly these fields:
 - "spoken_sharp_line" (20-28 words): observational voiceover insight.
 - "spoken_compatibility_line" (20-28 words): voiceover explaining harmonious and friction sign compatibility.
 - "reflection_question" (5-10 words): short, engaging self-reflection question for viewer comments/saves.
-- "spoken_reflection" (15-22 words): voiceover introducing and explicitly speaking the reflection_question word-for-word.
+- "spoken_reflection" (18-26 words): voiceover introducing and explicitly speaking the reflection_question word-for-word, followed by a closing phrase ONLY in the voiceover (e.g., "Take a pause and think about it.").
 - "caption" (40-70 words): atmospheric post caption text with 3-5 lowercase hashtags at the end.
 
 Output ONLY the JSON object. No markdown fences, no preamble."""
@@ -221,7 +221,7 @@ def mock_response(sign: str, element: str, transit_context: str) -> dict:
         "spoken_sharp_line": "Whatever project you started earlier this week, push to finish it today rather than starting something completely new.",
         "reflection_question": "What priority are you avoiding finishing today?",
         "spoken_compatibility_line": "You will vibe best with Aries energy today, but handle Gemini with extra care.",
-        "spoken_reflection": "As today closes, ask yourself: what priority are you avoiding finishing today?",
+        "spoken_reflection": "As today closes, ask yourself: what priority are you avoiding finishing today? Take a pause and think about it.",
         "caption": (
             f"Under a waning Taurus moon, the {element} in you meets earth that refuses to "
             f"hurry. What already has momentum wants your attention now, not the next spark. "

@@ -207,18 +207,13 @@ const SkyWeatherCard: React.FC<{ block: CardBlock; opacity: number; ty: number }
 }) => {
   const weatherText = block.skyWeatherText || block.text || "Planetary Transits Active";
   return (
-    <CardShell
-      opacity={opacity}
-      translateY={ty}
-      bgColor="rgba(25, 25, 112, 0.28)"
-      borderColor="rgba(139, 92, 246, 0.35)"
-    >
+    <CardShell opacity={opacity} translateY={ty}>
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{
           width: 36, height: 36, borderRadius: "50%",
-          background: "rgba(139, 92, 246, 0.2)",
-          border: "1.5px solid #8B5CF6",
-          boxShadow: "0 0 14px rgba(139, 92, 246, 0.4)",
+          background: "rgba(255, 255, 255, 0.12)",
+          border: "1.5px solid rgba(255, 255, 255, 0.35)",
+          boxShadow: "0 0 14px rgba(255, 255, 255, 0.2)",
           display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: 18, flexShrink: 0,
         }}>🪐</div>
@@ -381,7 +376,7 @@ const SharpLineCard: React.FC<{ block: CardBlock; opacity: number; ty: number }>
   );
 };
 
-// ─── Card 4: Compatibility (Best Energy & Handle With Care) ─────
+// ─── Card 5: Compatibility (Best Energy & Handle With Care) ─────
 const CompatibilityCard: React.FC<{
   block: CardBlock; bestSign: string; cautionSign: string;
   opacity: number; ty: number;
@@ -431,7 +426,7 @@ const CompatibilityCard: React.FC<{
   );
 };
 
-// ─── Card 5: Dedicated Journal Reflection ────────────────────────
+// ─── Card 6: Dedicated Journal Reflection ────────────────────────
 const ReflectionCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> = ({
   block, opacity, ty,
 }) => {
@@ -441,22 +436,22 @@ const ReflectionCard: React.FC<{ block: CardBlock; opacity: number; ty: number }
     <CardShell
       opacity={opacity}
       translateY={ty}
-      bgColor="rgba(255, 215, 0, 0.10)"
-      borderColor="rgba(255, 215, 0, 0.28)"
+      bgColor="rgba(255, 215, 0, 0.14)"
+      borderColor="rgba(255, 215, 0, 0.40)"
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 18, padding: "6px 2px" }}>
         <div
           style={{
-            width: 36,
-            height: 36,
+            width: 48,
+            height: 48,
             borderRadius: "50%",
-            background: "rgba(255, 215, 0, 0.18)",
-            border: `1.5px solid ${LIGHT_GOLD}`,
-            boxShadow: `0 0 14px rgba(255, 215, 0, 0.4)`,
+            background: "rgba(255, 215, 0, 0.22)",
+            border: `2px solid ${LIGHT_GOLD}`,
+            boxShadow: `0 0 18px rgba(255, 215, 0, 0.5)`,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 18,
+            fontSize: 24,
             flexShrink: 0,
           }}
         >
@@ -466,12 +461,12 @@ const ReflectionCard: React.FC<{ block: CardBlock; opacity: number; ty: number }
           <div
             style={{
               fontFamily,
-              fontSize: 12,
-              fontWeight: 700,
+              fontSize: 14,
+              fontWeight: 800,
               color: LIGHT_GOLD,
               textTransform: "uppercase",
-              letterSpacing: 2.5,
-              marginBottom: 2,
+              letterSpacing: 3,
+              marginBottom: 4,
             }}
           >
             Daily Reflection
@@ -479,10 +474,10 @@ const ReflectionCard: React.FC<{ block: CardBlock; opacity: number; ty: number }
           <div
             style={{
               fontFamily: "Georgia, serif",
-              fontSize: 22,
+              fontSize: 26,
               fontWeight: 700,
               color: WHITE,
-              lineHeight: 1.3,
+              lineHeight: 1.35,
               fontStyle: "italic",
             }}
           >
