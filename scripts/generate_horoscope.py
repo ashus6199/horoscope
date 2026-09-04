@@ -82,8 +82,9 @@ Output a JSON object with exactly these fields:
 - "sharp_do" (3-7 words): specific DO observation.
 - "sharp_dont" (3-7 words): specific DON'T observation.
 - "spoken_sharp_line" (20-28 words): observational voiceover insight.
+- "spoken_compatibility_line" (20-28 words): voiceover explaining harmonious and friction sign compatibility.
 - "reflection_question" (5-10 words): short, engaging self-reflection question for viewer comments/saves.
-- "spoken_compatibility_line" (25-35 words): voiceover combining the reflection question with harmonious and friction sign compatibility explanations.
+- "spoken_reflection" (15-22 words): voiceover introducing and explicitly speaking the reflection_question word-for-word.
 - "caption" (40-70 words): atmospheric post caption text with 3-5 lowercase hashtags at the end.
 
 Output ONLY the JSON object. No markdown fences, no preamble."""
@@ -215,7 +216,8 @@ def mock_response(sign: str, element: str, transit_context: str) -> dict:
         "sharp_dont": "Re-open old arguments",
         "spoken_sharp_line": "Whatever project you started earlier this week, push to finish it today rather than starting something completely new.",
         "reflection_question": "What priority are you avoiding finishing today?",
-        "spoken_compatibility_line": "Ask yourself: what priority are you holding back from finishing? You will vibe best with Aries energy today, but handle Gemini with extra care.",
+        "spoken_compatibility_line": "You will vibe best with Aries energy today, but handle Gemini with extra care.",
+        "spoken_reflection": "As today closes, ask yourself: what priority are you avoiding finishing today?",
         "caption": (
             f"Under a waning Taurus moon, the {element} in you meets earth that refuses to "
             f"hurry. What already has momentum wants your attention now, not the next spark. "
@@ -227,7 +229,7 @@ def mock_response(sign: str, element: str, transit_context: str) -> dict:
 def spoken_word_count(result: dict) -> int:
     return sum(
         len(result.get(k, "").split())
-        for k in ("spoken_hook", "spoken_sky_weather", "spoken_context", "spoken_sharp_line", "spoken_compatibility_line")
+        for k in ("spoken_hook", "spoken_sky_weather", "spoken_context", "spoken_sharp_line", "spoken_compatibility_line", "spoken_reflection")
     )
 
 

@@ -134,7 +134,7 @@ const CardShell: React.FC<{
       WebkitBackdropFilter: "blur(16px)",
       border: `1px solid ${borderColor || "rgba(255, 255, 255, 0.12)"}`,
       borderRadius: 18,
-      padding: "20px 26px",
+      padding: "16px 22px",
       boxShadow: "0 8px 32px rgba(0,0,0,0.45)",
     }}
   >
@@ -381,61 +381,113 @@ const SharpLineCard: React.FC<{ block: CardBlock; opacity: number; ty: number }>
   );
 };
 
-// ─── Card 5: Reflection & Compatibility ──────────────────────────
+// ─── Card 4: Compatibility (Best Energy & Handle With Care) ─────
 const CompatibilityCard: React.FC<{
   block: CardBlock; bestSign: string; cautionSign: string;
   opacity: number; ty: number;
 }> = ({ block, bestSign, cautionSign, opacity, ty }) => {
   const bestGlyph = ZODIAC_GLYPHS[bestSign] || "★";
   const cautionGlyph = ZODIAC_GLYPHS[cautionSign] || "☆";
-  const reflection = block.reflectionQuestion;
 
   return (
     <CardShell opacity={opacity} translateY={ty}>
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        {reflection && (
-          <div style={{ display: "flex", alignItems: "center", gap: 10, background: "rgba(255,255,255,0.06)", padding: "8px 14px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.1)" }}>
-            <span style={{ fontSize: 18 }}>💬</span>
-            <div style={{ fontFamily, fontSize: 20, fontWeight: 700, color: LIGHT_GOLD, fontStyle: "italic" }}>
-              "{reflection}"
+      <div style={{ display: "flex", gap: 20, alignItems: "stretch" }}>
+        {/* Best Energy Column */}
+        {bestSign && (
+          <div style={{ flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 2 }}>
+              <div style={{ fontSize: 28, lineHeight: 1, color: EMERALD, filter: `drop-shadow(0 0 8px ${EMERALD}50)` }}>
+                {bestGlyph}
+              </div>
+              <div style={{ fontFamily, fontSize: 22, fontWeight: 800, color: EMERALD, lineHeight: 1.2 }}>
+                {bestSign}
+              </div>
+            </div>
+            <div style={{ fontFamily, fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: 2, marginLeft: 38 }}>
+              Best Energy
             </div>
           </div>
         )}
-        <div style={{ display: "flex", gap: 20, alignItems: "stretch" }}>
-          {/* Best Energy Column */}
-          {bestSign && (
-            <div style={{ flex: 1 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 2 }}>
-                <div style={{ fontSize: 32, lineHeight: 1, color: EMERALD, filter: `drop-shadow(0 0 8px ${EMERALD}50)` }}>
-                  {bestGlyph}
-                </div>
-                <div style={{ fontFamily, fontSize: 22, fontWeight: 800, color: EMERALD, lineHeight: 1.2 }}>
-                  {bestSign}
-                </div>
+        {/* Divider */}
+        <div style={{ width: 1, background: "rgba(255,255,255,0.08)", alignSelf: "stretch" }} />
+        {/* Caution Column */}
+        {cautionSign && (
+          <div style={{ flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 2 }}>
+              <div style={{ fontSize: 28, lineHeight: 1, color: AMBER, filter: `drop-shadow(0 0 8px ${AMBER}50)` }}>
+                {cautionGlyph}
               </div>
-              <div style={{ fontFamily, fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: 2, marginLeft: 42 }}>
-                Best Energy
+              <div style={{ fontFamily, fontSize: 22, fontWeight: 800, color: AMBER, lineHeight: 1.2 }}>
+                {cautionSign}
               </div>
             </div>
-          )}
-          {/* Divider */}
-          <div style={{ width: 1, background: "rgba(255,255,255,0.08)", alignSelf: "stretch" }} />
-          {/* Caution Column */}
-          {cautionSign && (
-            <div style={{ flex: 1 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 2 }}>
-                <div style={{ fontSize: 32, lineHeight: 1, color: AMBER, filter: `drop-shadow(0 0 8px ${AMBER}50)` }}>
-                  {cautionGlyph}
-                </div>
-                <div style={{ fontFamily, fontSize: 22, fontWeight: 800, color: AMBER, lineHeight: 1.2 }}>
-                  {cautionSign}
-                </div>
-              </div>
-              <div style={{ fontFamily, fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: 2, marginLeft: 42 }}>
-                Handle With Care
-              </div>
+            <div style={{ fontFamily, fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: 2, marginLeft: 38 }}>
+              Handle With Care
             </div>
-          )}
+          </div>
+        )}
+      </div>
+    </CardShell>
+  );
+};
+
+// ─── Card 5: Dedicated Journal Reflection ────────────────────────
+const ReflectionCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> = ({
+  block, opacity, ty,
+}) => {
+  const question = block.reflectionQuestion || block.text;
+
+  return (
+    <CardShell
+      opacity={opacity}
+      translateY={ty}
+      bgColor="rgba(255, 215, 0, 0.10)"
+      borderColor="rgba(255, 215, 0, 0.28)"
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        <div
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+            background: "rgba(255, 215, 0, 0.18)",
+            border: `1.5px solid ${LIGHT_GOLD}`,
+            boxShadow: `0 0 14px rgba(255, 215, 0, 0.4)`,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 18,
+            flexShrink: 0,
+          }}
+        >
+          💬
+        </div>
+        <div>
+          <div
+            style={{
+              fontFamily,
+              fontSize: 12,
+              fontWeight: 700,
+              color: LIGHT_GOLD,
+              textTransform: "uppercase",
+              letterSpacing: 2.5,
+              marginBottom: 2,
+            }}
+          >
+            Daily Reflection
+          </div>
+          <div
+            style={{
+              fontFamily: "Georgia, serif",
+              fontSize: 22,
+              fontWeight: 700,
+              color: WHITE,
+              lineHeight: 1.3,
+              fontStyle: "italic",
+            }}
+          >
+            "{question}"
+          </div>
         </div>
       </div>
     </CardShell>
@@ -533,6 +585,8 @@ export const HoroscopeVideo: React.FC<Props> = ({
             ty={ty}
           />
         );
+      case "reflection":
+        return <ReflectionCard block={block} opacity={opacity} ty={ty} />;
     }
   };
 

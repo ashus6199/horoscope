@@ -100,8 +100,11 @@ def main():
     except Exception as e:
         print(f"[WARNING] Could not extract transit metadata ({e})", file=sys.stderr)
 
-    # Build spoken script from 5 spoken beats
-    spoken_beat_keys = ["spoken_hook", "spoken_sky_weather", "spoken_context", "spoken_sharp_line", "spoken_compatibility_line"]
+    # Build spoken script from 6 spoken beats
+    spoken_beat_keys = [
+        "spoken_hook", "spoken_sky_weather", "spoken_context",
+        "spoken_sharp_line", "spoken_compatibility_line", "spoken_reflection"
+    ]
     spoken_parts = [horoscope_data.get(k, "") for k in spoken_beat_keys]
     spoken_parts = [p for p in spoken_parts if p]
 
@@ -200,34 +203,36 @@ def main():
             "words": bw,
         })
 
-    # --- Card 4: Sharp line (do / don't) ---
+    # --- Card 4: Compatibility & Action ---
+    spoken_compat = horoscope_data.get("spoken_compatibility_line", "")
     spoken_sharp = horoscope_data.get("spoken_sharp_line", "")
-    if spoken_sharp:
-        start, end, bw, w_cursor = find_beat_timing(spoken_sharp, w_cursor, prev_end)
+    combined_sharp_compat = f"{spoken_sharp} {spoken_compat}".strip()
+    if combined_sharp_compat:
+        start, end, bw, w_cursor = find_beat_timing(combined_sharp_compat, w_cursor, prev_end)
         prev_end = end
         card_blocks.append({
-            "key": "sharp_line",
-            "text": horoscope_data.get("sharp_do", ""),
+            "key": "compatibility_line",
+            "text": horoscope_data.get("sharp_do", transit_meta["bestSign"]),
             "sharpDo": horoscope_data.get("sharp_do", ""),
             "sharpDont": horoscope_data.get("sharp_dont", ""),
-            "spokenText": spoken_sharp,
+            "bestSign": transit_meta["bestSign"],
+            "cautionSign": transit_meta["cautionSign"],
+            "spokenText": combined_sharp_compat,
             "start": start, "end": end,
             "isSharpLine": True,
             "words": bw,
         })
 
-    # --- Card 5: Reflection Question & Compatibility ---
-    spoken_compat = horoscope_data.get("spoken_compatibility_line", "")
-    if spoken_compat:
-        start, end, bw, w_cursor = find_beat_timing(spoken_compat, w_cursor, prev_end)
+    # --- Card 5: Dedicated Journal Reflection ---
+    spoken_reflection = horoscope_data.get("spoken_reflection", "")
+    if spoken_reflection:
+        start, end, bw, w_cursor = find_beat_timing(spoken_reflection, w_cursor, prev_end)
         prev_end = end
         card_blocks.append({
-            "key": "compatibility_line",
-            "text": horoscope_data.get("reflection_question", transit_meta["bestSign"]),
+            "key": "reflection",
+            "text": horoscope_data.get("reflection_question", ""),
             "reflectionQuestion": horoscope_data.get("reflection_question", ""),
-            "bestSign": transit_meta["bestSign"],
-            "cautionSign": transit_meta["cautionSign"],
-            "spokenText": spoken_compat,
+            "spokenText": spoken_reflection,
             "start": start, "end": end,
             "isSharpLine": False,
             "words": bw,
