@@ -34,14 +34,27 @@ const cardBlockSchema = z.object({
   cautionSign: z.string().optional(),
 });
 
+const eventAlertSchema = z.object({
+  tier: z.number(),
+  type: z.string(),
+  label: z.string(),
+  badgeAccent: z.string().optional(),
+  sign: z.string().optional(),
+  planet: z.string().optional(),
+  daysRemaining: z.number().optional(),
+}).nullable().optional();
+
 export const horoscopeVideoSchema = z.object({
   signName: z.string(),
   captionText: z.string(),
   spokenText: z.string().optional(),
   moonSign: z.string().default(""),
   moonPhase: z.string().default(""),
+  moonPhasePct: z.number().default(50.0),
+  moonAgeDays: z.number().default(14.0),
   bestSign: z.string().default(""),
   cautionSign: z.string().default(""),
+  eventAlert: eventAlertSchema.default(null),
   backgroundVideoPath: z.string(),
   audioPath: z.string(),
   durationInSeconds: z.number(),
@@ -53,6 +66,7 @@ export const horoscopeVideoSchema = z.object({
 
 type Props = z.infer<typeof horoscopeVideoSchema>;
 type CardBlock = z.infer<typeof cardBlockSchema>;
+type EventAlert = z.infer<typeof eventAlertSchema>;
 
 // ─── Design Tokens ───────────────────────────────────────────────
 const ORANGE = "#FF7200";
@@ -70,7 +84,7 @@ const ZODIAC_GLYPHS: Record<string, string> = {
   Sagittarius: "♐", Capricorn: "♑", Aquarius: "♒", Pisces: "♓",
 };
 
-// ─── Moon Phase Icon Map ─────────────────────────────────────────
+// ─── Moon Phase Icon Map & Resolution ─────────────────────────────
 const MOON_ICONS: Record<string, string> = {
   "new moon": "🌑", "waxing crescent": "🌒", "waxing": "🌒",
   "first quarter": "🌓", "waxing gibbous": "🌔",
@@ -78,6 +92,28 @@ const MOON_ICONS: Record<string, string> = {
   "waning gibbous": "🌖", "waning": "🌘",
   "last quarter": "🌗", "waning crescent": "🌘",
 };
+
+function getMoonPhaseIcon(phaseLabel?: string, phasePct?: number, ageDays?: number): string {
+  if (ageDays !== undefined && ageDays >= 0) {
+    const age = ageDays % 29.53;
+    if (age < 1.84 || age >= 27.69) return "🌑";
+    if (age < 5.53) return "🌒";
+    if (age < 9.22) return "🌓";
+    if (age < 12.91) return "🌔";
+    if (age < 16.61) return "🌕";
+    if (age < 20.30) return "🌖";
+    if (age < 23.99) return "🌗";
+    return "🌘";
+  }
+  const key = (phaseLabel || "").toLowerCase().trim();
+  if (MOON_ICONS[key]) return MOON_ICONS[key];
+  if (phasePct !== undefined) {
+    if (phasePct < 5) return "🌑";
+    if (phasePct > 95) return "🌕";
+    return "🌓";
+  }
+  return "☽";
+}
 
 // ─── Shared Card Shell ───────────────────────────────────────────
 const CardShell: React.FC<{
@@ -105,14 +141,55 @@ const CardShell: React.FC<{
 );
 
 // ─── Card 1: Hook (Moon Transit) ─────────────────────────────────
-const HookCard: React.FC<{ block: CardBlock; moonPhase: string; opacity: number; ty: number }> = ({
-  block, moonPhase, opacity, ty,
-}) => {
-  const moonIcon = MOON_ICONS[moonPhase.toLowerCase()] || "☽";
+const HookCard: React.FC<{
+  block: CardBlock;
+  moonPhase: string;
+  moonPhasePct?: number;
+  moonAgeDays?: number;
+  eventAlert?: EventAlert;
+  opacity: number;
+  ty: number;
+}> = ({ block, moonPhase, moonPhasePct, moonAgeDays, eventAlert, opacity, ty }) => {
+  const moonIcon = getMoonPhaseIcon(moonPhase, moonPhasePct, moonAgeDays);
+  const accent = eventAlert?.badgeAccent || "rgba(196, 201, 212, 0.25)";
   return (
-    <CardShell opacity={opacity} translateY={ty} borderColor="rgba(196, 201, 212, 0.2)">
-      <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-        <div style={{ fontSize: 44, lineHeight: 1, flexShrink: 0, filter: "drop-shadow(0 2px 8px rgba(196,201,212,0.4))" }}>
+    <CardShell opacity={opacity} translateY={ty} borderColor={eventAlert ? `${accent}60` : "rgba(196, 201, 212, 0.25)"}>
+      {/* Event Alert Badge (Tier 2 or Tier 3) */}
+      {eventAlert && eventAlert.label && (
+        <div
+          style={{
+            fontFamily,
+            fontSize: 15,
+            fontWeight: 700,
+            color: accent,
+            textTransform: "uppercase",
+            letterSpacing: 3,
+            marginBottom: 14,
+            paddingBottom: 12,
+            borderBottom: `1px solid ${accent}30`,
+          }}
+        >
+          {eventAlert.label}
+        </div>
+      )}
+      <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+        {/* Dynamic Glowing Moon Badge */}
+        <div
+          style={{
+            width: 54,
+            height: 54,
+            borderRadius: "50%",
+            background: eventAlert ? `${accent}18` : "rgba(196, 201, 212, 0.12)",
+            border: `1.5px solid ${eventAlert ? `${accent}50` : "rgba(196, 201, 212, 0.35)"}`,
+            boxShadow: eventAlert ? `0 0 24px ${accent}35` : "0 0 20px rgba(196, 201, 212, 0.25)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 34,
+            lineHeight: 1,
+            flexShrink: 0,
+          }}
+        >
           {moonIcon}
         </div>
         <div style={{ fontFamily, fontSize: 30, fontWeight: 700, lineHeight: 1.35, color: LIGHT_GOLD, letterSpacing: "-0.01em" }}>
@@ -129,14 +206,37 @@ const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> =
 }) => {
   const focus = block.powerFocus || block.text;
   const color = block.powerColor || "";
+  const colorHex = color ? colorNameToHex(color) : "#A78BFA";
+
   return (
-    <CardShell opacity={opacity} translateY={ty}>
+    <CardShell
+      opacity={opacity}
+      translateY={ty}
+      borderColor={`${colorHex}45`}
+      bgColor="rgba(0, 0, 0, 0.72)"
+    >
       <div style={{ display: "flex", gap: 24, alignItems: "stretch" }}>
-        {/* Power Focus Column */}
+        {/* Power Focus Column with Power-Color-Tinted Icon Badge */}
         <div style={{ flex: 1 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-            <div style={{ fontSize: 22, lineHeight: 1 }}>⚡</div>
-            <div style={{ fontFamily, fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: 2 }}>
+            <div
+              style={{
+                width: 28,
+                height: 28,
+                borderRadius: "50%",
+                background: `${colorHex}22`,
+                border: `1.5px solid ${colorHex}80`,
+                boxShadow: `0 0 12px ${colorHex}60`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 16,
+                lineHeight: 1,
+              }}
+            >
+              ⚡
+            </div>
+            <div style={{ fontFamily, fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2 }}>
               Power Focus
             </div>
           </div>
@@ -144,19 +244,51 @@ const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> =
             {focus}
           </div>
         </div>
+
         {/* Divider */}
         <div style={{ width: 1, background: "rgba(255,255,255,0.12)", alignSelf: "stretch" }} />
-        {/* Power Color Column */}
+
+        {/* Power Color Column with Dynamic Icon & Glowing Swatch Badge */}
         {color && (
           <div style={{ flex: 1 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-              <div style={{ width: 20, height: 20, borderRadius: "50%", background: colorNameToHex(color), border: "2px solid rgba(255,255,255,0.25)", boxShadow: `0 0 12px ${colorNameToHex(color)}60` }} />
-              <div style={{ fontFamily, fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: 2 }}>
+              <div
+                style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  background: `${colorHex}22`,
+                  border: `1.5px solid ${colorHex}80`,
+                  boxShadow: `0 0 12px ${colorHex}60`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 16,
+                  lineHeight: 1,
+                }}
+              >
+                🎨
+              </div>
+              <div style={{ fontFamily, fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2 }}>
                 Color
               </div>
             </div>
-            <div style={{ fontFamily, fontSize: 28, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
-              {color}
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              {/* Color Swatch Dot */}
+              <div
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: "50%",
+                  background: colorHex,
+                  border: "2px solid #FFFFFF",
+                  boxShadow: `0 0 16px ${colorHex}`,
+                  flexShrink: 0,
+                }}
+              />
+              <div style={{ fontFamily, fontSize: 28, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
+                {color}
+              </div>
             </div>
           </div>
         )}
@@ -288,7 +420,8 @@ function colorNameToHex(name: string): string {
 // ─── Main Component ──────────────────────────────────────────────
 export const HoroscopeVideo: React.FC<Props> = ({
   signName, captionText, spokenText,
-  moonSign, moonPhase, bestSign, cautionSign,
+  moonSign, moonPhase, moonPhasePct, moonAgeDays, bestSign, cautionSign,
+  eventAlert,
   backgroundVideoPath, audioPath,
   durationInSeconds, bgDurationSeconds,
   dateText, wordTimings, cardBlocks,
@@ -325,7 +458,17 @@ export const HoroscopeVideo: React.FC<Props> = ({
   const renderCard = (block: CardBlock, opacity: number, ty: number) => {
     switch (block.key) {
       case "hook":
-        return <HookCard block={block} moonPhase={moonPhase} opacity={opacity} ty={ty} />;
+        return (
+          <HookCard
+            block={block}
+            moonPhase={moonPhase}
+            moonPhasePct={moonPhasePct}
+            moonAgeDays={moonAgeDays}
+            eventAlert={eventAlert}
+            opacity={opacity}
+            ty={ty}
+          />
+        );
       case "context":
         return <ContextCard block={block} opacity={opacity} ty={ty} />;
       case "sharp_line":

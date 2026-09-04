@@ -4,8 +4,11 @@
   "spokenText": "Today's waning Moon in Taurus forms a challenging angle to your sun. This steady earth placement is asking you to ground your restless energy today. Focus on clearing your open tasks and wear forest green. Whatever project you started earlier this week, push to finish it today. And if old disagreements bubble up, don't re-open them. You will vibe best with Aries energy today to amplify your momentum, but handle Gemini with extra care to avoid static.",
   "moonSign": "Gemini",
   "moonPhase": "waning",
+  "moonPhasePct": 52.2,
+  "moonAgeDays": 22.42,
   "bestSign": "Aries",
   "cautionSign": "Gemini",
+  "eventAlert": null,
   "cardBlocks": [
     {
       "key": "hook",
@@ -448,7 +451,7 @@
   "audioPath": "assets/sagittarius-audio.mp3",
   "durationInSeconds": 31.248,
   "bgDurationSeconds": 9.084,
-  "dateText": "03 September 2026",
+  "dateText": "04 September 2026",
   "wordTimings": [
     {
       "word": "Today's",

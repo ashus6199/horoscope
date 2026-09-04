@@ -1,0 +1,16 @@
+[
+  {"date": "2026-02-17", "type": "SOLAR_ECLIPSE", "subtype": "annular", "sign": "Aquarius", "label": "ANNULAR SOLAR ECLIPSE IN AQUARIUS"},
+  {"date": "2026-03-03", "type": "LUNAR_ECLIPSE", "subtype": "total", "sign": "Virgo", "label": "TOTAL LUNAR ECLIPSE IN VIRGO"},
+  {"date": "2026-08-12", "type": "SOLAR_ECLIPSE", "subtype": "total", "sign": "Leo", "label": "TOTAL SOLAR ECLIPSE IN LEO"},
+  {"date": "2026-08-28", "type": "LUNAR_ECLIPSE", "subtype": "partial", "sign": "Pisces", "label": "PARTIAL LUNAR ECLIPSE IN PISCES"},
+  {"date": "2027-02-06", "type": "SOLAR_ECLIPSE", "subtype": "annular", "sign": "Aquarius", "label": "ANNULAR SOLAR ECLIPSE IN AQUARIUS"},
+  {"date": "2027-02-20", "type": "LUNAR_ECLIPSE", "subtype": "penumbral", "sign": "Virgo", "label": "LUNAR ECLIPSE IN VIRGO"},
+  {"date": "2027-07-18", "type": "LUNAR_ECLIPSE", "subtype": "penumbral", "sign": "Capricorn", "label": "LUNAR ECLIPSE IN CAPRICORN"},
+  {"date": "2027-08-02", "type": "SOLAR_ECLIPSE", "subtype": "total", "sign": "Leo", "label": "TOTAL SOLAR ECLIPSE IN LEO"},
+  {"date": "2027-08-17", "type": "LUNAR_ECLIPSE", "subtype": "penumbral", "sign": "Aquarius", "label": "LUNAR ECLIPSE IN AQUARIUS"},
+  {"date": "2028-01-11", "type": "LUNAR_ECLIPSE", "subtype": "partial", "sign": "Cancer", "label": "PARTIAL LUNAR ECLIPSE IN CANCER"},
+  {"date": "2028-01-26", "type": "SOLAR_ECLIPSE", "subtype": "annular", "sign": "Aquarius", "label": "ANNULAR SOLAR ECLIPSE IN AQUARIUS"},
+  {"date": "2028-07-06", "type": "LUNAR_ECLIPSE", "subtype": "partial", "sign": "Capricorn", "label": "PARTIAL LUNAR ECLIPSE IN CAPRICORN"},
+  {"date": "2028-07-22", "type": "SOLAR_ECLIPSE", "subtype": "total", "sign": "Cancer", "label": "TOTAL SOLAR ECLIPSE IN CANCER"},
+  {"date": "2028-12-31", "type": "LUNAR_ECLIPSE", "subtype": "total", "sign": "Cancer", "label": "TOTAL LUNAR ECLIPSE IN CANCER"}
+]

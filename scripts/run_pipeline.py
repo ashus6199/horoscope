@@ -72,13 +72,23 @@ def main():
     # Extract transit metadata from the horoscope JSON output
     transit_ctx = horoscope_data.get("transit_context", "")
     # Re-run get_transits.py to get structured transit data for Remotion props
-    transit_meta = {"moonSign": "", "moonPhase": "", "bestSign": "", "cautionSign": ""}
+    transit_meta = {
+        "moonSign": "",
+        "moonPhase": "",
+        "moonPhasePct": 50.0,
+        "moonAgeDays": 14.0,
+        "bestSign": "",
+        "cautionSign": "",
+    }
     try:
         transit_cmd = [sys.executable, str(scripts_dir / "get_transits.py"), "--sign", args.sign]
         transit_json = run_command(transit_cmd, cwd=repo_root)
         transit_data = json.loads(transit_json)
         transit_meta["moonSign"] = transit_data.get("moon_sign", "")
         transit_meta["moonPhase"] = transit_data.get("moon_phase_label", "")
+        transit_meta["moonPhasePct"] = transit_data.get("moon_phase_pct", 50.0)
+        transit_meta["moonAgeDays"] = transit_data.get("moon_age_days", 14.0)
+        transit_meta["eventAlert"] = transit_data.get("event_alert", None)
         compat = transit_data.get("compatibility", {})
         transit_meta["bestSign"] = compat.get("harmonious_pick", "")
         transit_meta["cautionSign"] = compat.get("friction_pick", "")
@@ -292,8 +302,11 @@ def main():
         "spokenText": spoken_text,
         "moonSign": transit_meta["moonSign"],
         "moonPhase": transit_meta["moonPhase"],
+        "moonPhasePct": transit_meta["moonPhasePct"],
+        "moonAgeDays": transit_meta["moonAgeDays"],
         "bestSign": transit_meta["bestSign"],
         "cautionSign": transit_meta["cautionSign"],
+        "eventAlert": transit_meta.get("eventAlert"),
         "cardBlocks": card_blocks,
         "backgroundVideoPath": bg_video_path,
         "audioPath": f"assets/{args.sign.lower()}-audio.mp3",

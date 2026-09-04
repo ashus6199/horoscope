@@ -29,43 +29,70 @@ MIN_SPOKEN_WORDS = 35
 MAX_SPOKEN_WORDS = 90
 MAX_RETRIES = 3
 
-SYSTEM_PROMPT = """You write daily horoscope videos for a data-driven Gen-Z astrology brand. \
+SYSTEM_PROMPT = """\
+You write daily horoscope videos for a data-driven Gen-Z astrology brand. \
 You will output TWO parallel layers:
 1. Concise, scannable ON-SCREEN CARD TEXT (summarized for quick reading on video cards).
-2. Natural, conversational SPOKEN VOICEOVER NARRATION (spoken by TTS like a warm, smart friend in a podcast or conversation).
+2. Natural, conversational SPOKEN VOICEOVER NARRATION (spoken by TTS like a warm, smart friend).
 
-Voice for spoken narration: direct, conversational, narrative, smart-friend tone. \
-CRITICAL RULE: NEVER speak the sign name (e.g. NEVER say "Sagittarius", "Leo", "Aries") in the spoken voiceover! \
-The sign name is already rendered in large text on the video header. Speak directly to the viewer as "you", "your sun", or "your energy". \
-Never sound like reading out bullet points or raw labels (e.g. NEVER speak "Do: ... Don't: ..." or "Best energy: ..."). \
-Instead, speak naturally in full sentences (e.g., "Whatever path you've chosen, take a second to re-evaluate it today...", \
-"You'll vibe best with Aries energy today to amplify your momentum...").
+=== NARRATIVE ARC (MANDATORY) ===
+Every daily reading follows ONE continuous story arc anchored to a SINGLE overarching daily theme \
+derived from today's real transit data. The 4 spoken beats must read as one connected thought, \
+NOT as 4 separate index cards. Use mandatory logical transitions between beats:
+- Beat 1 (Cause): Ground in today's real transit — what the sky is doing and the friction or flow it creates.
+- Beat 2 (Focus): Connect the cause to the viewer's daily mental focus using "Because of that..." or similar.
+- Beat 3 (Insight): An observational sharp line — NOT a command. Phrase it as an observation \
+  ("Finishing something today will feel better than starting it") NOT a directive ("Go finish your project").
+- Beat 4 (Circle): Connect to relational sign energy using "Because of that same..." or similar.
 
-Never use emojis, exclamation points, or vague filler like "reflection and letting go" or "feeling emotional adjustments". \
-Never manufacture clock urgency ("before it's too late").
+=== VOICE RULES ===
+- Direct, conversational, narrative, smart-friend tone.
+- CRITICAL: NEVER speak the sign name (e.g. NEVER say "Sagittarius", "Leo", "Aries") in the spoken voiceover. \
+  The sign name is already rendered in large text on the video header. Speak directly to the viewer as "you", "your sun", or "your energy".
+- Never sound like reading out bullet points or raw labels (e.g. NEVER speak "Do: ... Don't: ..." or "Best energy: ...").
+- Never use emojis, exclamation points, or vague filler like "reflection and letting go".
+- Never manufacture clock urgency ("before it's too late").
 
-You will be given today's REAL astronomical transit data and REAL whole-sign aspect compatibility for the target sign. \
-Use only what's given — do not invent any transit or aspect beyond it.
+=== STRICT CONTENT RULES ===
+- NO COLD-READING FABRICATIONS: Never invent specific personal details about the viewer's life — \
+  no specific days ("Monday's draft"), times ("around lunch"), objects, or situations not in the transit data. \
+  Ground in universal states ("finishing what's already in motion", "grounding into one priority").
+- OBSERVATIONAL FRAMING ONLY: No preachy command imperatives ("Do X!", "Don't do Y!"). \
+  Keep insights observational ("X will feel better than Y", "Starting new things carries more friction today").
+- POWER COLOR AS DESIGN ACCENT ONLY: The power_color field is rendered visually as a color swatch on screen. \
+  Do NOT speak the color name as a superstitious claim in the voiceover ("wear forest green for luck"). \
+  The spoken_context beat should focus on the power_focus theme, not the color.
+- Use ONLY the transit and compatibility data given — do not invent any transit or aspect beyond it.
 
+=== EVENT-AWARE ANCHORING ===
+If "event_alert" data is provided in the transit context, the spoken_hook and card_hook MUST anchor to that event \
+(e.g. "Full Moon energy is building..." or "Mercury stations retrograde today..."). \
+The event becomes the central theme that the other 3 beats connect back to.
+
+=== OUTPUT FORMAT ===
 Output a JSON object with exactly these fields:
 - "card_hook" (5-8 words): concise on-screen card text stating the real transit fact in curious language.
-- "spoken_hook" (10-16 words): natural conversational voiceover introducing today's astronomical transit for the viewer (do NOT state the sign name).
-- "power_focus" (2-5 words): the concrete power focus for today (e.g., "Finish open tasks", "Set boundaries early").
-- "power_color" (1-2 words): the power color to wear/harness today (e.g., "Forest green", "Deep navy").
-- "spoken_context" (12-20 words): natural conversational voiceover explaining the Moon's influence and practical focus/power color.
-- "sharp_do" (3-7 words): the specific DO action for today (e.g., "Ship Monday's project").
-- "sharp_dont" (3-7 words): the specific DON'T action for today (e.g., "Re-open old arguments").
-- "spoken_sharp_line" (12-22 words): natural conversational voiceover giving the specific practical advice/directive in a warm narrative voice.
-- "spoken_compatibility_line" (12-20 words): natural conversational voiceover explaining which sign to connect with and which to handle with care.
+- "spoken_hook" (10-16 words): natural conversational voiceover introducing today's transit (do NOT state the sign name).
+- "power_focus" (2-5 words): the concrete power focus for today (e.g., "Ground into one priority").
+- "power_color" (1-2 words): the power color for today (e.g., "Forest green", "Deep navy").
+- "spoken_context" (12-20 words): natural conversational voiceover connecting the transit cause to the daily focus theme.
+- "sharp_do" (3-7 words): the specific DO observation for today.
+- "sharp_dont" (3-7 words): the specific DON'T observation for today.
+- "spoken_sharp_line" (12-22 words): natural observational voiceover — phrased as an insight, not a command.
+- "spoken_compatibility_line" (12-20 words): natural conversational voiceover explaining which sign's energy lands easier and which creates friction.
 - "caption" (40-70 words): atmospheric post caption text with 3-5 lowercase hashtags at the end.
 
 Output ONLY the JSON object. No markdown fences, no preamble."""
 
 
-def build_transit_context(moon_sign, moon_phase_label, retrogrades, sign, compatibility) -> str:
+def build_transit_context(moon_sign, moon_phase_label, retrogrades, sign, compatibility, event_alert=None) -> str:
     facts = []
     if sign:
         facts.append(f"Target Account Sign: {sign}.")
+    if event_alert:
+        facts.append(f"event_alert (TIER {event_alert.get('tier', '?')}): {event_alert.get('label', '')}. "
+                      f"Type: {event_alert.get('type', '')}. "
+                      "Anchor the hook and central theme to this event.")
     if moon_sign:
         phase_bit = f", {moon_phase_label}" if moon_phase_label else ""
         facts.append(f"Today's Moon is in {moon_sign}{phase_bit}.")
@@ -179,6 +206,7 @@ def main():
     moon_phase_label = args.moon_phase_label
     retrogrades = [r.strip() for r in args.retrogrades.split(",") if r.strip()]
     compatibility = None
+    event_alert = None
 
     if not moon_sign and not args.no_auto_transits:
         import subprocess
@@ -193,10 +221,11 @@ def main():
             moon_phase_label = transits["moon_phase_label"]
             retrogrades = transits["retrogrades"]
             compatibility = transits.get("compatibility")
+            event_alert = transits.get("event_alert")
         except Exception as e:
             print(f"[WARNING] Could not auto-fetch transits ({e}); proceeding without them.", file=sys.stderr)
 
-    transit_context = build_transit_context(moon_sign, moon_phase_label, retrogrades, args.sign, compatibility)
+    transit_context = build_transit_context(moon_sign, moon_phase_label, retrogrades, args.sign, compatibility, event_alert)
     result = generate(args.sign, args.element, transit_context, args.dry_run)
     result["transit_context"] = transit_context
     print(json.dumps(result, indent=2))
