@@ -25,7 +25,7 @@ SIGNS = [
 
 def ecliptic_longitude(body_class, date) -> float:
     body = body_class(date)
-    eq = ephem.Ecliptic(body)
+    eq = ephem.Ecliptic(body, epoch=date)
     return eq.lon * 180.0 / ephem.pi
 
 
@@ -297,6 +297,21 @@ def resolve_event_alert(now, moon, phase_pct) -> dict | None:
             "daysRemaining": days_to_new,
             "badgeAccent": "#C4C9D4",
         }
+
+    # ── Tier 2: Ongoing Retrograde Alert (Mercury, Venus, Mars) ──
+    yesterday = ephem.Date(now - 1)
+    for name, body_class in [("Mercury", ephem.Mercury), ("Venus", ephem.Venus), ("Mars", ephem.Mars)]:
+        d = ecliptic_longitude(body_class, now) - ecliptic_longitude(body_class, yesterday)
+        if d > 180: d -= 360
+        if d < -180: d += 360
+        if d < 0:
+            return {
+                "tier": 2,
+                "type": "RETROGRADE_ACTIVE",
+                "planet": name,
+                "label": f"{name.upper()} RETROGRADE",
+                "badgeAccent": "#F59E0B",
+            }
 
     # ── Tier 1: No special event today ──
     return None

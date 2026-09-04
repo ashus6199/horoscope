@@ -403,15 +403,16 @@ function colorNameToHex(name: string): string {
     "burnt orange": "#CC5500", "amber": "#FFBF00", "gold": "#FFD700",
     "emerald": "#50C878", "sage": "#9DC183", "olive": "#808000",
     "lavender": "#E6E6FA", "violet": "#8B5CF6", "plum": "#8E4585",
-    "coral": "#FF7F50", "peach": "#FFDAB9", "blush": "#DE5D83",
+    "coral": "#FF7F50", "warm coral": "#FF6F59", "peach": "#FFDAB9", "blush": "#DE5D83",
     "silver": "#C0C0C0", "charcoal": "#36454F", "ivory": "#FFFFF0",
-    "teal": "#008080", "turquoise": "#40E0D0", "cyan": "#00FFFF",
-    "rose": "#FF007F", "magenta": "#FF00FF", "burgundy": "#800020",
+    "teal": "#008080", "turquoise": "#40E0D0", "cyan": "#00FFFF", "aquamarine": "#7FFFD4",
+    "rose": "#FF007F", "magenta": "#FF00FF", "burgundy": "#800020", "terracotta": "#E2725B",
     "rust": "#B7410E", "copper": "#B87333", "bronze": "#CD7F32",
     "white": "#FFFFFF", "black": "#000000", "red": "#EF4444",
     "blue": "#3B82F6", "green": "#22C55E", "yellow": "#EAB308",
     "orange": "#F97316", "pink": "#EC4899", "purple": "#A855F7",
-    "indigo": "#6366F1", "sky blue": "#87CEEB", "royal blue": "#4169E1",
+    "indigo": "#6366F1", "deep indigo": "#4B0082", "electric violet": "#8B5CF6",
+    "sky blue": "#87CEEB", "royal blue": "#4169E1",
   };
   const key = name.toLowerCase().trim();
   return map[key] || "#A78BFA"; // fallback to soft violet
