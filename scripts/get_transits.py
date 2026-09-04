@@ -62,24 +62,38 @@ def aspect_between(a: str, b: str) -> str:
     return ASPECT_BY_DISTANCE[sign_distance(a, b)]
 
 
-def compatibility_for_sign(sign: str) -> dict:
-    """For a given target account sign (e.g. Sagittarius), bucket all other 11 signs
-    by their whole-sign aspect to it, then deterministically pick one 'easier' sign
-    (trine preferred over sextile) and one 'harder' sign (opposition preferred over
-    square) for use in the daily compatibility beat. Target account sign is strictly excluded."""
+def compatibility_for_sign(sign: str, moon_sign: str = None, date_num: int = 0) -> dict:
+    """For a given target account sign (e.g. Sagittarius) and today's Moon sign (e.g. Gemini),
+    compute dynamic daily compatibility that shifts naturally as the Moon moves.
+    Target account sign is strictly excluded from being picked."""
+    ref_sign = moon_sign if moon_sign else sign
+    moon_idx = SIGNS.index(ref_sign) if ref_sign in SIGNS else 0
+    sign_idx = SIGNS.index(sign) if sign in SIGNS else 0
+
     buckets = {"trine": [], "sextile": [], "square": [], "opposition": []}
     for s in SIGNS:
         if s.lower() == sign.lower():
             continue
-        asp = aspect_between(sign, s)
+        asp = aspect_between(ref_sign, s)
         if asp in buckets:
             buckets[asp].append(s)
 
     def pick(*bucket_names):
+        candidates = []
         for name in bucket_names:
-            valid_candidates = [candidate for candidate in buckets[name] if candidate.lower() != sign.lower()]
-            if valid_candidates:
-                return sorted(valid_candidates, key=SIGNS.index)[0]
+            for c in buckets[name]:
+                if c.lower() != sign.lower() and c not in candidates:
+                    candidates.append(c)
+        if not candidates:
+            # Fallback: check aspects from target sign
+            for name in bucket_names:
+                for s in SIGNS:
+                    if s.lower() != sign.lower() and aspect_between(sign, s) == name and s not in candidates:
+                        candidates.append(s)
+        if candidates:
+            # Rotate pick dynamically based on moon position and date offset
+            idx = (moon_idx + sign_idx + date_num) % len(candidates)
+            return candidates[idx]
         return None
 
     return {
@@ -146,7 +160,8 @@ def get_transits(sign: str = None, date_str: str = None) -> dict:
         "event_alert": resolve_event_alert(now, moon, phase_pct),
     }
     if sign:
-        result["compatibility"] = compatibility_for_sign(sign)
+        date_num = int(float(now))
+        result["compatibility"] = compatibility_for_sign(sign, moon_sign=moon_sign, date_num=date_num)
     return result
 
 
