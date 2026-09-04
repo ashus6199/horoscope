@@ -20,8 +20,15 @@ from pathlib import Path
 
 
 def run_command(cmd: list[str], cwd: Path | None = None) -> str:
-    res = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, check=True)
-    return res.stdout.strip()
+    try:
+        res = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, check=True)
+        return res.stdout.strip()
+    except subprocess.CalledProcessError as e:
+        if e.stdout:
+            print(f"[SUBPROCESS ERROR STDOUT]\n{e.stdout.strip()}", file=sys.stderr)
+        if e.stderr:
+            print(f"[SUBPROCESS ERROR STDERR]\n{e.stderr.strip()}", file=sys.stderr)
+        raise
 
 
 SIGN_ELEMENT_MAP = {

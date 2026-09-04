@@ -13,6 +13,7 @@ appears (nothing is replaced) — see AGENTS.md for the reveal timing.
 import argparse
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 
@@ -368,6 +369,7 @@ def main():
     retrogrades = [r.strip() for r in args.retrogrades.split(",") if r.strip()]
     compatibility = None
     event_alert = None
+    sky_weather = None
 
     if not moon_sign and not args.no_auto_transits:
         import subprocess
