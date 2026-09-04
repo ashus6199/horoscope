@@ -49,6 +49,8 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Use dry-run/mock responses")
     parser.add_argument("--skip-render", action="store_true", help="Prepare assets and props but skip Remotion render step")
     parser.add_argument("--date", help="Override date (YYYY-MM-DD) for testing historical or future events")
+    parser.add_argument("--thumb-offset-ms", type=int, default=1500, help="Thumbnail frame offset in milliseconds for Instagram Reel cover (default: 1500ms)")
+    parser.add_argument("--cover-url", help="Public HTTPS URL of a custom thumbnail cover image")
     parser.add_argument("--publish-ig", action="store_true", help="Publish rendered video to Instagram Reels")
     parser.add_argument("--video-url", help="Public video HTTPS URL for Instagram publishing (required if --publish-ig)")
     parser.add_argument("--output-dir", type=Path, default=Path("output"))
@@ -428,11 +430,25 @@ def main():
         print(f"\n=== Step 7: Publishing to Instagram Reels ===")
         ig_caption = post_caption
         
+        # Dynamically calculate timestamp when all cards are fully revealed
+        if args.thumb_offset_ms and args.thumb_offset_ms != 1500:
+            thumb_offset = args.thumb_offset_ms
+        elif card_blocks:
+            last_card_start = card_blocks[-1].get("start", 25.0)
+            thumb_offset = int((last_card_start + 1.0) * 1000)
+        else:
+            thumb_offset = 25000
+
+        print(f"[INFO] Auto-calculated Reel thumbnail offset: {thumb_offset}ms (frame with all cards revealed)")
+
         pub_cmd = [
             sys.executable, str(scripts_dir / "publish_instagram.py"),
             "--caption", ig_caption,
             "--video-path", str(faststart_path),
+            "--thumb-offset-ms", str(thumb_offset),
         ]
+        if args.cover_url:
+            pub_cmd.extend(["--cover-url", args.cover_url])
         if not args.dry_run:
             pub_cmd.extend(["--jitter-max-seconds", "300"])
         if args.video_url:

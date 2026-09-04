@@ -119,8 +119,7 @@ jobs:
 
           rm -f "$RAW_PATH"
 
-      - name: Publish to Instagram Reels (Step G - Temporarily Disabled for Video Artifact Inspection)
-        if: false
+      - name: Publish to Instagram Reels & Story (Step G)
         env:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
@@ -129,12 +128,15 @@ jobs:
           SIGN_LOWER=$(echo "$SIGN" | tr '[:upper:]' '[:lower:]')
           VIDEO_PATH="remotion/out/${SIGN_LOWER}_test.mp4"
 
+          CAPTION=$(python3 -c "import json; print(json.load(open('remotion/props.json'))['captionText'])" 2>/dev/null || echo "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}")
+          THUMB_OFFSET=$(python3 -c "import json; p=json.load(open('remotion/props.json')); blocks=p.get('cardBlocks',[]); print(int((blocks[-1]['start']+1.0)*1000) if blocks else 25000)" 2>/dev/null || echo "25000")
+
           if [ -z "$INSTAGRAM_ACCESS_TOKEN" ] || [ -z "$INSTAGRAM_USER_ID" ]; then
             echo "[INFO] INSTAGRAM_ACCESS_TOKEN or INSTAGRAM_USER_ID secrets missing; running publish_instagram in --dry-run mode."
-            python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --dry-run
+            python scripts/publish_instagram.py --caption "$CAPTION" --thumb-offset-ms "$THUMB_OFFSET" --dry-run
           else
             echo "[INFO] Meta API credentials found. Initiating Direct Binary Resumable Upload to Meta (rupload.facebook.com)..."
-            python scripts/publish_instagram.py --caption "Daily horoscope for ${SIGN} ✨ #horoscope #${SIGN_LOWER}" --video-path "$VIDEO_PATH" --publish-story
+            python scripts/publish_instagram.py --caption "$CAPTION" --video-path "$VIDEO_PATH" --thumb-offset-ms "$THUMB_OFFSET" --publish-story
           fi
 
       - name: Upload Rendered Video Artifact

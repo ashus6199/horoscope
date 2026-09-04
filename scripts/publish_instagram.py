@@ -86,10 +86,10 @@ def publish_container(ig_user_id: str, access_token: str, container_id: str) -> 
     return {"media_id": media_id}
 
 
-def publish_reel_resumable(ig_user_id: str, access_token: str, video_path: Path, caption: str) -> Dict[str, Any]:
+def publish_reel_resumable(ig_user_id: str, access_token: str, video_path: Path, caption: str, thumb_offset_ms: int = 1500, cover_url: str = None) -> Dict[str, Any]:
     """
     Bulletproof Direct Binary Resumable Upload Protocol (rupload.facebook.com).
-    Streams video binary bytes directly to Meta's servers with frame 0 set as cover thumbnail.
+    Streams video binary bytes directly to Meta's servers with specified cover thumbnail.
     """
     if not video_path.exists():
         raise FileNotFoundError(f"Video file does not exist: {video_path}")
@@ -97,16 +97,22 @@ def publish_reel_resumable(ig_user_id: str, access_token: str, video_path: Path,
     file_size = video_path.stat().st_size
     print(f"[INFO] Initiating Direct Resumable Upload for {video_path.name} ({file_size} bytes)...", file=sys.stderr)
 
-    # Step 1: Initialize Resumable Session with frame 0 cover thumbnail
+    # Step 1: Initialize Resumable Session with cover thumbnail configuration
     init_endpoint = f"{GRAPH_BASE_URL}/{ig_user_id}/media"
     init_payload = {
         "media_type": "REELS",
         "upload_type": "resumable",
-        "thumb_offset": "0",  # Sets the very first frame (0ms) as the Reel thumbnail
         "share_to_feed": "true",
         "caption": caption,
         "access_token": access_token,
     }
+    if cover_url:
+        init_payload["cover_url"] = cover_url
+        print(f"[INFO] Setting Reel cover thumbnail from custom URL: {cover_url}", file=sys.stderr)
+    else:
+        init_payload["thumb_offset"] = str(thumb_offset_ms)
+        print(f"[INFO] Setting Reel cover thumbnail at video offset: {thumb_offset_ms}ms", file=sys.stderr)
+
     init_res = make_request(init_endpoint, method="POST", data=init_payload)
     container_id = init_res.get("id")
     upload_uri = init_res.get("uri", f"https://rupload.facebook.com/ig-api-upload/v20.0/{container_id}")
@@ -191,7 +197,7 @@ def publish_story_resumable(ig_user_id: str, access_token: str, video_path: Path
     return result
 
 
-def publish_reel_url(ig_user_id: str, access_token: str, video_url: str, caption: str) -> Dict[str, Any]:
+def publish_reel_url(ig_user_id: str, access_token: str, video_url: str, caption: str, thumb_offset_ms: int = 1500, cover_url: str = None) -> Dict[str, Any]:
     """Fallback flow for public HTTPS URLs."""
     endpoint = f"{GRAPH_BASE_URL}/{ig_user_id}/media"
     payload = {
@@ -200,6 +206,11 @@ def publish_reel_url(ig_user_id: str, access_token: str, video_url: str, caption
         "caption": caption,
         "access_token": access_token,
     }
+    if cover_url:
+        payload["cover_url"] = cover_url
+    else:
+        payload["thumb_offset"] = str(thumb_offset_ms)
+
     res = make_request(endpoint, method="POST", data=payload)
     container_id = res.get("id")
     if not container_id:
@@ -217,6 +228,8 @@ def main():
     parser.add_argument("--video-path", type=Path, help="Local file path of rendered video file")
     parser.add_argument("--video-url", help="Public HTTPS URL of rendered video file (alternative to --video-path)")
     parser.add_argument("--caption", default="Daily horoscope ✨\n\n#horoscope #sagittarius", help="Reel caption text")
+    parser.add_argument("--thumb-offset-ms", type=int, default=1500, help="Thumbnail frame offset timestamp in milliseconds (default: 1500ms)")
+    parser.add_argument("--cover-url", help="Public HTTPS URL of a custom thumbnail cover image")
     parser.add_argument("--ig-user-id", default=os.environ.get("INSTAGRAM_USER_ID"), help="Instagram Business Account ID")
     parser.add_argument("--access-token", default=os.environ.get("INSTAGRAM_ACCESS_TOKEN"), help="Meta Graph API Access Token")
     parser.add_argument("--jitter-max-seconds", type=int, default=0, help="Random delay in seconds before publishing (anti-bot protection)")
@@ -252,9 +265,15 @@ def main():
 
     try:
         if args.video_path and args.video_path.exists():
-            pub_result = publish_reel_resumable(args.ig_user_id, args.access_token, args.video_path, args.caption)
+            pub_result = publish_reel_resumable(
+                args.ig_user_id, args.access_token, args.video_path, args.caption,
+                thumb_offset_ms=args.thumb_offset_ms, cover_url=args.cover_url
+            )
         else:
-            pub_result = publish_reel_url(args.ig_user_id, args.access_token, args.video_url, args.caption)
+            pub_result = publish_reel_url(
+                args.ig_user_id, args.access_token, args.video_url, args.caption,
+                thumb_offset_ms=args.thumb_offset_ms, cover_url=args.cover_url
+            )
 
         if args.publish_story and args.video_path and args.video_path.exists():
             print("[INFO] Also publishing video as Instagram Story...", file=sys.stderr)
