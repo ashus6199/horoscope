@@ -24,9 +24,19 @@ def run_command(cmd: list[str], cwd: Path | None = None) -> str:
     return res.stdout.strip()
 
 
+SIGN_ELEMENT_MAP = {
+    "aries": "fire", "leo": "fire", "sagittarius": "fire",
+    "taurus": "earth", "virgo": "earth", "capricorn": "earth",
+    "gemini": "air", "libra": "air", "aquarius": "air",
+    "cancer": "water", "scorpio": "water", "pisces": "water",
+}
+
+
 def main():
     parser = argparse.ArgumentParser(description="Run full Horoscope video pipeline")
     parser.add_argument("--sign", required=True, help="Zodiac sign (e.g. Sagittarius)")
+    parser.add_argument("--element", choices=["fire", "earth", "air", "water"], help="Element (auto-derived from sign if omitted)")
+    parser.add_argument("--manifest", type=Path, default=Path("manifest/manifest.json"))
     parser.add_argument("--mark-used", action="store_true", help="Mark selected clip as used in manifest (enabled by default for real runs)")
     parser.add_argument("--no-mark-used", action="store_true", help="Prevent marking selected clip as used in manifest")
     parser.add_argument("--dry-run", action="store_true", help="Use dry-run/mock responses")
@@ -37,6 +47,9 @@ def main():
     parser.add_argument("--output-dir", type=Path, default=Path("output"))
     parser.add_argument("--props-out", type=Path, default=Path("remotion/props.json"))
     args = parser.parse_args()
+
+    element = args.element or SIGN_ELEMENT_MAP.get(args.sign.lower(), "fire")
+    args.element = element
 
     repo_root = Path(__file__).resolve().parent.parent
     scripts_dir = repo_root / "scripts"

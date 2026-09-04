@@ -4,8 +4,8 @@
   "spokenText": "Today's waning Moon in Taurus forms a challenging angle to your sun sign today. With current sky transits highlighting practical priorities, steady grounded momentum is favored. This steady energy is asking you to ground your restless thoughts today into one priority before expanding outward. Whatever project you started earlier this week, push to finish it today rather than starting something completely new. You will vibe best with Aries energy today, but handle Gemini with extra care. As today closes, ask yourself: what priority are you avoiding finishing today? Take a pause and think about it.",
   "moonSign": "Gemini",
   "moonPhase": "waning",
-  "moonPhasePct": 50.2,
-  "moonAgeDays": 22.58,
+  "moonPhasePct": 50.0,
+  "moonAgeDays": 22.6,
   "bestSign": "Aquarius",
   "cautionSign": "Pisces",
   "eventAlert": null,
@@ -554,7 +554,7 @@
       ]
     }
   ],
-  "backgroundVideoPath": "assets/loop_fire_002.mp4",
+  "backgroundVideoPath": "assets/loop_fire_005.mp4",
   "audioPath": "assets/sagittarius-audio.mp3",
   "durationInSeconds": 38.064,
   "bgDurationSeconds": 9.084,
