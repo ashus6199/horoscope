@@ -10,13 +10,13 @@
       "id": "fire_002",
       "element": "fire",
       "filename": "fire_002.mp4",
-      "last_used": null
+      "last_used": "2026-09-04T07:45:52.860390+00:00"
     },
     {
       "id": "fire_003",
       "element": "fire",
       "filename": "fire_003.mp4",
-      "last_used": "2026-09-01"
+      "last_used": "2026-09-04T07:46:01.318799+00:00"
     },
     {
       "id": "earth_001",
@@ -35,6 +35,12 @@
       "element": "water",
       "filename": "water_001.mp4",
       "last_used": null
+    },
+    {
+      "id": "fire_004",
+      "element": "fire",
+      "filename": "fire_004.mp4",
+      "last_used": "2026-09-04T07:46:08.156525+00:00"
     }
   ]
 }
