@@ -25,6 +25,11 @@ on:
         required: false
         type: boolean
         default: false
+      date:
+        description: 'Override date YYYY-MM-DD (e.g. 2026-08-28 for Lunar Eclipse)'
+        required: false
+        type: string
+        default: ''
 
 jobs:
   build-and-render:
@@ -73,13 +78,18 @@ jobs:
             DRY_RUN_FLAG="--dry-run"
           fi
           
+          DATE_FLAG=""
+          if [ -n "${{ inputs.date }}" ]; then
+            DATE_FLAG="--date ${{ inputs.date }}"
+          fi
+          
           SIGN="${{ inputs.sign }}"
           ELEMENT="${{ inputs.element }}"
           
           if [ -z "$SIGN" ]; then SIGN="Sagittarius"; fi
           if [ -z "$ELEMENT" ]; then ELEMENT="fire"; fi
           
-          python scripts/run_pipeline.py --sign "$SIGN" --element "$ELEMENT" --mark-used $DRY_RUN_FLAG --skip-render
+          python scripts/run_pipeline.py --sign "$SIGN" --element "$ELEMENT" --mark-used $DRY_RUN_FLAG $DATE_FLAG --skip-render
 
       - name: Render Remotion Video in Cloud (Step F)
         run: |
