@@ -66,10 +66,10 @@ def compatibility_for_sign(sign: str) -> dict:
     """For a given target account sign (e.g. Sagittarius), bucket all other 11 signs
     by their whole-sign aspect to it, then deterministically pick one 'easier' sign
     (trine preferred over sextile) and one 'harder' sign (opposition preferred over
-    square) for use in the daily compatibility beat."""
+    square) for use in the daily compatibility beat. Target account sign is strictly excluded."""
     buckets = {"trine": [], "sextile": [], "square": [], "opposition": []}
     for s in SIGNS:
-        if s == sign:
+        if s.lower() == sign.lower():
             continue
         asp = aspect_between(sign, s)
         if asp in buckets:
@@ -77,8 +77,9 @@ def compatibility_for_sign(sign: str) -> dict:
 
     def pick(*bucket_names):
         for name in bucket_names:
-            if buckets[name]:
-                return sorted(buckets[name], key=SIGNS.index)[0]
+            valid_candidates = [candidate for candidate in buckets[name] if candidate.lower() != sign.lower()]
+            if valid_candidates:
+                return sorted(valid_candidates, key=SIGNS.index)[0]
         return None
 
     return {
