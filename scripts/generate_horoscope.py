@@ -60,8 +60,13 @@ NOT as 4 separate index cards. Use mandatory logical transitions between beats:
 - OBSERVATIONAL FRAMING ONLY: No preachy command imperatives ("Do X!", "Don't do Y!"). \
   Keep insights observational ("X will feel better than Y", "Starting new things carries more friction today").
 - POWER COLOR AS DESIGN ACCENT ONLY: The power_color field is rendered visually as a color swatch on screen. \
+  You MUST pick exactly ONE color from this approved list: Forest green, Deep navy, Midnight blue, Crimson, Ruby, Scarlet, \
+  Burnt orange, Amber, Gold, Emerald, Sage, Olive, Lavender, Violet, Plum, Coral, Peach, Blush, Silver, Charcoal, Ivory, \
+  Teal, Turquoise, Cyan, Rose, Magenta, Burgundy, Rust, Copper, Bronze, White, Black, Red, Blue, Green, Yellow, Orange, \
+  Pink, Purple, Indigo, Sky blue, Royal blue. \
   Do NOT speak the color name as a superstitious claim in the voiceover ("wear forest green for luck"). \
   The spoken_context beat should focus on the power_focus theme, not the color.
+- COMPATIBILITY ACCURACY: You MUST use exactly the `harmonious_pick` and `friction_pick` signs provided in the transit data for the spoken_compatibility_line. Do not invent or hallucinate other signs.
 - Use ONLY the transit and compatibility data given — do not invent any transit or aspect beyond it.
 
 === EVENT-AWARE ANCHORING ===
