@@ -204,13 +204,17 @@ def call_openai(sign: str, element: str, transit_context: str, history: list[dic
 
 def mock_response(sign: str, element: str, transit_context: str) -> dict:
     # Used only with --dry-run, to exercise validation/retry logic offline.
+    palette = ELEMENT_PALETTES.get(element.lower(), ELEMENT_PALETTES["fire"])
+    color_idx = sum(ord(c) for c in f"{sign}{transit_context}") % len(palette)
+    power_color = palette[color_idx]
+
     return {
         "card_hook": f"Waning Moon in Taurus tests your {element} energy.",
         "spoken_hook": "Today's waning Moon in Taurus forms a challenging angle to your sun sign today.",
         "card_sky_weather": "Mercury in steady motion",
         "spoken_sky_weather": "With current sky transits highlighting practical priorities, steady grounded momentum is favored.",
         "power_focus": "Finish open tasks",
-        "power_color": "Crimson" if element.lower() == "fire" else "Forest green",
+        "power_color": power_color,
         "spoken_context": "This steady energy is asking you to ground your restless thoughts today into one priority before expanding outward.",
         "sharp_do": "Finish active tasks",
         "sharp_dont": "Re-open old arguments",
