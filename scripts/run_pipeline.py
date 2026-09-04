@@ -32,6 +32,7 @@ def main():
     parser.add_argument("--mark-used", action="store_true", help="Mark selected clip as used in manifest")
     parser.add_argument("--dry-run", action="store_true", help="Use dry-run/mock responses")
     parser.add_argument("--skip-render", action="store_true", help="Prepare assets and props but skip Remotion render step")
+    parser.add_argument("--date", help="Override date (YYYY-MM-DD) for testing historical or future events")
     parser.add_argument("--publish-ig", action="store_true", help="Publish rendered video to Instagram Reels")
     parser.add_argument("--video-url", help="Public video HTTPS URL for Instagram publishing (required if --publish-ig)")
     parser.add_argument("--output-dir", type=Path, default=Path("output"))
@@ -63,6 +64,8 @@ def main():
         "--sign", args.sign,
         "--element", args.element,
     ]
+    if args.date:
+        horoscope_cmd.extend(["--date", args.date])
     if args.dry_run or not os.environ.get("OPENAI_API_KEY"):
         print("[INFO] Using --dry-run for text generation (no OPENAI_API_KEY found or --dry-run passed)")
         horoscope_cmd.append("--dry-run")
@@ -82,6 +85,8 @@ def main():
     }
     try:
         transit_cmd = [sys.executable, str(scripts_dir / "get_transits.py"), "--sign", args.sign]
+        if args.date:
+            transit_cmd.extend(["--date", args.date])
         transit_json = run_command(transit_cmd, cwd=repo_root)
         transit_data = json.loads(transit_json)
         transit_meta["moonSign"] = transit_data.get("moon_sign", "")

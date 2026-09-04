@@ -207,6 +207,7 @@ def main():
     parser.add_argument("--retrogrades", default="", help="Comma-separated list, e.g. 'Mercury,Venus'")
     parser.add_argument("--no-auto-transits", action="store_true",
                          help="Skip calling get_transits.py automatically; use only --moon-sign/--retrogrades if given")
+    parser.add_argument("--date", default=None, help="Override date (YYYY-MM-DD)")
     parser.add_argument("--dry-run", action="store_true", help="skip the API call, use a mock response")
     args = parser.parse_args()
 
@@ -224,8 +225,11 @@ def main():
         import subprocess
         transits_script = Path(__file__).resolve().parent / "get_transits.py"
         try:
+            trans_cmd = [sys.executable, str(transits_script), "--sign", args.sign]
+            if args.date:
+                trans_cmd.extend(["--date", args.date])
             out = subprocess.run(
-                [sys.executable, str(transits_script), "--sign", args.sign],
+                trans_cmd,
                 capture_output=True, text=True, check=True,
             )
             transits = json.loads(out.stdout)

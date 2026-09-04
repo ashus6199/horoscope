@@ -99,8 +99,14 @@ def own_aspect_to_moon(sign: str, moon_sign: str) -> str:
     return aspect_between(sign, moon_sign)
 
 
-def get_transits(sign: str = None) -> dict:
-    now = ephem.now()
+def get_transits(sign: str = None, date_str: str = None) -> dict:
+    if date_str:
+        from datetime import datetime
+        dt = datetime.strptime(date_str, "%Y-%m-%d")
+        now = ephem.Date(dt)
+    else:
+        now = ephem.now()
+
     yesterday = ephem.Date(now - 1)
 
     moon = ephem.Moon(now)
@@ -285,8 +291,9 @@ def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--sign", default=None, help="Target account sign for sign-centric compatibility")
+    parser.add_argument("--date", default=None, help="Override date (YYYY-MM-DD)")
     args = parser.parse_args()
-    print(json.dumps(get_transits(args.sign), indent=2))
+    print(json.dumps(get_transits(args.sign, args.date), indent=2))
 
 
 if __name__ == "__main__":
