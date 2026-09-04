@@ -396,7 +396,8 @@ def main():
         "npx", "remotion", "render",
         "src/index.ts", "HoroscopeVideo",
         str(out_video_path),
-        f"--props={rel_props}"
+        f"--props={rel_props}",
+        "--audio-codec=aac",
     ]
 
     ffmpeg_bin = shutil.which("ffmpeg")
