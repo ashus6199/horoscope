@@ -116,10 +116,20 @@ def build_transit_context(moon_sign, moon_phase_label, retrogrades, sign, compat
     return " ".join(facts)
 
 
+ELEMENT_PALETTES = {
+    "fire": ["Warm Coral", "Gold", "Crimson", "Ruby", "Scarlet", "Amber", "Burnt orange", "Rust"],
+    "earth": ["Forest green", "Emerald", "Sage", "Terracotta", "Olive", "Bronze", "Copper"],
+    "air": ["Electric Violet", "Cyan", "Lavender", "Midnight blue", "Sky blue", "Silver"],
+    "water": ["Deep Indigo", "Teal", "Aquamarine", "Deep navy", "Turquoise", "Plum"],
+}
+
+
 def build_user_prompt(sign: str, element: str, transit_context: str) -> str:
+    allowed_colors = ", ".join(ELEMENT_PALETTES.get(element.lower(), ELEMENT_PALETTES["fire"]))
     return (
         f"Write today's horoscope card for {sign} ({element} sign).\n\n"
-        f"Today's real transit and compatibility data: {transit_context}"
+        f"Today's real transit and compatibility data: {transit_context}\n\n"
+        f"IMPORTANT: For power_color, you MUST select a color from the {element.upper()} palette: {allowed_colors}."
     )
 
 
@@ -144,11 +154,11 @@ def mock_response(sign: str, element: str, transit_context: str) -> dict:
         "card_hook": f"Waning Moon in Taurus tests your {element} energy.",
         "spoken_hook": "Today's waning Moon in Taurus forms a challenging angle to your sun.",
         "power_focus": "Finish open tasks",
-        "power_color": "Forest green",
-        "spoken_context": "This steady earth placement is asking you to ground your restless energy today. Focus on clearing your open tasks and wear forest green.",
-        "sharp_do": "Ship Monday's project",
+        "power_color": "Crimson" if element.lower() == "fire" else "Forest green",
+        "spoken_context": "This steady energy is asking you to ground your restless thoughts today into one priority.",
+        "sharp_do": "Finish active tasks",
         "sharp_dont": "Re-open old arguments",
-        "spoken_sharp_line": "Whatever project you started earlier this week, push to finish it today. And if old disagreements bubble up, don't re-open them.",
+        "spoken_sharp_line": "Whatever project you started earlier this week, push to finish it today rather than starting something new.",
         "spoken_compatibility_line": "You will vibe best with Aries energy today to amplify your momentum, but handle Gemini with extra care to avoid static.",
         "caption": (
             f"Under a waning Taurus moon, the {element} in you meets earth that refuses to "
@@ -218,7 +228,7 @@ def main():
         transits_script = Path(__file__).resolve().parent / "get_transits.py"
         try:
             out = subprocess.run(
-                [sys.executable, str(transits_script)],
+                [sys.executable, str(transits_script), "--sign", args.sign],
                 capture_output=True, text=True, check=True,
             )
             transits = json.loads(out.stdout)
