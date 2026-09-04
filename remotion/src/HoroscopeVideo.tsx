@@ -300,7 +300,7 @@ const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> =
                 🎨
               </div>
               <div style={{ fontFamily, fontSize: 16, fontWeight: 600, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2 }}>
-                Color
+                Power Color
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -334,12 +334,7 @@ const SharpLineCard: React.FC<{ block: CardBlock; opacity: number; ty: number }>
   const doText = block.sharpDo || block.text;
   const dontText = block.sharpDont || "";
   return (
-    <CardShell
-      opacity={opacity}
-      translateY={ty}
-      bgColor="rgba(255, 114, 0, 0.12)"
-      borderColor="rgba(255, 114, 0, 0.25)"
-    >
+    <CardShell opacity={opacity} translateY={ty}>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {/* DO row */}
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
@@ -390,15 +385,15 @@ const CompatibilityCard: React.FC<{
         {/* Best Energy Column */}
         {bestSign && (
           <div style={{ flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 2 }}>
-              <div style={{ fontSize: 28, lineHeight: 1, color: EMERALD, filter: `drop-shadow(0 0 8px ${EMERALD}50)` }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+              <div style={{ fontSize: 34, lineHeight: 1, color: EMERALD, filter: `drop-shadow(0 0 10px ${EMERALD}60)` }}>
                 {bestGlyph}
               </div>
-              <div style={{ fontFamily, fontSize: 22, fontWeight: 800, color: EMERALD, lineHeight: 1.2 }}>
+              <div style={{ fontFamily, fontSize: 26, fontWeight: 800, color: EMERALD, lineHeight: 1.2 }}>
                 {bestSign}
               </div>
             </div>
-            <div style={{ fontFamily, fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: 2, marginLeft: 38 }}>
+            <div style={{ fontFamily, fontSize: 15, fontWeight: 700, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2, marginLeft: 44 }}>
               Best Energy
             </div>
           </div>
@@ -408,15 +403,15 @@ const CompatibilityCard: React.FC<{
         {/* Caution Column */}
         {cautionSign && (
           <div style={{ flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 2 }}>
-              <div style={{ fontSize: 28, lineHeight: 1, color: AMBER, filter: `drop-shadow(0 0 8px ${AMBER}50)` }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+              <div style={{ fontSize: 34, lineHeight: 1, color: AMBER, filter: `drop-shadow(0 0 10px ${AMBER}60)` }}>
                 {cautionGlyph}
               </div>
-              <div style={{ fontFamily, fontSize: 22, fontWeight: 800, color: AMBER, lineHeight: 1.2 }}>
+              <div style={{ fontFamily, fontSize: 26, fontWeight: 800, color: AMBER, lineHeight: 1.2 }}>
                 {cautionSign}
               </div>
             </div>
-            <div style={{ fontFamily, fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: 2, marginLeft: 38 }}>
+            <div style={{ fontFamily, fontSize: 15, fontWeight: 700, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2, marginLeft: 44 }}>
               Handle With Care
             </div>
           </div>
