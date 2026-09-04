@@ -1,7 +1,7 @@
 # AGENTS.md — Elemental Horoscope Video Pipeline
 
 ## What this project is
-An automated pipeline that generates a daily 15-30s horoscope short-form video
+An automated pipeline that generates a daily 35-50s horoscope short-form video
 per zodiac sign, publishes it as an Instagram Reel + auto-shared Story, and as
 a YouTube Short. Currently validating the full pipeline end-to-end on a single
 sign (Sagittarius) before scaling to all 12. Full requirements and phased plan
@@ -29,7 +29,7 @@ are in `PRD.md` — read that first for context on what phase we're in.
 - The "Pokemon" / creature-video concept is a placeholder, not final IP —
   don't hardcode Pokemon names/references into code; keep it generic
   ("element", "creature", "clip") so it's easy to reskin later.
-- Target horoscope length: 40-70 words (≈15-30s spoken).
+- Target horoscope length: 85-145 words (≈35-50s spoken across 5 visual cards).
 - Prefer editing/extending existing scripts over introducing new frameworks
   or dependencies not already in `requirements.txt` / `remotion/package.json`.
 - When touching credentials/secrets (IG tokens, YouTube OAuth, API keys),

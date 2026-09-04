@@ -25,31 +25,30 @@ except ImportError:
 
 from get_transits import aspect_between
 
-MIN_SPOKEN_WORDS = 35
-MAX_SPOKEN_WORDS = 90
+MIN_SPOKEN_WORDS = 85
+MAX_SPOKEN_WORDS = 145
 MAX_RETRIES = 3
 
 SYSTEM_PROMPT = """\
 You write daily horoscope videos for a data-driven Gen-Z astrology brand. \
-You will output TWO parallel layers:
-1. Concise, scannable ON-SCREEN CARD TEXT (summarized for quick reading on video cards).
-2. Natural, conversational SPOKEN VOICEOVER NARRATION (spoken by TTS like a warm, smart friend).
+You will output TWO parallel layers across 5 progressive beats:
+1. Concise, scannable ON-SCREEN CARD TEXT (summarized for quick reading on 5 sequential video cards).
+2. Natural, conversational SPOKEN VOICEOVER NARRATION (spoken by TTS like a warm, smart friend for a 50-second video).
 
-=== NARRATIVE ARC (MANDATORY) ===
-Every daily reading follows ONE continuous story arc anchored to a SINGLE overarching daily theme \
-derived from today's real transit data. The 4 spoken beats must read as one connected thought, \
-NOT as 4 separate index cards. Use mandatory logical transitions between beats:
-- Beat 1 (Cause): Ground in today's real transit — what the sky is doing and the friction or flow it creates.
-- Beat 2 (Focus): Connect the cause to the viewer's daily mental focus using "Because of that..." or similar.
-- Beat 3 (Insight): An observational sharp line — NOT a command. Phrase it as an observation \
-  ("Finishing something today will feel better than starting it") NOT a directive ("Go finish your project").
-- Beat 4 (Circle): Connect to relational sign energy using "Because of that same..." or similar.
+=== 5-BEAT NARRATIVE ARC (MANDATORY) ===
+Every daily reading follows ONE continuous 5-beat story arc anchored to today's real transit data:
+- Beat 1 (Hook): Ground in today's main astronomical event / Moon transit — what the sky is doing.
+- Beat 2 (Sky Weather): Deepen the astronomical context using active retrogrades or moon phase details (e.g., active retrograde progress or transit atmospheric mood).
+- Beat 3 (Focus): Connect the sky cause to the viewer's daily mental focus using "Because of that..." or similar.
+- Beat 4 (Insight): An observational sharp DO & DON'T line — NOT a preachy directive ("Finishing something today will feel better than starting it").
+- Beat 5 (Reflection & Compatibility): Ask a short, engaging journal reflection question AND connect to relational sign energy (`harmonious_pick` & `friction_pick`).
 
 === VOICE RULES ===
 - Direct, conversational, narrative, smart-friend tone.
 - CRITICAL: NEVER speak the viewer's target sun sign name (e.g. NEVER say "Sagittarius" when writing for Sagittarius). \
   The viewer's sign name is already rendered in large text on the video header. Speak directly to the viewer as "you", "your sun", or "your energy".
 - MANDATORY COMPATIBILITY SIGN NAMES: In `spoken_compatibility_line`, you MUST explicitly speak the exact names of the `harmonious_pick` sign (e.g. "Aries") and `friction_pick` sign (e.g. "Gemini") provided in the transit data. Do NOT substitute generic phrases like "those who share your passion" or "fire signs".
+- JOURNAL REFLECTION QUESTION: The `reflection_question` field MUST be a short, engaging self-reflection question (e.g., "What are you holding back from finishing today?") that prompts comments and saves.
 - Never sound like reading out bullet points or raw labels (e.g. NEVER speak "Do: ... Don't: ..." or "Best energy: ...").
 - Never use emojis, exclamation points, or vague filler like "reflection and letting go".
 - Never manufacture clock urgency ("before it's too late").
@@ -69,25 +68,28 @@ NOT as 4 separate index cards. Use mandatory logical transitions between beats:
 === EVENT-AWARE ANCHORING ===
 If "event_alert" data is provided in the transit context, the spoken_hook and card_hook MUST anchor to that event \
 (e.g. "Full Moon energy is building..." or "Mercury stations retrograde today..."). \
-The event becomes the central theme that the other 3 beats connect back to.
+The event becomes the central theme that the other beats connect back to.
 
 === OUTPUT FORMAT ===
 Output a JSON object with exactly these fields:
-- "card_hook" (5-8 words): concise on-screen card text stating the real transit fact in curious language.
-- "spoken_hook" (10-16 words): natural conversational voiceover introducing today's transit (do NOT state the sign name).
-- "power_focus" (2-5 words): the concrete power focus for today (e.g., "Ground into one priority").
-- "power_color" (1-2 words): the power color for today (e.g., "Forest green", "Deep navy").
-- "spoken_context" (12-20 words): natural conversational voiceover connecting the transit cause to the daily focus theme.
-- "sharp_do" (3-7 words): the specific DO observation for today.
-- "sharp_dont" (3-7 words): the specific DON'T observation for today.
-- "spoken_sharp_line" (12-22 words): natural observational voiceover — phrased as an insight, not a command.
-- "spoken_compatibility_line" (12-20 words): natural conversational voiceover explaining which sign's energy lands easier and which creates friction.
+- "card_hook" (5-8 words): concise on-screen card text stating today's main transit fact.
+- "spoken_hook" (15-22 words): natural voiceover introducing today's transit (do NOT state the viewer's sign name).
+- "card_sky_weather" (4-8 words): concise on-screen text for planetary sky weather or retrograde status.
+- "spoken_sky_weather" (15-22 words): natural voiceover elaborating on today's sky weather or planetary motion.
+- "power_focus" (2-5 words): the concrete power focus for today.
+- "power_color" (1-2 words): the power color for today (select from the allowed element palette).
+- "spoken_context" (20-28 words): natural voiceover connecting sky weather to the daily focus theme.
+- "sharp_do" (3-7 words): specific DO observation.
+- "sharp_dont" (3-7 words): specific DON'T observation.
+- "spoken_sharp_line" (20-28 words): observational voiceover insight.
+- "reflection_question" (5-10 words): short, engaging self-reflection question for viewer comments/saves.
+- "spoken_compatibility_line" (25-35 words): voiceover combining the reflection question with harmonious and friction sign compatibility explanations.
 - "caption" (40-70 words): atmospheric post caption text with 3-5 lowercase hashtags at the end.
 
 Output ONLY the JSON object. No markdown fences, no preamble."""
 
 
-def build_transit_context(moon_sign, moon_phase_label, retrogrades, sign, compatibility, event_alert=None) -> str:
+def build_transit_context(moon_sign, moon_phase_label, retrogrades, sign, compatibility, event_alert=None, sky_weather=None) -> str:
     facts = []
     if sign:
         facts.append(f"Target Account Sign: {sign}.")
@@ -98,7 +100,9 @@ def build_transit_context(moon_sign, moon_phase_label, retrogrades, sign, compat
     if moon_sign:
         phase_bit = f", {moon_phase_label}" if moon_phase_label else ""
         facts.append(f"Today's Moon is in {moon_sign}{phase_bit}.")
-    if retrogrades:
+    if sky_weather and sky_weather.get("summary"):
+        facts.append(f"Sky Weather / Retrogrades: {sky_weather['summary']}.")
+    elif retrogrades:
         verb = "is" if len(retrogrades) == 1 else "are"
         facts.append(f"{', '.join(retrogrades)} {verb} currently retrograde.")
     if moon_sign and sign:
@@ -143,6 +147,7 @@ def save_script_history(sign: str, result: dict):
         "sharp_do": result.get("sharp_do", ""),
         "sharp_dont": result.get("sharp_dont", ""),
         "spoken_sharp_line": result.get("spoken_sharp_line", ""),
+        "reflection_question": result.get("reflection_question", ""),
     }
     sign_history.append(entry)
     data[sign] = sign_history[-10:]
@@ -165,7 +170,7 @@ ELEMENT_PALETTES = {
 def build_user_prompt(sign: str, element: str, transit_context: str, history: list[dict] = None) -> str:
     allowed_colors = ", ".join(ELEMENT_PALETTES.get(element.lower(), ELEMENT_PALETTES["fire"]))
     prompt = (
-        f"Write today's horoscope card for {sign} ({element} sign).\n\n"
+        f"Write today's 5-beat horoscope card for {sign} ({element} sign).\n\n"
         f"Today's real transit and compatibility data: {transit_context}\n\n"
         f"IMPORTANT: For power_color, you MUST select a color from the {element.upper()} palette: {allowed_colors}."
     )
@@ -200,14 +205,17 @@ def mock_response(sign: str, element: str, transit_context: str) -> dict:
     # Used only with --dry-run, to exercise validation/retry logic offline.
     return {
         "card_hook": f"Waning Moon in Taurus tests your {element} energy.",
-        "spoken_hook": "Today's waning Moon in Taurus forms a challenging angle to your sun.",
+        "spoken_hook": "Today's waning Moon in Taurus forms a challenging angle to your sun sign today.",
+        "card_sky_weather": "Mercury in steady motion",
+        "spoken_sky_weather": "With current sky transits highlighting practical priorities, steady grounded momentum is favored.",
         "power_focus": "Finish open tasks",
         "power_color": "Crimson" if element.lower() == "fire" else "Forest green",
-        "spoken_context": "This steady energy is asking you to ground your restless thoughts today into one priority.",
+        "spoken_context": "This steady energy is asking you to ground your restless thoughts today into one priority before expanding outward.",
         "sharp_do": "Finish active tasks",
         "sharp_dont": "Re-open old arguments",
-        "spoken_sharp_line": "Whatever project you started earlier this week, push to finish it today rather than starting something new.",
-        "spoken_compatibility_line": "You will vibe best with Aries energy today to amplify your momentum, but handle Gemini with extra care to avoid static.",
+        "spoken_sharp_line": "Whatever project you started earlier this week, push to finish it today rather than starting something completely new.",
+        "reflection_question": "What priority are you avoiding finishing today?",
+        "spoken_compatibility_line": "Ask yourself: what priority are you holding back from finishing? You will vibe best with Aries energy today, but handle Gemini with extra care.",
         "caption": (
             f"Under a waning Taurus moon, the {element} in you meets earth that refuses to "
             f"hurry. What already has momentum wants your attention now, not the next spark. "
@@ -219,7 +227,7 @@ def mock_response(sign: str, element: str, transit_context: str) -> dict:
 def spoken_word_count(result: dict) -> int:
     return sum(
         len(result.get(k, "").split())
-        for k in ("spoken_hook", "spoken_context", "spoken_sharp_line", "spoken_compatibility_line")
+        for k in ("spoken_hook", "spoken_sky_weather", "spoken_context", "spoken_sharp_line", "spoken_compatibility_line")
     )
 
 
@@ -294,10 +302,11 @@ def main():
             retrogrades = transits["retrogrades"]
             compatibility = transits.get("compatibility")
             event_alert = transits.get("event_alert")
+            sky_weather = transits.get("sky_weather")
         except Exception as e:
             print(f"[WARNING] Could not auto-fetch transits ({e}); proceeding without them.", file=sys.stderr)
 
-    transit_context = build_transit_context(moon_sign, moon_phase_label, retrogrades, args.sign, compatibility, event_alert)
+    transit_context = build_transit_context(moon_sign, moon_phase_label, retrogrades, args.sign, compatibility, event_alert, sky_weather)
     result = generate(args.sign, args.element, transit_context, args.dry_run)
     result["transit_context"] = transit_context
     print(json.dumps(result, indent=2))

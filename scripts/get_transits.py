@@ -113,6 +113,48 @@ def own_aspect_to_moon(sign: str, moon_sign: str) -> str:
     return aspect_between(sign, moon_sign)
 
 
+def calculate_retrograde_progress(now, body_class) -> dict | None:
+    yesterday = ephem.Date(now - 1)
+    lon_today = ecliptic_longitude(body_class, now)
+    lon_yesterday = ecliptic_longitude(body_class, yesterday)
+    d = lon_today - lon_yesterday
+    if d > 180: d -= 360
+    if d < -180: d += 360
+    if d >= 0:
+        return None
+
+    start_day = 0
+    t = float(now)
+    for i in range(1, 90):
+        t_curr = ephem.Date(t - i)
+        t_prev = ephem.Date(t - i - 1)
+        delta = ecliptic_longitude(body_class, t_curr) - ecliptic_longitude(body_class, t_prev)
+        if delta > 180: delta -= 360
+        if delta < -180: delta += 360
+        if delta >= 0:
+            start_day = i
+            break
+
+    end_day = 0
+    for i in range(1, 90):
+        t_curr = ephem.Date(t + i)
+        t_prev = ephem.Date(t + i - 1)
+        delta = ecliptic_longitude(body_class, t_curr) - ecliptic_longitude(body_class, t_prev)
+        if delta > 180: delta -= 360
+        if delta < -180: delta += 360
+        if delta >= 0:
+            end_day = i
+            break
+
+    total_days = start_day + end_day
+    day_num = start_day + 1
+    return {
+        "day_num": day_num,
+        "total_days": total_days,
+        "label": f"Day {day_num} of {total_days}"
+    }
+
+
 def get_transits(sign: str = None, date_str: str = None) -> dict:
     if date_str:
         from datetime import datetime
@@ -127,11 +169,6 @@ def get_transits(sign: str = None, date_str: str = None) -> dict:
     moon_lon = ecliptic_longitude(ephem.Moon, now)
     moon_sign = longitude_to_sign(moon_lon)
 
-    # Waxing/waning is about position in the ~29.53-day synodic cycle, not
-    # day-over-day ecliptic longitude change (the Moon's longitude increases
-    # almost every day regardless of phase, so that check was nearly always
-    # true — it was misreporting "waxing" through the second half of the
-    # cycle). Age since the last new moon < half the cycle == waxing.
     prev_new_moon = ephem.previous_new_moon(now)
     moon_age_days = round(float(now - prev_new_moon), 2)
     waxing = moon_age_days < 14.765
@@ -140,7 +177,9 @@ def get_transits(sign: str = None, date_str: str = None) -> dict:
     phase_label = moon_phase_label(phase_pct, waxing)
 
     retrogrades = []
-    for name, body_class in [("Mercury", ephem.Mercury), ("Venus", ephem.Venus), ("Mars", ephem.Mars)]:
+    sky_weather_details = []
+    body_map = {"Mercury": ephem.Mercury, "Venus": ephem.Venus, "Mars": ephem.Mars}
+    for name, body_class in body_map.items():
         lon_today = ecliptic_longitude(body_class, now)
         lon_yesterday = ecliptic_longitude(body_class, yesterday)
         d = lon_today - lon_yesterday
@@ -150,6 +189,11 @@ def get_transits(sign: str = None, date_str: str = None) -> dict:
             d += 360
         if d < 0:
             retrogrades.append(name)
+            prog = calculate_retrograde_progress(now, body_class)
+            if prog:
+                sky_weather_details.append(f"{name} Retrograde ({prog['label']})")
+            else:
+                sky_weather_details.append(f"{name} Retrograde")
 
     result = {
         "moon_sign": moon_sign,
@@ -157,6 +201,11 @@ def get_transits(sign: str = None, date_str: str = None) -> dict:
         "moon_phase_label": phase_label,
         "moon_age_days": moon_age_days,
         "retrogrades": retrogrades,  # empty list if nothing is retrograde today
+        "sky_weather": {
+            "active_retrogrades": retrogrades,
+            "details": sky_weather_details,
+            "summary": ", ".join(sky_weather_details) if sky_weather_details else f"Moon in {moon_sign} ({phase_label})"
+        },
         "event_alert": resolve_event_alert(now, moon, phase_pct),
     }
     if sign:
