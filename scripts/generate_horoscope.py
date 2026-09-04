@@ -14,6 +14,7 @@ import argparse
 import json
 import os
 import sys
+from datetime import datetime, timezone
 
 from pathlib import Path
 try:
@@ -127,7 +128,7 @@ def load_script_history(sign: str) -> list[dict]:
     try:
         with open(HISTORY_FILE, "r") as f:
             data = json.load(f)
-            return data.get(sign, [])[-5:]
+            return data.get(sign.lower(), [])[-5:]
     except Exception:
         return []
 
@@ -142,22 +143,68 @@ def save_script_history(sign: str, result: dict):
         except Exception:
             data = {}
 
-    sign_history = data.get(sign, [])
+    sign_key = sign.lower()
+    sign_history = data.get(sign_key, [])
+    now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     entry = {
+        "date": now_iso,
         "power_focus": result.get("power_focus", ""),
+        "power_color": result.get("power_color", ""),
         "sharp_do": result.get("sharp_do", ""),
         "sharp_dont": result.get("sharp_dont", ""),
         "spoken_sharp_line": result.get("spoken_sharp_line", ""),
         "reflection_question": result.get("reflection_question", ""),
+        "spoken_reflection": result.get("spoken_reflection", ""),
     }
     sign_history.append(entry)
-    data[sign] = sign_history[-10:]
+    data[sign_key] = sign_history[-10:]
 
     try:
         with open(HISTORY_FILE, "w") as f:
             json.dump(data, f, indent=2)
     except Exception as e:
         print(f"[WARNING] Could not save script history ({e})", file=sys.stderr)
+
+
+def tokenize_words(text: str) -> set[str]:
+    words = re.findall(r'\b[a-z]{3,}\b', text.lower())
+    stopwords = {
+        "the", "and", "for", "that", "this", "with", "you", "your", "today",
+        "from", "have", "will", "what", "are", "about", "more", "into", "than"
+    }
+    return set(w for w in words if w not in stopwords)
+
+
+def is_too_similar(candidate: dict, history: list[dict]) -> bool:
+    if not history:
+        return False
+
+    cand_focus = tokenize_words(candidate.get("power_focus", "") + " " + candidate.get("sharp_do", ""))
+    cand_question = tokenize_words(candidate.get("reflection_question", ""))
+
+    for past in history:
+        past_focus = tokenize_words(past.get("power_focus", "") + " " + past.get("sharp_do", ""))
+        past_question = tokenize_words(past.get("reflection_question", ""))
+
+        # Check focus/action word overlap
+        if cand_focus and past_focus:
+            intersection = cand_focus.intersection(past_focus)
+            union = cand_focus.union(past_focus)
+            jaccard = len(intersection) / len(union) if union else 0
+            if jaccard > 0.35:
+                print(f"[RETRY CHECK] Focus '{candidate.get('power_focus')}' shares too much overlap with past focus '{past.get('power_focus')}' (Jaccard: {jaccard:.2f})", file=sys.stderr)
+                return True
+
+        # Check reflection question word overlap
+        if cand_question and past_question:
+            q_intersection = cand_question.intersection(past_question)
+            q_union = cand_question.union(past_question)
+            q_jaccard = len(q_intersection) / len(q_union) if q_union else 0
+            if q_jaccard > 0.40:
+                print(f"[RETRY CHECK] Question '{candidate.get('reflection_question')}' shares too much overlap with past question '{past.get('reflection_question')}' (Jaccard: {q_jaccard:.2f})", file=sys.stderr)
+                return True
+
+    return False
 
 
 ELEMENT_PALETTES = {
@@ -171,35 +218,62 @@ ELEMENT_PALETTES = {
 def build_user_prompt(sign: str, element: str, transit_context: str, history: list[dict] = None) -> str:
     allowed_colors = ", ".join(ELEMENT_PALETTES.get(element.lower(), ELEMENT_PALETTES["fire"]))
     prompt = (
-        f"Write today's 5-beat horoscope card for {sign} ({element} sign).\n\n"
+        f"Write today's 6-beat horoscope card for {sign} ({element} sign).\n\n"
         f"Today's real transit and compatibility data: {transit_context}\n\n"
         f"IMPORTANT: For power_color, you MUST select a color from the {element.upper()} palette: {allowed_colors}."
     )
     if history:
-        avoid_items = [f"- '{item.get('spoken_sharp_line')}' (focus: '{item.get('power_focus')}')" for item in history if item.get('spoken_sharp_line')]
-        if avoid_items:
-            prompt += (
-                f"\n\n=== RECENT READINGS TO AVOID REPEATING ===\n"
-                f"Do NOT repeat or paraphrase these specific themes/lines used for {sign} in recent days:\n"
-                + "\n".join(avoid_items)
-                + "\nYou MUST generate a completely distinct, fresh daily focus and observational insight today."
-            )
+        avoid_themes = []
+        avoid_questions = []
+        avoid_colors = []
+        for item in history:
+            if item.get("power_focus"):
+                avoid_themes.append(f"- Focus: '{item.get('power_focus')}', DO: '{item.get('sharp_do')}'")
+            if item.get("reflection_question"):
+                avoid_questions.append(f"- Question: '{item.get('reflection_question')}'")
+            if item.get("power_color"):
+                avoid_colors.append(item.get("power_color"))
+
+        prompt += (
+            f"\n\n=== RECENT READINGS FOR {sign.upper()} (LAST 5 DAYS) ===\n"
+            f"Do NOT repeat, paraphrase, or reuse any of the following recent themes, questions, or colors:\n"
+        )
+        if avoid_themes:
+            prompt += "Recent Themes & Actions:\n" + "\n".join(avoid_themes) + "\n"
+        if avoid_questions:
+            prompt += "Recent Reflection Questions:\n" + "\n".join(avoid_questions) + "\n"
+        if avoid_colors:
+            prompt += f"Recent Colors Used: {', '.join(set(avoid_colors))}\n"
+        prompt += "\nYou MUST generate a completely original focus theme, fresh DO/DON'T pair, and unique reflection question today."
     return prompt
 
 
 def call_openai(sign: str, element: str, transit_context: str, history: list[dict] = None) -> dict:
     from openai import OpenAI
+    import time
     client = OpenAI()
-    resp = client.chat.completions.create(
-        model="gpt-4o-mini",
-        response_format={"type": "json_object"},
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": build_user_prompt(sign, element, transit_context, history)},
-        ],
-        temperature=0.85,
-    )
-    return json.loads(resp.choices[0].message.content)
+
+    last_err = None
+    for attempt in range(1, 4):
+        try:
+            resp = client.chat.completions.create(
+                model="gpt-4o-mini",
+                response_format={"type": "json_object"},
+                messages=[
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": build_user_prompt(sign, element, transit_context, history)},
+                ],
+                temperature=0.85,
+                timeout=30.0,
+            )
+            return json.loads(resp.choices[0].message.content)
+        except Exception as e:
+            last_err = e
+            print(f"[WARNING] OpenAI API attempt {attempt} failed ({e}); retrying in {attempt * 2}s...", file=sys.stderr)
+            time.sleep(attempt * 2)
+
+    print(f"[ERROR] All OpenAI API attempts failed: {last_err}", file=sys.stderr)
+    raise last_err
 
 
 def mock_response(sign: str, element: str, transit_context: str) -> dict:
@@ -246,12 +320,16 @@ def generate(sign: str, element: str, transit_context: str, dry_run: bool) -> di
         result = fetch(sign, element, transit_context, history)
         word_count = spoken_word_count(result)
         last_result = result
+
+        if not dry_run and is_too_similar(result, history):
+            print(f"[attempt {attempt}] candidate script is too similar to recent history for {sign}, retrying...", file=sys.stderr)
+            continue
+
         if MIN_SPOKEN_WORDS <= word_count <= MAX_SPOKEN_WORDS:
             result["sign"] = sign
             result["element"] = element
             result["word_count"] = word_count
-            if not dry_run:
-                save_script_history(sign, result)
+            save_script_history(sign, result)
             return result
         print(
             f"[attempt {attempt}] spoken word_count={word_count} outside "

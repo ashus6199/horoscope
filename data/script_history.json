@@ -1,11 +1,24 @@
 {
-  "Sagittarius": [
+  "sagittarius": [
     {
-      "power_focus": "Emotional clarity.",
-      "sharp_do": "Finish what you started.",
-      "sharp_dont": "Start new projects.",
+      "date": "2026-09-04",
+      "power_focus": "Emotional clarity",
+      "power_color": "Crimson",
+      "sharp_do": "Finish what you started",
+      "sharp_dont": "Start new projects",
       "spoken_sharp_line": "Finishing what you've already started will feel more satisfying than diving into something new right now.",
-      "reflection_question": "What emotions are you ready to clarify?"
+      "reflection_question": "What emotions are you ready to clarify?",
+      "spoken_reflection": "What emotions are you ready to clarify? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-04",
+      "power_focus": "Finish open tasks",
+      "power_color": "Amber",
+      "sharp_do": "Finish active tasks",
+      "sharp_dont": "Re-open old arguments",
+      "spoken_sharp_line": "Whatever project you started earlier this week, push to finish it today rather than starting something completely new.",
+      "reflection_question": "What priority are you avoiding finishing today?",
+      "spoken_reflection": "As today closes, ask yourself: what priority are you avoiding finishing today? Take a pause and think about it."
     }
   ]
 }
