@@ -183,7 +183,25 @@ const HookCard: React.FC<{
             borderRadius: "50%",
             background: eventAlert ? `${accent}18` : "rgba(196, 201, 212, 0.12)",
             border: `1.5px solid ${eventAlert ? `${accent}50` : "rgba(196, 201, 212, 0.35)"}`,
-            boxShadow: eventAlert ? `0// ─── Card 2: Sky Weather & Retrogrades ───────────────────────────
+            boxShadow: eventAlert ? `0 0 16px ${accent}60` : "0 0 12px rgba(196, 201, 212, 0.2)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 26,
+            flexShrink: 0,
+          }}
+        >
+          {moonIcon}
+        </div>
+        <div style={{ fontFamily, fontSize: 26, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
+          {block.text}
+        </div>
+      </div>
+    </CardShell>
+  );
+};
+
+// ─── Card 2: Sky Weather & Retrogrades ───────────────────────────
 const SkyWeatherCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> = ({
   block, opacity, ty,
 }) => {
