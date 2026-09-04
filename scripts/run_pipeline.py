@@ -203,27 +203,39 @@ def main():
             "words": bw,
         })
 
-    # --- Card 4: Compatibility & Action ---
-    spoken_compat = horoscope_data.get("spoken_compatibility_line", "")
+    # --- Card 4: Sharp Line (DO / DON'T) ---
     spoken_sharp = horoscope_data.get("spoken_sharp_line", "")
-    combined_sharp_compat = f"{spoken_sharp} {spoken_compat}".strip()
-    if combined_sharp_compat:
-        start, end, bw, w_cursor = find_beat_timing(combined_sharp_compat, w_cursor, prev_end)
+    if spoken_sharp:
+        start, end, bw, w_cursor = find_beat_timing(spoken_sharp, w_cursor, prev_end)
         prev_end = end
         card_blocks.append({
-            "key": "compatibility_line",
-            "text": horoscope_data.get("sharp_do", transit_meta["bestSign"]),
+            "key": "sharp_line",
+            "text": horoscope_data.get("sharp_do", ""),
             "sharpDo": horoscope_data.get("sharp_do", ""),
             "sharpDont": horoscope_data.get("sharp_dont", ""),
-            "bestSign": transit_meta["bestSign"],
-            "cautionSign": transit_meta["cautionSign"],
-            "spokenText": combined_sharp_compat,
+            "spokenText": spoken_sharp,
             "start": start, "end": end,
             "isSharpLine": True,
             "words": bw,
         })
 
-    # --- Card 5: Dedicated Journal Reflection ---
+    # --- Card 5: Compatibility (Best Energy & Handle With Care) ---
+    spoken_compat = horoscope_data.get("spoken_compatibility_line", "")
+    if spoken_compat:
+        start, end, bw, w_cursor = find_beat_timing(spoken_compat, w_cursor, prev_end)
+        prev_end = end
+        card_blocks.append({
+            "key": "compatibility_line",
+            "text": transit_meta["bestSign"],
+            "bestSign": transit_meta["bestSign"],
+            "cautionSign": transit_meta["cautionSign"],
+            "spokenText": spoken_compat,
+            "start": start, "end": end,
+            "isSharpLine": False,
+            "words": bw,
+        })
+
+    # --- Card 6: Dedicated Journal Reflection ---
     spoken_reflection = horoscope_data.get("spoken_reflection", "")
     if spoken_reflection:
         start, end, bw, w_cursor = find_beat_timing(spoken_reflection, w_cursor, prev_end)

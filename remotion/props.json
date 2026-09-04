@@ -4,8 +4,8 @@
   "spokenText": "Today's waning Moon in Taurus forms a challenging angle to your sun sign today. With current sky transits highlighting practical priorities, steady grounded momentum is favored. This steady energy is asking you to ground your restless thoughts today into one priority before expanding outward. Whatever project you started earlier this week, push to finish it today rather than starting something completely new. You will vibe best with Aries energy today, but handle Gemini with extra care. As today closes, ask yourself: what priority are you avoiding finishing today?",
   "moonSign": "Gemini",
   "moonPhase": "waning",
-  "moonPhasePct": 50.7,
-  "moonAgeDays": 22.55,
+  "moonPhasePct": 50.5,
+  "moonAgeDays": 22.56,
   "bestSign": "Aquarius",
   "cautionSign": "Pisces",
   "eventAlert": null,
@@ -264,15 +264,13 @@
       ]
     },
     {
-      "key": "compatibility_line",
+      "key": "sharp_line",
       "text": "Finish active tasks",
       "sharpDo": "Finish active tasks",
       "sharpDont": "Re-open old arguments",
-      "bestSign": "Aquarius",
-      "cautionSign": "Pisces",
-      "spokenText": "Whatever project you started earlier this week, push to finish it today rather than starting something completely new. You will vibe best with Aries energy today, but handle Gemini with extra care.",
+      "spokenText": "Whatever project you started earlier this week, push to finish it today rather than starting something completely new.",
       "start": 17.658,
-      "end": 30.44,
+      "end": 24.822,
       "isSharpLine": true,
       "words": [
         {
@@ -364,7 +362,19 @@
           "word": "new.",
           "start": 24.481,
           "end": 24.822
-        },
+        }
+      ]
+    },
+    {
+      "key": "compatibility_line",
+      "text": "Aquarius",
+      "bestSign": "Aquarius",
+      "cautionSign": "Pisces",
+      "spokenText": "You will vibe best with Aries energy today, but handle Gemini with extra care.",
+      "start": 24.882,
+      "end": 30.44,
+      "isSharpLine": false,
+      "words": [
         {
           "word": "You",
           "start": 24.882,

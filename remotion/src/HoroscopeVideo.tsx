@@ -551,8 +551,8 @@ export const HoroscopeVideo: React.FC<Props> = ({
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
-  // Ensure we have 5 card slots for progressive disclosure
-  const slots = Array.from({ length: 5 }).map((_, idx) => cardBlocks[idx] || null);
+  // Ensure we have 6 card slots for progressive disclosure
+  const slots = Array.from({ length: 6 }).map((_, idx) => cardBlocks[idx] || null);
 
   // Render the correct card component based on block.key
   const renderCard = (block: CardBlock, opacity: number, ty: number) => {
@@ -611,12 +611,12 @@ export const HoroscopeVideo: React.FC<Props> = ({
       />
 
       {/* Top Header: Sign Name & Date */}
-      <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 180 }}>
+      <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 150 }}>
         <div
           style={{
             opacity: labelOpacity,
             fontFamily: "Georgia, serif",
-            fontSize: 48,
+            fontSize: 46,
             letterSpacing: 6,
             textTransform: "uppercase",
             color: LIGHT_GOLD,
@@ -624,13 +624,13 @@ export const HoroscopeVideo: React.FC<Props> = ({
           }}
         >
           <div>{signName}</div>
-          <div style={{ fontSize: 24, letterSpacing: 4, marginTop: 12, opacity: 0.7 }}>{dateText}</div>
+          <div style={{ fontSize: 22, letterSpacing: 4, marginTop: 10, opacity: 0.7 }}>{dateText}</div>
         </div>
       </AbsoluteFill>
 
       {/* Progressive Disclosure Card Stack with Skeleton Loaders */}
       {!isAudioFinished && (
-        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", paddingTop: 260, paddingBottom: 200, paddingLeft: 60, paddingRight: 60 }}>
+        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", paddingTop: 230, paddingBottom: 160, paddingLeft: 60, paddingRight: 60 }}>
           <div
             style={{
               width: "100%",
@@ -638,7 +638,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
               opacity: stackFadeOut,
               display: "flex",
               flexDirection: "column",
-              gap: 20,
+              gap: 14,
             }}
           >
             {slots.map((block, idx) => {
