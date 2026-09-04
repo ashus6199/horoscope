@@ -113,6 +113,47 @@ def build_transit_context(moon_sign, moon_phase_label, retrogrades, sign, compat
     return " ".join(facts)
 
 
+HISTORY_FILE = Path(__file__).resolve().parent.parent / "data" / "script_history.json"
+
+
+def load_script_history(sign: str) -> list[dict]:
+    if not HISTORY_FILE.exists():
+        return []
+    try:
+        with open(HISTORY_FILE, "r") as f:
+            data = json.load(f)
+            return data.get(sign, [])[-5:]
+    except Exception:
+        return []
+
+
+def save_script_history(sign: str, result: dict):
+    HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
+    data = {}
+    if HISTORY_FILE.exists():
+        try:
+            with open(HISTORY_FILE, "r") as f:
+                data = json.load(f)
+        except Exception:
+            data = {}
+
+    sign_history = data.get(sign, [])
+    entry = {
+        "power_focus": result.get("power_focus", ""),
+        "sharp_do": result.get("sharp_do", ""),
+        "sharp_dont": result.get("sharp_dont", ""),
+        "spoken_sharp_line": result.get("spoken_sharp_line", ""),
+    }
+    sign_history.append(entry)
+    data[sign] = sign_history[-10:]
+
+    try:
+        with open(HISTORY_FILE, "w") as f:
+            json.dump(data, f, indent=2)
+    except Exception as e:
+        print(f"[WARNING] Could not save script history ({e})", file=sys.stderr)
+
+
 ELEMENT_PALETTES = {
     "fire": ["Warm Coral", "Gold", "Crimson", "Ruby", "Scarlet", "Amber", "Burnt orange", "Rust"],
     "earth": ["Forest green", "Emerald", "Sage", "Terracotta", "Olive", "Bronze", "Copper"],
@@ -121,16 +162,26 @@ ELEMENT_PALETTES = {
 }
 
 
-def build_user_prompt(sign: str, element: str, transit_context: str) -> str:
+def build_user_prompt(sign: str, element: str, transit_context: str, history: list[dict] = None) -> str:
     allowed_colors = ", ".join(ELEMENT_PALETTES.get(element.lower(), ELEMENT_PALETTES["fire"]))
-    return (
+    prompt = (
         f"Write today's horoscope card for {sign} ({element} sign).\n\n"
         f"Today's real transit and compatibility data: {transit_context}\n\n"
         f"IMPORTANT: For power_color, you MUST select a color from the {element.upper()} palette: {allowed_colors}."
     )
+    if history:
+        avoid_items = [f"- '{item.get('spoken_sharp_line')}' (focus: '{item.get('power_focus')}')" for item in history if item.get('spoken_sharp_line')]
+        if avoid_items:
+            prompt += (
+                f"\n\n=== RECENT READINGS TO AVOID REPEATING ===\n"
+                f"Do NOT repeat or paraphrase these specific themes/lines used for {sign} in recent days:\n"
+                + "\n".join(avoid_items)
+                + "\nYou MUST generate a completely distinct, fresh daily focus and observational insight today."
+            )
+    return prompt
 
 
-def call_openai(sign: str, element: str, transit_context: str) -> dict:
+def call_openai(sign: str, element: str, transit_context: str, history: list[dict] = None) -> dict:
     from openai import OpenAI
     client = OpenAI()
     resp = client.chat.completions.create(
@@ -138,7 +189,7 @@ def call_openai(sign: str, element: str, transit_context: str) -> dict:
         response_format={"type": "json_object"},
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": build_user_prompt(sign, element, transit_context)},
+            {"role": "user", "content": build_user_prompt(sign, element, transit_context, history)},
         ],
         temperature=0.85,
     )
@@ -173,17 +224,20 @@ def spoken_word_count(result: dict) -> int:
 
 
 def generate(sign: str, element: str, transit_context: str, dry_run: bool) -> dict:
-    fetch = mock_response if dry_run else call_openai
+    history = load_script_history(sign)
+    fetch = (lambda s, e, tc, h=None: mock_response(s, e, tc)) if dry_run else call_openai
 
     last_result = None
     for attempt in range(1, MAX_RETRIES + 1):
-        result = fetch(sign, element, transit_context)
+        result = fetch(sign, element, transit_context, history)
         word_count = spoken_word_count(result)
         last_result = result
         if MIN_SPOKEN_WORDS <= word_count <= MAX_SPOKEN_WORDS:
             result["sign"] = sign
             result["element"] = element
             result["word_count"] = word_count
+            if not dry_run:
+                save_script_history(sign, result)
             return result
         print(
             f"[attempt {attempt}] spoken word_count={word_count} outside "
@@ -195,6 +249,8 @@ def generate(sign: str, element: str, transit_context: str, dry_run: bool) -> di
     last_result["element"] = element
     last_result["word_count"] = spoken_word_count(last_result)
     last_result["warning"] = "spoken word count out of target band after max retries"
+    if not dry_run:
+        save_script_history(sign, last_result)
     return last_result
 
 
