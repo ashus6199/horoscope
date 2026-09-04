@@ -2,8 +2,8 @@ name: Horoscope Video Pipeline
 
 on:
   schedule:
-    # Runs daily at 01:30 UTC (7:00 AM IST)
-    - cron: '30 1 * * *'
+    # Runs daily at 01:17 UTC (6:47 AM IST) - non-round minute to avoid GitHub Actions queue delays
+    - cron: '17 1 * * *'
   workflow_dispatch:
     inputs:
       sign:
