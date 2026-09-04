@@ -27,9 +27,8 @@ def run_command(cmd: list[str], cwd: Path | None = None) -> str:
 def main():
     parser = argparse.ArgumentParser(description="Run full Horoscope video pipeline")
     parser.add_argument("--sign", required=True, help="Zodiac sign (e.g. Sagittarius)")
-    parser.add_argument("--element", required=True, choices=["fire", "earth", "air", "water"])
-    parser.add_argument("--manifest", type=Path, default=Path("manifest/manifest.json"))
-    parser.add_argument("--mark-used", action="store_true", help="Mark selected clip as used in manifest")
+    parser.add_argument("--mark-used", action="store_true", help="Mark selected clip as used in manifest (enabled by default for real runs)")
+    parser.add_argument("--no-mark-used", action="store_true", help="Prevent marking selected clip as used in manifest")
     parser.add_argument("--dry-run", action="store_true", help="Use dry-run/mock responses")
     parser.add_argument("--skip-render", action="store_true", help="Prepare assets and props but skip Remotion render step")
     parser.add_argument("--date", help="Override date (YYYY-MM-DD) for testing historical or future events")
@@ -52,7 +51,8 @@ def main():
         "--element", args.element,
         "--manifest", str(args.manifest),
     ]
-    if args.mark_used:
+    should_mark = (not args.no_mark_used and not args.dry_run) or args.mark_used
+    if should_mark:
         pick_cmd.append("--mark-used")
     clip_output_json = run_command(pick_cmd, cwd=repo_root)
     clip_data = json.loads(clip_output_json)
