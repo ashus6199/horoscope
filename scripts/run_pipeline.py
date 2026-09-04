@@ -298,7 +298,10 @@ def main():
     print(f"Using background clip: {bg_video_path} (Duration: {bg_duration_seconds}s)")
 
     from datetime import datetime
-    date_text = datetime.now().strftime("%d %B %Y")
+    if args.date:
+        date_text = datetime.strptime(args.date, "%Y-%m-%d").strftime("%d %B %Y")
+    else:
+        date_text = datetime.now().strftime("%d %B %Y")
 
     print(f"\n=== Step 5: Writing Remotion Props File ===")
     props = {
