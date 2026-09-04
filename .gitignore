@@ -4,6 +4,7 @@ remotion/out/
 remotion/node_modules/
 output/
 remotion/public/assets/*.mp3
+remotion/public/assets/loop_*.mp4
 remotion/public/assets/placeholder-bg.mp4
 .env
 __pycache__/
