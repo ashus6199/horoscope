@@ -46,9 +46,27 @@ def make_request(url: str, method: str = "GET", data: Dict[str, Any] = None) -> 
         err_body = e.read().decode("utf-8")
         try:
             err_json = json.loads(err_body)
-            error_msg = err_json.get("error", {}).get("message", err_body)
+            error_obj = err_json.get("error", {})
+            error_msg = error_obj.get("message", err_body)
+            error_code = error_obj.get("code")
         except Exception:
             error_msg = err_body
+            error_code = None
+
+        if "API access blocked" in error_msg or error_code in (200, 10, 200-299):
+            print("\n=================== META GRAPH API TROUBLESHOOTING ===================", file=sys.stderr)
+            print("[ERROR] Meta returned 'API access blocked'. Check the following 3 requirements:", file=sys.stderr)
+            print(" 1. Meta App Development Mode:", file=sys.stderr)
+            print("    If your Meta App is in Development Mode, your Instagram account MUST be added under:", file=sys.stderr)
+            print("    Meta App Dashboard -> Roles -> Roles / Instagram Testers -> Add Instagram Testers.", file=sys.stderr)
+            print("    Then accept the invite in Instagram Mobile App: Settings -> Account / Website Permissions -> Tester Invites.", file=sys.stderr)
+            print(" 2. Token Scopes:", file=sys.stderr)
+            print("    Ensure your INSTAGRAM_ACCESS_TOKEN was generated with 'instagram_basic' and 'instagram_content_publish' scopes.", file=sys.stderr)
+            print("    Verify your token at: https://developers.facebook.com/tools/debug/accesstoken/", file=sys.stderr)
+            print(" 3. Instagram Account Type:", file=sys.stderr)
+            print("    Ensure your Instagram account is set to Business/Creator and linked to a Facebook Page.", file=sys.stderr)
+            print("======================================================================\n", file=sys.stderr)
+
         raise RuntimeError(f"Meta Graph API error (HTTP {e.code}): {error_msg}")
 
 
