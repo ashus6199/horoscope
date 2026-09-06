@@ -1,6 +1,6 @@
-# Elemental Horoscope Video Pipeline
+# Elemental Horoscope Video
 
-Automated daily short-form horoscope video pipeline — see `PRD.md` for full
+Daily short-form horoscope video — see `PRD.md` for full
 requirements/phased plan, and `AGENTS.md` for standing project context.
 
 ## Structure
