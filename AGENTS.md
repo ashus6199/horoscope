@@ -24,7 +24,7 @@ are in `PRD.md` — read that first for context on what phase we're in.
   GitHub Actions, not run interactively.
 - Video duration must always be derived from the actual TTS audio duration,
   never hardcoded — see `remotion/src/Root.tsx`'s `calculateMetadata`.
-- Voice is fixed: `en-GB-SoniaNeural`, rate `-8%`, pitch `-4Hz`. Don't change
+- Voice: `en-US-EmmaMultilingualNeural`, rate `+0%`, pitch `+0Hz`. Don't change
   without asking.
 - The "Pokemon" / creature-video concept is a placeholder, not final IP —
   don't hardcode Pokemon names/references into code; keep it generic

@@ -2,16 +2,6 @@
   "sagittarius": [
     {
       "date": "2026-09-04",
-      "power_focus": "Emotional clarity",
-      "power_color": "Crimson",
-      "sharp_do": "Finish what you started",
-      "sharp_dont": "Start new projects",
-      "spoken_sharp_line": "Finishing what you've already started will feel more satisfying than diving into something new right now.",
-      "reflection_question": "What emotions are you ready to clarify?",
-      "spoken_reflection": "What emotions are you ready to clarify? Take a pause and think about it."
-    },
-    {
-      "date": "2026-09-04",
       "power_focus": "Finish open tasks",
       "power_color": "Amber",
       "sharp_do": "Finish active tasks",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Caring for yourself today will feel more rewarding than ignoring your emotions.",
       "reflection_question": "What self-care ritual can you embrace today?",
       "spoken_reflection": "What self-care ritual can you embrace today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-07",
+      "power_focus": "Emotional clarity and release.",
+      "power_color": "Rust",
+      "sharp_do": "Reflect on your emotional needs.",
+      "sharp_dont": "Avoid suppressing your feelings.",
+      "spoken_sharp_line": "Taking time to reflect on your emotional needs will feel better than pushing them aside.",
+      "reflection_question": "What emotions are ready to be released?",
+      "spoken_reflection": "What emotions are ready to be released? Take a pause and think about it."
     }
   ]
 }

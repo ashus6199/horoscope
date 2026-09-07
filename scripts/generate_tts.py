@@ -27,11 +27,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-# Tuned for "elegant, mysterious" — a measured pace and slightly lower pitch
-# read as more deliberate/oracular than the default neutral delivery.
-DEFAULT_VOICE = "en-GB-SoniaNeural"
-DEFAULT_RATE = "-8%"
-DEFAULT_PITCH = "-4Hz"
+# Emma Multilingual — expressive, warm, modern conversational tone.
+DEFAULT_VOICE = "en-US-EmmaMultilingualNeural"
+DEFAULT_RATE = "+0%"
+DEFAULT_PITCH = "+0Hz"
 
 # edge-tts reports WordBoundary offsets/durations in 100-nanosecond units.
 HNS_PER_SECOND = 10_000_000
