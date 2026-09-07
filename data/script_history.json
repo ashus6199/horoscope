@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-04",
-      "power_focus": "Prioritize self-reflection.",
-      "power_color": "Burnt orange",
-      "sharp_do": "Explore your inner thoughts.",
-      "sharp_dont": "Avoid shying away from discomfort.",
-      "spoken_sharp_line": "Engaging with your inner thoughts will feel more rewarding than ignoring any discomfort you might be experiencing.",
-      "reflection_question": "What thoughts are you avoiding reflecting on?",
-      "spoken_reflection": "What thoughts are you avoiding reflecting on? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-05",
       "power_focus": "Embrace playful curiosity",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Sharing your thoughts will feel more liberating than keeping them bottled up.",
       "reflection_question": "What emotions are you ready to share?",
       "spoken_reflection": "What emotions are you ready to share? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-07",
+      "power_focus": "Emotional grounding.",
+      "power_color": "Gold",
+      "sharp_do": "Consolidate your emotional needs.",
+      "sharp_dont": "Avoid starting new emotional projects.",
+      "spoken_sharp_line": "Grounding into your existing emotions will feel more fulfilling than diving into new ones.",
+      "reflection_question": "What emotional truths can you embrace today?",
+      "spoken_reflection": "What emotional truths can you embrace today? Take a pause and think about it."
     }
   ]
 }
