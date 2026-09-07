@@ -27,8 +27,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-# Emma Multilingual — expressive, warm, modern conversational tone.
-DEFAULT_VOICE = "en-US-EmmaMultilingualNeural"
+# Ava Multilingual — warm, soft, natural breath cadence and intimate tone.
+DEFAULT_VOICE = "en-US-AvaMultilingualNeural"
 DEFAULT_RATE = "+0%"
 DEFAULT_PITCH = "+0Hz"
 
