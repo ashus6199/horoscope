@@ -122,9 +122,9 @@ def main():
     except Exception as e:
         print(f"[WARNING] Could not extract transit metadata ({e})", file=sys.stderr)
 
-    # Build spoken script from 6 spoken beats
+    # Build spoken script from 5 spoken beats
     spoken_beat_keys = [
-        "spoken_hook", "spoken_sky_weather", "spoken_context",
+        "spoken_hook", "spoken_context",
         "spoken_sharp_line", "spoken_compatibility_line", "spoken_reflection"
     ]
     spoken_parts = [horoscope_data.get(k, "") for k in spoken_beat_keys]
@@ -194,22 +194,7 @@ def main():
             "words": bw,
         })
 
-    # --- Card 2: Sky Weather & Retrogrades ---
-    spoken_sky_weather = horoscope_data.get("spoken_sky_weather", "")
-    if spoken_sky_weather:
-        start, end, bw, w_cursor = find_beat_timing(spoken_sky_weather, w_cursor, prev_end)
-        prev_end = end
-        card_blocks.append({
-            "key": "sky_weather",
-            "text": horoscope_data.get("card_sky_weather", ""),
-            "skyWeatherText": horoscope_data.get("card_sky_weather", ""),
-            "spokenText": spoken_sky_weather,
-            "start": start, "end": end,
-            "isSharpLine": False,
-            "words": bw,
-        })
-
-    # --- Card 3: Context (power focus + color) ---
+    # --- Card 2: Context (power focus + color) ---
     spoken_context = horoscope_data.get("spoken_context", "")
     if spoken_context:
         start, end, bw, w_cursor = find_beat_timing(spoken_context, w_cursor, prev_end)
@@ -225,7 +210,7 @@ def main():
             "words": bw,
         })
 
-    # --- Card 4: Sharp Line (DO / DON'T) ---
+    # --- Card 3: Sharp Line (DO / DON'T) ---
     spoken_sharp = horoscope_data.get("spoken_sharp_line", "")
     if spoken_sharp:
         start, end, bw, w_cursor = find_beat_timing(spoken_sharp, w_cursor, prev_end)
@@ -241,7 +226,7 @@ def main():
             "words": bw,
         })
 
-    # --- Card 5: Compatibility (Best Energy & Handle With Care) ---
+    # --- Card 4: Compatibility (Best Energy & Handle With Care) ---
     spoken_compat = horoscope_data.get("spoken_compatibility_line", "")
     if spoken_compat:
         start, end, bw, w_cursor = find_beat_timing(spoken_compat, w_cursor, prev_end)
@@ -257,7 +242,7 @@ def main():
             "words": bw,
         })
 
-    # --- Card 6: Dedicated Journal Reflection ---
+    # --- Card 5: Dedicated Journal Reflection ---
     spoken_reflection = horoscope_data.get("spoken_reflection", "")
     if spoken_reflection:
         start, end, bw, w_cursor = find_beat_timing(spoken_reflection, w_cursor, prev_end)

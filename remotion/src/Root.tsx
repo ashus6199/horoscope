@@ -73,6 +73,16 @@ const defaultProps = {
       isSharpLine: false,
       words: [],
     },
+    {
+      key: "reflection",
+      text: "What are you holding back from finishing today?",
+      reflectionQuestion: "What are you holding back from finishing today?",
+      spokenText: "As today closes, ask yourself: what are you holding back from finishing today? Take a pause and think about it.",
+      start: 19.8,
+      end: 24.5,
+      isSharpLine: false,
+      words: [],
+    },
   ],
 };
 

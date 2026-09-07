@@ -541,8 +541,8 @@ export const HoroscopeVideo: React.FC<Props> = ({
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
-  // Ensure we have 6 card slots for progressive disclosure
-  const slots = Array.from({ length: 6 }).map((_, idx) => cardBlocks[idx] || null);
+  // Ensure we have 5 card slots for progressive disclosure
+  const slots = Array.from({ length: 5 }).map((_, idx) => cardBlocks[idx] || null);
 
   // Render the correct card component based on block.key
   const renderCard = (block: CardBlock, opacity: number, ty: number) => {
