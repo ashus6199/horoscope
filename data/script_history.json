@@ -2,16 +2,6 @@
   "sagittarius": [
     {
       "date": "2026-09-05",
-      "power_focus": "Embrace playful curiosity",
-      "power_color": "Crimson",
-      "sharp_do": "Engage in light-hearted activities.",
-      "sharp_dont": "Overthink your social interactions.",
-      "spoken_sharp_line": "Finding joy in playful curiosity will feel better than dwelling on serious matters today.",
-      "reflection_question": "What light-hearted activity can you try today?",
-      "spoken_reflection": "What light-hearted activity can you try today? Take a pause and think about it."
-    },
-    {
-      "date": "2026-09-05",
       "power_focus": "Finishing existing projects",
       "power_color": "Amber",
       "sharp_do": "Complete a task you've started",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Grounding into your existing emotions will feel more fulfilling than diving into new ones.",
       "reflection_question": "What emotional truths can you embrace today?",
       "spoken_reflection": "What emotional truths can you embrace today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-07",
+      "power_focus": "Emotional clarity",
+      "power_color": "Scarlet",
+      "sharp_do": "Reflect on past experiences",
+      "sharp_dont": "Avoid starting new projects",
+      "spoken_sharp_line": "Reflecting on what\u2019s been can provide more clarity than jumping into new ventures right now.",
+      "reflection_question": "What past experience can you learn from today?",
+      "spoken_reflection": "What past experience can you learn from today? Take a pause and think about it."
     }
   ]
 }
