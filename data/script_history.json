@@ -2,16 +2,6 @@
   "sagittarius": [
     {
       "date": "2026-09-04",
-      "power_focus": "Clarifying your thoughts",
-      "power_color": "Gold",
-      "sharp_do": "Use this time to articulate ideas.",
-      "sharp_dont": "Avoid jumping to conclusions prematurely.",
-      "spoken_sharp_line": "Articulating your ideas will feel better than making hasty conclusions today.",
-      "reflection_question": "What thoughts do you need to clarify today?",
-      "spoken_reflection": "What thoughts do you need to clarify today? Take a pause and think about it."
-    },
-    {
-      "date": "2026-09-04",
       "power_focus": "Rethink your connections",
       "power_color": "Scarlet",
       "sharp_do": "Engage in meaningful conversations.",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Taking time to examine your emotions will feel more rewarding than jumping headfirst into something new.",
       "reflection_question": "What feelings are surfacing for you right now?",
       "spoken_reflection": "What feelings are surfacing for you right now? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-07",
+      "power_focus": "Emotional resilience",
+      "power_color": "Crimson",
+      "sharp_do": "Embrace your feelings and acknowledge them.",
+      "sharp_dont": "Avoid suppressing your emotional reactions.",
+      "spoken_sharp_line": "Acknowledging your feelings today will feel more empowering than trying to ignore them.",
+      "reflection_question": "What emotions can you honor today?",
+      "spoken_reflection": "What emotions can you honor today? Take a pause and think about it."
     }
   ]
 }
