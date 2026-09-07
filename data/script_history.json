@@ -2,26 +2,6 @@
   "sagittarius": [
     {
       "date": "2026-09-04",
-      "power_focus": "Rethink your connections",
-      "power_color": "Scarlet",
-      "sharp_do": "Engage in meaningful conversations.",
-      "sharp_dont": "Avoid superficial interactions.",
-      "spoken_sharp_line": "Engaging in meaningful conversations will feel more fulfilling than getting stuck in superficial interactions.",
-      "reflection_question": "What connections need your attention today?",
-      "spoken_reflection": "Consider this: What connections need your attention today? Take a pause and think about it."
-    },
-    {
-      "date": "2026-09-04",
-      "power_focus": "Emotional processing.",
-      "power_color": "Rust",
-      "sharp_do": "Reflect on recent interactions.",
-      "sharp_dont": "Avoid jumping to conclusions.",
-      "spoken_sharp_line": "Taking time to reflect on recent interactions will feel better than jumping to conclusions today.",
-      "reflection_question": "What feelings are you ready to process?",
-      "spoken_reflection": "What feelings are you ready to process? Take a pause and think about it."
-    },
-    {
-      "date": "2026-09-04",
       "power_focus": "Prioritize self-reflection.",
       "power_color": "Burnt orange",
       "sharp_do": "Explore your inner thoughts.",
@@ -109,6 +89,16 @@
       "spoken_sharp_line": "Whatever project you started earlier this week, push to finish it today rather than starting something completely new.",
       "reflection_question": "What priority are you avoiding finishing today?",
       "spoken_reflection": "As today closes, ask yourself: what priority are you avoiding finishing today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-07",
+      "power_focus": "Prioritize emotional expression.",
+      "power_color": "Amber",
+      "sharp_do": "Share your thoughts openly.",
+      "sharp_dont": "Hold back your emotions.",
+      "spoken_sharp_line": "Sharing your thoughts will feel more liberating than keeping them bottled up.",
+      "reflection_question": "What emotions are you ready to share?",
+      "spoken_reflection": "What emotions are you ready to share? Take a pause and think about it."
     }
   ]
 }
