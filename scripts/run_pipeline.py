@@ -127,15 +127,8 @@ def main():
         "spoken_hook", "spoken_context",
         "spoken_sharp_line", "spoken_compatibility_line", "spoken_reflection"
     ]
-    spoken_parts = []
-    for k in spoken_beat_keys:
-        val = horoscope_data.get(k, "")
-        if not val:
-            continue
-        if k == "spoken_reflection" and spoken_parts:
-            # Add an ellipsis pause (<0.5s natural breath pause) before the self-reflection question
-            spoken_parts[-1] = spoken_parts[-1].rstrip(". ") + "..."
-        spoken_parts.append(val)
+    spoken_parts = [horoscope_data.get(k, "") for k in spoken_beat_keys]
+    spoken_parts = [p for p in spoken_parts if p]
 
     spoken_text = " ".join(spoken_parts)
     post_caption = horoscope_data.get("caption", spoken_text)
