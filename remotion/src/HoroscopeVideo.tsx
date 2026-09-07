@@ -124,23 +124,32 @@ const CardShell: React.FC<{
   translateY: number;
   borderColor?: string;
   bgColor?: string;
-}> = ({ children, opacity, translateY, borderColor, bgColor }) => (
-  <div
-    style={{
-      opacity,
-      transform: `translateY(${translateY}px)`,
-      background: bgColor || "rgba(0, 0, 0, 0.68)",
-      backdropFilter: "blur(16px)",
-      WebkitBackdropFilter: "blur(16px)",
-      border: `1px solid ${borderColor || "rgba(255, 255, 255, 0.12)"}`,
-      borderRadius: 18,
-      padding: "16px 22px",
-      boxShadow: "0 8px 32px rgba(0,0,0,0.45)",
-    }}
-  >
-    {children}
-  </div>
-);
+  isActive?: boolean;
+  glowColor?: string;
+}> = ({ children, opacity, translateY, borderColor, bgColor, isActive, glowColor }) => {
+  const activeBorder = glowColor || borderColor || "rgba(255, 255, 255, 0.45)";
+  const activeShadow = glowColor
+    ? `0 18px 48px rgba(0,0,0,0.75), 0 0 24px ${glowColor}55`
+    : "0 18px 48px rgba(0,0,0,0.75), 0 0 24px rgba(255, 255, 255, 0.15)";
+
+  return (
+    <div
+      style={{
+        opacity,
+        transform: `translateY(${translateY}px)`,
+        background: bgColor || (isActive ? "rgba(12, 12, 18, 0.85)" : "rgba(0, 0, 0, 0.68)"),
+        backdropFilter: "blur(18px)",
+        WebkitBackdropFilter: "blur(18px)",
+        border: `1px solid ${isActive ? activeBorder : (borderColor || "rgba(255, 255, 255, 0.12)")}`,
+        borderRadius: 18,
+        padding: "16px 22px",
+        boxShadow: isActive ? activeShadow : "0 8px 32px rgba(0,0,0,0.45)",
+      }}
+    >
+      {children}
+    </div>
+  );
+};
 
 // ─── Card 1: Hook (Moon Transit) ─────────────────────────────────
 const HookCard: React.FC<{
@@ -151,11 +160,18 @@ const HookCard: React.FC<{
   eventAlert?: EventAlert;
   opacity: number;
   ty: number;
-}> = ({ block, moonPhase, moonPhasePct, moonAgeDays, eventAlert, opacity, ty }) => {
+  isActive?: boolean;
+}> = ({ block, moonPhase, moonPhasePct, moonAgeDays, eventAlert, opacity, ty, isActive }) => {
   const moonIcon = getMoonPhaseIcon(moonPhase, moonPhasePct, moonAgeDays);
   const accent = eventAlert?.badgeAccent || "rgba(196, 201, 212, 0.25)";
   return (
-    <CardShell opacity={opacity} translateY={ty} borderColor={eventAlert ? `${accent}60` : "rgba(196, 201, 212, 0.25)"}>
+    <CardShell
+      opacity={opacity}
+      translateY={ty}
+      borderColor={eventAlert ? `${accent}60` : "rgba(196, 201, 212, 0.25)"}
+      isActive={isActive}
+      glowColor={eventAlert?.badgeAccent || LUNAR_SILVER}
+    >
       {/* Event Alert Badge (Tier 2 or Tier 3) */}
       {eventAlert && eventAlert.label && (
         <div
@@ -202,12 +218,12 @@ const HookCard: React.FC<{
 };
 
 // ─── Card 2: Sky Weather & Retrogrades ───────────────────────────
-const SkyWeatherCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> = ({
-  block, opacity, ty,
+const SkyWeatherCard: React.FC<{ block: CardBlock; opacity: number; ty: number; isActive?: boolean }> = ({
+  block, opacity, ty, isActive,
 }) => {
   const weatherText = block.skyWeatherText || block.text || "Planetary Transits Active";
   return (
-    <CardShell opacity={opacity} translateY={ty}>
+    <CardShell opacity={opacity} translateY={ty} isActive={isActive}>
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{
           width: 36, height: 36, borderRadius: "50%",
@@ -231,8 +247,8 @@ const SkyWeatherCard: React.FC<{ block: CardBlock; opacity: number; ty: number }
 };
 
 // ─── Card 3: Context (Power Focus + Color) ───────────────────────
-const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> = ({
-  block, opacity, ty,
+const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number; isActive?: boolean }> = ({
+  block, opacity, ty, isActive,
 }) => {
   const focus = block.powerFocus || block.text;
   const color = block.powerColor || "";
@@ -244,6 +260,8 @@ const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> =
       translateY={ty}
       borderColor={`${colorHex}45`}
       bgColor="rgba(0, 0, 0, 0.72)"
+      isActive={isActive}
+      glowColor={colorHex}
     >
       <div style={{ display: "flex", gap: 24, alignItems: "stretch" }}>
         {/* Power Focus Column with Power-Color-Tinted Icon Badge */}
@@ -260,63 +278,80 @@ const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> =
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: 16,
-                lineHeight: 1,
+                fontSize: 14,
+                flexShrink: 0,
               }}
             >
               ⚡
             </div>
-            <div style={{ fontFamily, fontSize: 16, fontWeight: 600, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2 }}>
+            <div
+              style={{
+                fontFamily,
+                fontSize: 14,
+                fontWeight: 700,
+                color: "rgba(255,255,255,0.6)",
+                textTransform: "uppercase",
+                letterSpacing: 2,
+              }}
+            >
               Power Focus
             </div>
           </div>
-          <div style={{ fontFamily, fontSize: 24, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
+          <div
+            style={{
+              fontFamily,
+              fontSize: 26,
+              fontWeight: 800,
+              color: WHITE,
+              lineHeight: 1.25,
+            }}
+          >
             {focus}
           </div>
         </div>
 
-        {/* Divider */}
-        <div style={{ width: 1, background: "rgba(255,255,255,0.12)", alignSelf: "stretch" }} />
-
-        {/* Power Color Column with Dynamic Icon & Glowing Swatch Badge */}
+        {/* Vertical Divider */}
         {color && (
-          <div style={{ flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-              <div
-                style={{
-                  width: 28,
-                  height: 28,
-                  borderRadius: "50%",
-                  background: `${colorHex}22`,
-                  border: `1.5px solid ${colorHex}80`,
-                  boxShadow: `0 0 12px ${colorHex}60`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 16,
-                  lineHeight: 1,
-                }}
-              >
-                🎨
-              </div>
-              <div style={{ fontFamily, fontSize: 16, fontWeight: 600, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2 }}>
-                Power Color
-              </div>
+          <div style={{ width: 1, background: "rgba(255,255,255,0.08)", alignSelf: "stretch" }} />
+        )}
+
+        {/* Power Color Accent Column */}
+        {color && (
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 150 }}>
+            <div
+              style={{
+                fontFamily,
+                fontSize: 13,
+                fontWeight: 700,
+                color: "rgba(255,255,255,0.5)",
+                textTransform: "uppercase",
+                letterSpacing: 1.5,
+                marginBottom: 6,
+              }}
+            >
+              Power Color
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              {/* Color Swatch Dot */}
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div
                 style={{
-                  width: 22,
-                  height: 22,
+                  width: 20,
+                  height: 20,
                   borderRadius: "50%",
                   background: colorHex,
-                  border: "2px solid #FFFFFF",
-                  boxShadow: `0 0 16px ${colorHex}`,
+                  boxShadow: `0 0 14px ${colorHex}90`,
+                  border: "2px solid rgba(255,255,255,0.4)",
                   flexShrink: 0,
                 }}
               />
-              <div style={{ fontFamily, fontSize: 24, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
+              <div
+                style={{
+                  fontFamily,
+                  fontSize: 22,
+                  fontWeight: 700,
+                  color: WHITE,
+                  letterSpacing: 0.5,
+                }}
+              >
                 {color}
               </div>
             </div>
@@ -328,13 +363,13 @@ const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> =
 };
 
 // ─── Card 4: Sharp Line (Do / Don't) ────────────────────────────
-const SharpLineCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> = ({
-  block, opacity, ty,
+const SharpLineCard: React.FC<{ block: CardBlock; opacity: number; ty: number; isActive?: boolean }> = ({
+  block, opacity, ty, isActive,
 }) => {
   const doText = block.sharpDo || block.text;
   const dontText = block.sharpDont || "";
   return (
-    <CardShell opacity={opacity} translateY={ty}>
+    <CardShell opacity={opacity} translateY={ty} isActive={isActive} glowColor={EMERALD}>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {/* DO row */}
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
@@ -374,13 +409,13 @@ const SharpLineCard: React.FC<{ block: CardBlock; opacity: number; ty: number }>
 // ─── Card 5: Compatibility (Best Energy & Handle With Care) ─────
 const CompatibilityCard: React.FC<{
   block: CardBlock; bestSign: string; cautionSign: string;
-  opacity: number; ty: number;
-}> = ({ block, bestSign, cautionSign, opacity, ty }) => {
+  opacity: number; ty: number; isActive?: boolean;
+}> = ({ block, bestSign, cautionSign, opacity, ty, isActive }) => {
   const bestGlyph = ZODIAC_GLYPHS[bestSign] || "★";
   const cautionGlyph = ZODIAC_GLYPHS[cautionSign] || "☆";
 
   return (
-    <CardShell opacity={opacity} translateY={ty}>
+    <CardShell opacity={opacity} translateY={ty} isActive={isActive} glowColor={ROSE}>
       <div style={{ display: "flex", gap: 20, alignItems: "stretch" }}>
         {/* Best Energy Column */}
         {bestSign && (
@@ -422,8 +457,8 @@ const CompatibilityCard: React.FC<{
 };
 
 // ─── Card 6: Dedicated Journal Reflection ────────────────────────
-const ReflectionCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> = ({
-  block, opacity, ty,
+const ReflectionCard: React.FC<{ block: CardBlock; opacity: number; ty: number; isActive?: boolean }> = ({
+  block, opacity, ty, isActive,
 }) => {
   const question = block.reflectionQuestion || block.text;
 
@@ -433,6 +468,8 @@ const ReflectionCard: React.FC<{ block: CardBlock; opacity: number; ty: number }
       translateY={ty}
       bgColor="rgba(255, 215, 0, 0.14)"
       borderColor="rgba(255, 215, 0, 0.40)"
+      isActive={isActive}
+      glowColor={LIGHT_GOLD}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 18, padding: "6px 2px" }}>
         <div
@@ -545,7 +582,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
   const slots = Array.from({ length: 5 }).map((_, idx) => cardBlocks[idx] || null);
 
   // Render the correct card component based on block.key
-  const renderCard = (block: CardBlock, opacity: number, ty: number) => {
+  const renderCard = (block: CardBlock, opacity: number, ty: number, isActive?: boolean) => {
     switch (block.key) {
       case "hook":
         return (
@@ -557,14 +594,15 @@ export const HoroscopeVideo: React.FC<Props> = ({
             eventAlert={eventAlert}
             opacity={opacity}
             ty={ty}
+            isActive={isActive}
           />
         );
       case "sky_weather":
-        return <SkyWeatherCard block={block} opacity={opacity} ty={ty} />;
+        return <SkyWeatherCard block={block} opacity={opacity} ty={ty} isActive={isActive} />;
       case "context":
-        return <ContextCard block={block} opacity={opacity} ty={ty} />;
+        return <ContextCard block={block} opacity={opacity} ty={ty} isActive={isActive} />;
       case "sharp_line":
-        return <SharpLineCard block={block} opacity={opacity} ty={ty} />;
+        return <SharpLineCard block={block} opacity={opacity} ty={ty} isActive={isActive} />;
       case "compatibility_line":
         return (
           <CompatibilityCard
@@ -573,10 +611,11 @@ export const HoroscopeVideo: React.FC<Props> = ({
             cautionSign={block.cautionSign || cautionSign}
             opacity={opacity}
             ty={ty}
+            isActive={isActive}
           />
         );
       case "reflection":
-        return <ReflectionCard block={block} opacity={opacity} ty={ty} />;
+        return <ReflectionCard block={block} opacity={opacity} ty={ty} isActive={isActive} />;
     }
   };
 
@@ -642,9 +681,37 @@ export const HoroscopeVideo: React.FC<Props> = ({
                 const opacity = interpolate(blockLocalFrame, [0, 10], [0, 1], { extrapolateRight: "clamp" });
                 const translateY = interpolate(blockLocalFrame, [0, 10], [16, 0], { extrapolateRight: "clamp" });
 
+                // Find next block start frame to determine active window
+                const nextBlock = slots[idx + 1];
+                const nextStartFrame = nextBlock ? Math.round(nextBlock.start * fps) : audioEndFrame;
+                const isActive = frame >= startFrame && frame < nextStartFrame;
+
+                // Zoom in when active, smoothly settle back to 1.0 when next card activates
+                let scale = 1.0;
+                if (isActive) {
+                  // Bring forward / zoom towards user over ~8 frames
+                  scale = interpolate(blockLocalFrame, [0, 8], [1.0, 1.045], {
+                    extrapolateRight: "clamp",
+                  });
+                } else if (frame >= nextStartFrame) {
+                  // Settle back into original place over ~8 frames
+                  const settleFrame = frame - nextStartFrame;
+                  scale = interpolate(settleFrame, [0, 8], [1.045, 1.0], {
+                    extrapolateRight: "clamp",
+                  });
+                }
+
                 return (
-                  <div key={block.key || idx}>
-                    {renderCard(block, opacity, translateY)}
+                  <div
+                    key={block.key || idx}
+                    style={{
+                      transform: `scale(${scale})`,
+                      transformOrigin: "center center",
+                      zIndex: isActive ? 10 : 1,
+                      position: "relative",
+                    }}
+                  >
+                    {renderCard(block, opacity, translateY, isActive)}
                   </div>
                 );
               }
@@ -740,6 +807,17 @@ export const HoroscopeVideo: React.FC<Props> = ({
           </div>
         </AbsoluteFill>
       )}
+
+      {/* Card transition audio chimes */}
+      {slots.map((block, idx) => {
+        if (!block) return null;
+        const startFrame = Math.round(block.start * fps);
+        return (
+          <Sequence key={`chime-${idx}`} from={startFrame} durationInFrames={30}>
+            <Audio src={staticFile("assets/chime.mp3")} volume={0.28} />
+          </Sequence>
+        );
+      })}
 
       <Sequence from={0} durationInFrames={audioEndFrame}>
         <Audio src={staticFile(audioPath)} />
