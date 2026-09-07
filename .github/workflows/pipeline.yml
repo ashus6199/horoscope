@@ -29,7 +29,7 @@ on:
         description: 'Publish to Instagram Reels & Story'
         required: false
         type: boolean
-        default: false
+        default: true
       date:
         description: 'Override date YYYY-MM-DD (e.g. 2026-08-28 for Lunar Eclipse)'
         required: false
@@ -125,7 +125,7 @@ jobs:
           rm -f "$RAW_PATH"
 
       - name: Publish to Instagram Reels & Story (Step G)
-        if: ${{ inputs.publish_instagram == true }}
+        if: ${{ github.event_name == 'schedule' || inputs.publish_instagram == true }}
         continue-on-error: true
         env:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
