@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-05",
-      "power_focus": "Finishing existing projects",
-      "power_color": "Amber",
-      "sharp_do": "Complete a task you've started",
-      "sharp_dont": "Start something entirely new",
-      "spoken_sharp_line": "Finishing what's already in motion will feel better than starting something new today.",
-      "reflection_question": "What task have you been putting off?",
-      "spoken_reflection": "What task have you been putting off? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-06",
       "power_focus": "Finding emotional balance",
       "power_color": "Gold",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Reflecting on what\u2019s been can provide more clarity than jumping into new ventures right now.",
       "reflection_question": "What past experience can you learn from today?",
       "spoken_reflection": "What past experience can you learn from today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-08",
+      "power_focus": "Embrace new beginnings",
+      "power_color": "Ruby",
+      "sharp_do": "Sketch out future goals.",
+      "sharp_dont": "Avoid getting stuck in the past.",
+      "spoken_sharp_line": "Focusing on your future will feel more uplifting than dwelling on what's behind you.",
+      "reflection_question": "What new project excites you right now?",
+      "spoken_reflection": "What new project excites you right now? Take a pause and think about it."
     }
   ]
 }
