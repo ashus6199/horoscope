@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-06",
-      "power_focus": "Finding emotional balance",
-      "power_color": "Gold",
-      "sharp_do": "Balance your emotions today.",
-      "sharp_dont": "Avoid pushing feelings away.",
-      "spoken_sharp_line": "Balancing your emotions will feel better than avoiding them, so lean into what you're feeling.",
-      "reflection_question": "What emotions are you trying to balance?",
-      "spoken_reflection": "What emotions are you trying to balance? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-07",
       "power_focus": "Nurturing self-care.",
       "power_color": "Scarlet",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Focusing on your future will feel more uplifting than dwelling on what's behind you.",
       "reflection_question": "What new project excites you right now?",
       "spoken_reflection": "What new project excites you right now? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-09",
+      "power_focus": "Passion projects",
+      "power_color": "Crimson",
+      "sharp_do": "Channel your energy into existing projects",
+      "sharp_dont": "Avoid starting new initiatives",
+      "spoken_sharp_line": "Finishing existing projects today will feel much more satisfying than launching something new.",
+      "reflection_question": "What project can you wrap up today?",
+      "spoken_reflection": "What project can you wrap up today? Take a pause and think about it."
     }
   ]
 }
