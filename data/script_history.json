@@ -2,16 +2,6 @@
   "sagittarius": [
     {
       "date": "2026-09-07",
-      "power_focus": "Nurturing self-care.",
-      "power_color": "Scarlet",
-      "sharp_do": "Engage in a comforting routine.",
-      "sharp_dont": "Push away your feelings.",
-      "spoken_sharp_line": "Caring for yourself today will feel more rewarding than ignoring your emotions.",
-      "reflection_question": "What self-care ritual can you embrace today?",
-      "spoken_reflection": "What self-care ritual can you embrace today? Take a pause and think about it."
-    },
-    {
-      "date": "2026-09-07",
       "power_focus": "Emotional clarity and release.",
       "power_color": "Rust",
       "sharp_do": "Reflect on your emotional needs.",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finishing existing projects today will feel much more satisfying than launching something new.",
       "reflection_question": "What project can you wrap up today?",
       "spoken_reflection": "What project can you wrap up today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-10",
+      "power_focus": "Organize your intentions.",
+      "power_color": "Rust",
+      "sharp_do": "Align your goals with reality.",
+      "sharp_dont": "Avoid getting lost in dreams.",
+      "spoken_sharp_line": "Focusing on what\u2019s achievable will feel more rewarding than drifting into daydreams.",
+      "reflection_question": "What intentions are you setting for the new moon?",
+      "spoken_reflection": "What intentions are you setting for the new moon? Take a pause and think about it."
     }
   ]
 }
