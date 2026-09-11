@@ -2,16 +2,6 @@
   "sagittarius": [
     {
       "date": "2026-09-07",
-      "power_focus": "Emotional resilience",
-      "power_color": "Crimson",
-      "sharp_do": "Embrace your feelings and acknowledge them.",
-      "sharp_dont": "Avoid suppressing your emotional reactions.",
-      "spoken_sharp_line": "Acknowledging your feelings today will feel more empowering than trying to ignore them.",
-      "reflection_question": "What emotions can you honor today?",
-      "spoken_reflection": "What emotions can you honor today? Take a pause and think about it."
-    },
-    {
-      "date": "2026-09-07",
       "power_focus": "Finish open tasks",
       "power_color": "Warm Coral",
       "sharp_do": "Finish active tasks",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Focusing on what you already have will feel more satisfying than jumping into something new.",
       "reflection_question": "What can you simplify in your life?",
       "spoken_reflection": "What can you simplify in your life? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-11",
+      "power_focus": "Explore practical improvements",
+      "power_color": "Scarlet",
+      "sharp_do": "Enhance your daily habits.",
+      "sharp_dont": "Avoid starting completely new ventures.",
+      "spoken_sharp_line": "Enhancing what's already in motion will feel more rewarding than launching something new right now.",
+      "reflection_question": "What small changes can improve your routine?",
+      "spoken_reflection": "Think about this: What small changes can improve your routine? Take a pause and think about it."
     }
   ]
 }
