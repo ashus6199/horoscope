@@ -134,7 +134,7 @@ const CardShell: React.FC<{
       WebkitBackdropFilter: "blur(16px)",
       border: `1px solid ${borderColor || "rgba(255, 255, 255, 0.12)"}`,
       borderRadius: 18,
-      padding: "16px 22px",
+      padding: "20px 26px",
       boxShadow: "0 8px 32px rgba(0,0,0,0.45)",
     }}
   >
@@ -161,7 +161,7 @@ const HookCard: React.FC<{
         <div
           style={{
             fontFamily,
-            fontSize: 15,
+            fontSize: 18,
             fontWeight: 700,
             color: accent,
             textTransform: "uppercase",
@@ -178,8 +178,8 @@ const HookCard: React.FC<{
         {/* Dynamic Glowing Moon Badge */}
         <div
           style={{
-            width: 54,
-            height: 54,
+            width: 60,
+            height: 60,
             borderRadius: "50%",
             background: eventAlert ? `${accent}18` : "rgba(196, 201, 212, 0.12)",
             border: `1.5px solid ${eventAlert ? `${accent}50` : "rgba(196, 201, 212, 0.35)"}`,
@@ -187,13 +187,13 @@ const HookCard: React.FC<{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 26,
+            fontSize: 32,
             flexShrink: 0,
           }}
         >
           {moonIcon}
         </div>
-        <div style={{ fontFamily, fontSize: 26, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
+        <div style={{ fontFamily, fontSize: 32, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
           {block.text}
         </div>
       </div>
@@ -208,20 +208,20 @@ const SkyWeatherCard: React.FC<{ block: CardBlock; opacity: number; ty: number }
   const weatherText = block.skyWeatherText || block.text || "Planetary Transits Active";
   return (
     <CardShell opacity={opacity} translateY={ty}>
-      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
         <div style={{
-          width: 36, height: 36, borderRadius: "50%",
+          width: 44, height: 44, borderRadius: "50%",
           background: "rgba(255, 255, 255, 0.12)",
           border: "1.5px solid rgba(255, 255, 255, 0.35)",
           boxShadow: "0 0 14px rgba(255, 255, 255, 0.2)",
           display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 18, flexShrink: 0,
+          fontSize: 22, flexShrink: 0,
         }}>🪐</div>
         <div>
-          <div style={{ fontFamily, fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2, marginBottom: 3 }}>
+          <div style={{ fontFamily, fontSize: 17, fontWeight: 600, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2, marginBottom: 4 }}>
             Sky Weather
           </div>
-          <div style={{ fontFamily, fontSize: 24, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
+          <div style={{ fontFamily, fontSize: 30, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
             {weatherText}
           </div>
         </div>
@@ -251,8 +251,8 @@ const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> =
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
             <div
               style={{
-                width: 28,
-                height: 28,
+                width: 34,
+                height: 34,
                 borderRadius: "50%",
                 background: `${colorHex}22`,
                 border: `1.5px solid ${colorHex}80`,
@@ -260,17 +260,17 @@ const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> =
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: 16,
+                fontSize: 18,
                 lineHeight: 1,
               }}
             >
               ⚡
             </div>
-            <div style={{ fontFamily, fontSize: 16, fontWeight: 600, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2 }}>
+            <div style={{ fontFamily, fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2 }}>
               Power Focus
             </div>
           </div>
-          <div style={{ fontFamily, fontSize: 24, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
+          <div style={{ fontFamily, fontSize: 30, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
             {focus}
           </div>
         </div>
@@ -284,8 +284,8 @@ const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> =
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
               <div
                 style={{
-                  width: 28,
-                  height: 28,
+                  width: 34,
+                  height: 34,
                   borderRadius: "50%",
                   background: `${colorHex}22`,
                   border: `1.5px solid ${colorHex}80`,
@@ -293,13 +293,13 @@ const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> =
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: 16,
+                  fontSize: 18,
                   lineHeight: 1,
                 }}
               >
                 🎨
               </div>
-              <div style={{ fontFamily, fontSize: 16, fontWeight: 600, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2 }}>
+              <div style={{ fontFamily, fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2 }}>
                 Power Color
               </div>
             </div>
@@ -307,8 +307,8 @@ const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> =
               {/* Color Swatch Dot */}
               <div
                 style={{
-                  width: 22,
-                  height: 22,
+                  width: 26,
+                  height: 26,
                   borderRadius: "50%",
                   background: colorHex,
                   border: "2px solid #FFFFFF",
@@ -316,7 +316,7 @@ const ContextCard: React.FC<{ block: CardBlock; opacity: number; ty: number }> =
                   flexShrink: 0,
                 }}
               />
-              <div style={{ fontFamily, fontSize: 24, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
+              <div style={{ fontFamily, fontSize: 30, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
                 {color}
               </div>
             </div>
@@ -335,17 +335,17 @@ const SharpLineCard: React.FC<{ block: CardBlock; opacity: number; ty: number }>
   const dontText = block.sharpDont || "";
   return (
     <CardShell opacity={opacity} translateY={ty}>
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         {/* DO row */}
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <div style={{
-            width: 32, height: 32, borderRadius: "50%",
+            width: 38, height: 38, borderRadius: "50%",
             background: "rgba(52, 211, 153, 0.2)",
             border: `2px solid ${EMERALD}`,
             display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 18, color: EMERALD, fontWeight: 900, flexShrink: 0,
+            fontSize: 22, color: EMERALD, fontWeight: 900, flexShrink: 0,
           }}>✓</div>
-          <div style={{ fontFamily, fontSize: 24, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
+          <div style={{ fontFamily, fontSize: 30, fontWeight: 700, color: WHITE, lineHeight: 1.3 }}>
             {doText}
           </div>
         </div>
@@ -353,15 +353,15 @@ const SharpLineCard: React.FC<{ block: CardBlock; opacity: number; ty: number }>
         {dontText && <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />}
         {/* DON'T row */}
         {dontText && (
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <div style={{
-              width: 32, height: 32, borderRadius: "50%",
+              width: 38, height: 38, borderRadius: "50%",
               background: "rgba(251, 113, 133, 0.2)",
               border: `2px solid ${ROSE}`,
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 18, color: ROSE, fontWeight: 900, flexShrink: 0,
+              fontSize: 22, color: ROSE, fontWeight: 900, flexShrink: 0,
             }}>✗</div>
-            <div style={{ fontFamily, fontSize: 24, fontWeight: 700, color: "rgba(255,255,255,0.85)", lineHeight: 1.3 }}>
+            <div style={{ fontFamily, fontSize: 30, fontWeight: 700, color: "rgba(255,255,255,0.85)", lineHeight: 1.3 }}>
               {dontText}
             </div>
           </div>
@@ -385,15 +385,15 @@ const CompatibilityCard: React.FC<{
         {/* Best Energy Column */}
         {bestSign && (
           <div style={{ flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
-              <div style={{ fontSize: 34, lineHeight: 1, color: EMERALD, filter: `drop-shadow(0 0 10px ${EMERALD}60)` }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 4 }}>
+              <div style={{ fontSize: 42, lineHeight: 1, color: EMERALD, filter: `drop-shadow(0 0 10px ${EMERALD}60)` }}>
                 {bestGlyph}
               </div>
-              <div style={{ fontFamily, fontSize: 26, fontWeight: 800, color: EMERALD, lineHeight: 1.2 }}>
+              <div style={{ fontFamily, fontSize: 32, fontWeight: 800, color: EMERALD, lineHeight: 1.2 }}>
                 {bestSign}
               </div>
             </div>
-            <div style={{ fontFamily, fontSize: 15, fontWeight: 700, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2, marginLeft: 44 }}>
+            <div style={{ fontFamily, fontSize: 18, fontWeight: 700, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2, marginLeft: 54 }}>
               Best Energy
             </div>
           </div>
@@ -403,15 +403,15 @@ const CompatibilityCard: React.FC<{
         {/* Caution Column */}
         {cautionSign && (
           <div style={{ flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
-              <div style={{ fontSize: 34, lineHeight: 1, color: AMBER, filter: `drop-shadow(0 0 10px ${AMBER}60)` }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 4 }}>
+              <div style={{ fontSize: 42, lineHeight: 1, color: AMBER, filter: `drop-shadow(0 0 10px ${AMBER}60)` }}>
                 {cautionGlyph}
               </div>
-              <div style={{ fontFamily, fontSize: 26, fontWeight: 800, color: AMBER, lineHeight: 1.2 }}>
+              <div style={{ fontFamily, fontSize: 32, fontWeight: 800, color: AMBER, lineHeight: 1.2 }}>
                 {cautionSign}
               </div>
             </div>
-            <div style={{ fontFamily, fontSize: 15, fontWeight: 700, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2, marginLeft: 44 }}>
+            <div style={{ fontFamily, fontSize: 18, fontWeight: 700, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 2, marginLeft: 54 }}>
               Handle With Care
             </div>
           </div>
@@ -434,11 +434,11 @@ const ReflectionCard: React.FC<{ block: CardBlock; opacity: number; ty: number }
       bgColor="rgba(255, 215, 0, 0.14)"
       borderColor="rgba(255, 215, 0, 0.40)"
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 18, padding: "6px 2px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 20, padding: "6px 2px" }}>
         <div
           style={{
-            width: 48,
-            height: 48,
+            width: 56,
+            height: 56,
             borderRadius: "50%",
             background: "rgba(255, 215, 0, 0.22)",
             border: `2px solid ${LIGHT_GOLD}`,
@@ -446,7 +446,7 @@ const ReflectionCard: React.FC<{ block: CardBlock; opacity: number; ty: number }
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 24,
+            fontSize: 28,
             flexShrink: 0,
           }}
         >
@@ -456,7 +456,7 @@ const ReflectionCard: React.FC<{ block: CardBlock; opacity: number; ty: number }
           <div
             style={{
               fontFamily,
-              fontSize: 14,
+              fontSize: 17,
               fontWeight: 800,
               color: LIGHT_GOLD,
               textTransform: "uppercase",
@@ -469,7 +469,7 @@ const ReflectionCard: React.FC<{ block: CardBlock; opacity: number; ty: number }
           <div
             style={{
               fontFamily: "Georgia, serif",
-              fontSize: 26,
+              fontSize: 32,
               fontWeight: 700,
               color: WHITE,
               lineHeight: 1.35,
@@ -606,7 +606,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
           style={{
             opacity: labelOpacity,
             fontFamily: "Georgia, serif",
-            fontSize: 48,
+            fontSize: 56,
             letterSpacing: 6,
             textTransform: "uppercase",
             color: LIGHT_GOLD,
@@ -614,7 +614,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
           }}
         >
           <div>{signName}</div>
-          <div style={{ fontSize: 30, fontWeight: 700, letterSpacing: 4, marginTop: 10, color: LIGHT_GOLD, opacity: 0.9 }}>{dateText}</div>
+          <div style={{ fontSize: 34, fontWeight: 700, letterSpacing: 4, marginTop: 10, color: LIGHT_GOLD, opacity: 0.9 }}>{dateText}</div>
         </div>
       </AbsoluteFill>
 
@@ -715,7 +715,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
             <div
               style={{
                 fontFamily,
-                fontSize: 44,
+                fontSize: 50,
                 fontWeight: 800,
                 color: WHITE,
                 lineHeight: 1.35,
@@ -727,7 +727,7 @@ export const HoroscopeVideo: React.FC<Props> = ({
             <div
               style={{
                 fontFamily,
-                fontSize: 48,
+                fontSize: 56,
                 fontWeight: 900,
                 color: ORANGE,
                 letterSpacing: "0.02em",
