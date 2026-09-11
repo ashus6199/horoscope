@@ -2,16 +2,6 @@
   "sagittarius": [
     {
       "date": "2026-09-07",
-      "power_focus": "Emotional introspection",
-      "power_color": "Warm Coral",
-      "sharp_do": "Think deeply about your feelings.",
-      "sharp_dont": "Avoid rushing into new commitments.",
-      "spoken_sharp_line": "Taking time to examine your emotions will feel more rewarding than jumping headfirst into something new.",
-      "reflection_question": "What feelings are surfacing for you right now?",
-      "spoken_reflection": "What feelings are surfacing for you right now? Take a pause and think about it."
-    },
-    {
-      "date": "2026-09-07",
       "power_focus": "Emotional resilience",
       "power_color": "Crimson",
       "sharp_do": "Embrace your feelings and acknowledge them.",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Completing what\u2019s in motion will feel more satisfying than diving into something new today.",
       "reflection_question": "What old task can you finally complete?",
       "spoken_reflection": "What old task can you finally complete? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-11",
+      "power_focus": "Streamline your priorities",
+      "power_color": "Gold",
+      "sharp_do": "Refine your existing plans",
+      "sharp_dont": "Avoid starting new projects",
+      "spoken_sharp_line": "Focusing on what you already have will feel more satisfying than jumping into something new.",
+      "reflection_question": "What can you simplify in your life?",
+      "spoken_reflection": "What can you simplify in your life? Take a pause and think about it."
     }
   ]
 }
