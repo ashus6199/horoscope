@@ -507,6 +507,151 @@ function colorNameToHex(name: string): string {
   return map[key] || "#A78BFA"; // fallback to soft violet
 }
 
+// ─── ChatGPT-style Ethereal Particle Loader Card ────────────────────
+const ParticleLoaderCard: React.FC<{ idx: number; frame: number }> = ({ idx, frame }) => {
+  const particleCount = 28;
+  const particles = React.useMemo(() => {
+    return Array.from({ length: particleCount }).map((_, i) => {
+      const seed = (idx * 53 + i * 31) % 1000;
+      const baseX = (i * 3.4 + (seed % 17)) % 92 + 4; // 4% to 96%
+      const baseY = 18 + ((seed * 7) % 64); // 18% to 82%
+      const size = i % 6 === 0 ? 5.5 : i % 3 === 0 ? 3.8 : 2.4;
+      const speedX = 0.028 + (seed % 7) * 0.007;
+      const speedY = 0.038 + (seed % 5) * 0.009;
+      const phase = (seed % 100) * 0.1;
+      const isBokeh = i === 1 || i === 13 || i === 23;
+      const colorType = i % 4; // 0, 1: white, 2: gold, 3: amber
+      return { baseX, baseY, size, speedX, speedY, phase, isBokeh, colorType };
+    });
+  }, [idx]);
+
+  // Subtle wave/light sweep moving across the card
+  const sweepPercent = ((frame * 1.6 + idx * 35) % 170) - 35;
+
+  return (
+    <div
+      style={{
+        height: 80,
+        background: "rgba(10, 14, 26, 0.55)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+        border: "1px solid rgba(255, 255, 255, 0.10)",
+        borderRadius: 18,
+        position: "relative",
+        overflow: "hidden",
+        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08)",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      {/* Moving ethereal light sweep */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: `${sweepPercent}%`,
+          width: 160,
+          background:
+            "linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.04) 25%, rgba(232, 217, 192, 0.18) 50%, rgba(255, 255, 255, 0.04) 75%, transparent 100%)",
+          transform: "skewX(-20deg)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Floating Stardust Particles */}
+      {particles.map((p, i) => {
+        const currentX = (p.baseX + Math.sin(frame * p.speedX + p.phase) * 14 + 100) % 96;
+        const currentY = p.baseY + Math.cos(frame * p.speedY + p.phase) * 16;
+        const pulse = 0.35 + 0.65 * Math.sin(frame * 0.09 + p.phase * 2);
+
+        if (p.isBokeh) {
+          return (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                left: `${currentX}%`,
+                top: `${currentY}%`,
+                width: 28,
+                height: 28,
+                borderRadius: "50%",
+                background: "radial-gradient(circle, rgba(232, 217, 192, 0.28) 0%, transparent 70%)",
+                opacity: pulse * 0.8,
+                filter: "blur(5px)",
+                pointerEvents: "none",
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+          );
+        }
+
+        const color =
+          p.colorType === 2
+            ? LIGHT_GOLD
+            : p.colorType === 3
+            ? AMBER
+            : WHITE;
+
+        return (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left: `${currentX}%`,
+              top: `${currentY}%`,
+              width: p.size,
+              height: p.size,
+              borderRadius: "50%",
+              backgroundColor: color,
+              opacity: pulse,
+              boxShadow:
+                p.size > 3
+                  ? `0 0 10px ${color}, 0 0 20px rgba(232, 217, 192, 0.8)`
+                  : `0 0 6px ${color}`,
+              pointerEvents: "none",
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        );
+      })}
+
+      {/* Center ambient stardust accent */}
+      <div
+        style={{
+          position: "absolute",
+          left: 28,
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          opacity: 0.45 + 0.3 * Math.sin(frame * 0.08 + idx * 1.5),
+          pointerEvents: "none",
+        }}
+      >
+        <span
+          style={{
+            fontSize: 20,
+            color: LIGHT_GOLD,
+            textShadow: "0 0 12px rgba(232, 217, 192, 1)",
+            display: "inline-block",
+            transform: `scale(${0.9 + 0.2 * Math.sin(frame * 0.1 + idx)})`,
+          }}
+        >
+          ✦
+        </span>
+        <div
+          style={{
+            height: 2,
+            width: 52,
+            background: "linear-gradient(90deg, rgba(232, 217, 192, 0.7) 0%, transparent 100%)",
+            borderRadius: 2,
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
 // ─── Main Component ──────────────────────────────────────────────
 export const HoroscopeVideo: React.FC<Props> = ({
   signName, captionText, spokenText,
@@ -688,44 +833,13 @@ export const HoroscopeVideo: React.FC<Props> = ({
                 );
               }
 
-              // Skeleton Loader Placeholder Card for unrevealed slots
-              const pulseOpacity = 0.22 + 0.14 * Math.sin((frame / 10) + idx * 1.5);
-
+              // ChatGPT-style Particle Loader Placeholder Card for unrevealed slots
               return (
-                <div
-                  key={`skeleton-${idx}`}
-                  style={{
-                    opacity: 0.85,
-                    background: "rgba(0, 0, 0, 0.42)",
-                    backdropFilter: "blur(10px)",
-                    WebkitBackdropFilter: "blur(10px)",
-                    border: "1px solid rgba(255, 255, 255, 0.06)",
-                    borderRadius: 18,
-                    padding: "22px 26px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 12,
-                    boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
-                  }}
-                >
-                  <div
-                    style={{
-                      height: 20,
-                      borderRadius: 6,
-                      width: idx % 2 === 0 ? "72%" : "60%",
-                      background: `rgba(255, 255, 255, ${pulseOpacity})`,
-                      boxShadow: "0 0 12px rgba(255, 255, 255, 0.12)",
-                    }}
-                  />
-                  <div
-                    style={{
-                      height: 14,
-                      borderRadius: 4,
-                      width: idx % 2 === 0 ? "40%" : "50%",
-                      background: `rgba(255, 255, 255, ${pulseOpacity * 0.55})`,
-                    }}
-                  />
-                </div>
+                <ParticleLoaderCard
+                  key={`particle-loader-${idx}`}
+                  idx={idx}
+                  frame={frame}
+                />
               );
             })}
           </div>

@@ -473,7 +473,7 @@
       ]
     }
   ],
-  "backgroundVideoPath": "assets/loop_fire_006.mp4",
+  "backgroundVideoPath": "assets/fire_001.mp4",
   "audioPath": "assets/sagittarius-audio.mp3",
   "durationInSeconds": 32.448,
   "bgDurationSeconds": 9.084,
