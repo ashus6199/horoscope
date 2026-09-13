@@ -2,16 +2,6 @@
   "sagittarius": [
     {
       "date": "2026-09-07",
-      "power_focus": "Emotional grounding.",
-      "power_color": "Gold",
-      "sharp_do": "Consolidate your emotional needs.",
-      "sharp_dont": "Avoid starting new emotional projects.",
-      "spoken_sharp_line": "Grounding into your existing emotions will feel more fulfilling than diving into new ones.",
-      "reflection_question": "What emotional truths can you embrace today?",
-      "spoken_reflection": "What emotional truths can you embrace today? Take a pause and think about it."
-    },
-    {
-      "date": "2026-09-07",
       "power_focus": "Emotional clarity",
       "power_color": "Scarlet",
       "sharp_do": "Reflect on past experiences",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Reaching out to someone special today will feel much better than getting into conflicts.",
       "reflection_question": "Who do you want to reconnect with today?",
       "spoken_reflection": "Think about this: Who do you want to reconnect with today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-13",
+      "power_focus": "Cultivating relationships",
+      "power_color": "Ruby",
+      "sharp_do": "Engage in meaningful conversations.",
+      "sharp_dont": "Avoid superficial interactions.",
+      "spoken_sharp_line": "Engaging in meaningful conversations will feel far more rewarding than keeping things surface-level today.",
+      "reflection_question": "Which relationship needs more depth today?",
+      "spoken_reflection": "Think about this: Which relationship needs more depth today? Take a pause and think about it."
     }
   ]
 }
