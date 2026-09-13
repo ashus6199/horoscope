@@ -601,20 +601,59 @@ export const HoroscopeVideo: React.FC<Props> = ({
       />
 
       {/* Top Header: Sign Name & Date */}
-      <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 130 }}>
+      <AbsoluteFill
+        style={{
+          justifyContent: "flex-start",
+          alignItems: "center",
+          paddingTop: 120,
+          pointerEvents: "none",
+        }}
+      >
         <div
           style={{
             opacity: labelOpacity,
-            fontFamily: "Georgia, serif",
-            fontSize: 56,
-            letterSpacing: 6,
-            textTransform: "uppercase",
-            color: LIGHT_GOLD,
+            background: "rgba(10, 14, 26, 0.65)",
+            backdropFilter: "blur(24px) saturate(180%)",
+            WebkitBackdropFilter: "blur(24px) saturate(180%)",
+            border: "1px solid rgba(255, 255, 255, 0.16)",
+            borderRadius: 24,
+            padding: "20px 52px",
+            boxShadow: "0 16px 40px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
             textAlign: "center",
+            display: "inline-flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <div>{signName}</div>
-          <div style={{ fontSize: 34, fontWeight: 700, letterSpacing: 4, marginTop: 10, color: LIGHT_GOLD, opacity: 0.9 }}>{dateText}</div>
+          <div
+            style={{
+              fontFamily: "Georgia, serif",
+              fontSize: 52,
+              fontWeight: 700,
+              letterSpacing: 6,
+              textTransform: "uppercase",
+              color: "#FFFFFF",
+              textShadow: "0 2px 14px rgba(0, 0, 0, 0.8)",
+              lineHeight: 1.15,
+            }}
+          >
+            {signName}
+          </div>
+          <div
+            style={{
+              fontFamily,
+              fontSize: 26,
+              fontWeight: 700,
+              letterSpacing: 4,
+              textTransform: "uppercase",
+              marginTop: 10,
+              color: LIGHT_GOLD,
+              opacity: 0.95,
+              textShadow: "0 1px 8px rgba(0, 0, 0, 0.7)",
+            }}
+          >
+            {dateText}
+          </div>
         </div>
       </AbsoluteFill>
 

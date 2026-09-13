@@ -282,7 +282,7 @@ def main():
     loop_filename = f"loop_{chosen_clip_filename}"
     loop_path = assets_dir / loop_filename
     
-    if not loop_path.exists():
+    if not loop_path.exists() or loop_path.stat().st_mtime < chosen_clip_path.stat().st_mtime:
         print(f"Generating seamless crossfade loop for {chosen_clip_filename}...")
         
         # 1. Get original duration
