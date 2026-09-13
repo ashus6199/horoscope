@@ -2,16 +2,6 @@
   "sagittarius": [
     {
       "date": "2026-09-07",
-      "power_focus": "Prioritize emotional expression.",
-      "power_color": "Amber",
-      "sharp_do": "Share your thoughts openly.",
-      "sharp_dont": "Hold back your emotions.",
-      "spoken_sharp_line": "Sharing your thoughts will feel more liberating than keeping them bottled up.",
-      "reflection_question": "What emotions are you ready to share?",
-      "spoken_reflection": "What emotions are you ready to share? Take a pause and think about it."
-    },
-    {
-      "date": "2026-09-07",
       "power_focus": "Emotional grounding.",
       "power_color": "Gold",
       "sharp_do": "Consolidate your emotional needs.",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Taking a moment to visualize your goals will feel more rewarding than forcing anything today.",
       "reflection_question": "What new intentions are you excited to set?",
       "spoken_reflection": "What new intentions are you excited to set? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-13",
+      "power_focus": "Strengthening connections",
+      "power_color": "Crimson",
+      "sharp_do": "Reach out to someone special",
+      "sharp_dont": "Avoid conflicts or confrontations",
+      "spoken_sharp_line": "Reaching out to someone special today will feel much better than getting into conflicts.",
+      "reflection_question": "Who do you want to reconnect with today?",
+      "spoken_reflection": "Think about this: Who do you want to reconnect with today? Take a pause and think about it."
     }
   ]
 }
