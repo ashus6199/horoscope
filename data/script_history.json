@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-07",
-      "power_focus": "Emotional clarity",
-      "power_color": "Scarlet",
-      "sharp_do": "Reflect on past experiences",
-      "sharp_dont": "Avoid starting new projects",
-      "spoken_sharp_line": "Reflecting on what\u2019s been can provide more clarity than jumping into new ventures right now.",
-      "reflection_question": "What past experience can you learn from today?",
-      "spoken_reflection": "What past experience can you learn from today? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-08",
       "power_focus": "Embrace new beginnings",
       "power_color": "Ruby",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Engaging in meaningful conversations will feel far more rewarding than keeping things surface-level today.",
       "reflection_question": "Which relationship needs more depth today?",
       "spoken_reflection": "Think about this: Which relationship needs more depth today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-14",
+      "power_focus": "Nurture balance in relationships.",
+      "power_color": "Amber",
+      "sharp_do": "Prioritize shared experiences.",
+      "sharp_dont": "Avoid dwelling on past conflicts.",
+      "spoken_sharp_line": "Nurturing shared experiences will feel more fulfilling than lingering on old grievances.",
+      "reflection_question": "What steps can you take for more harmony?",
+      "spoken_reflection": "What steps can you take for more harmony? Take a pause and think about it."
     }
   ]
 }
