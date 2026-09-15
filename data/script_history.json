@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-08",
-      "power_focus": "Embrace new beginnings",
-      "power_color": "Ruby",
-      "sharp_do": "Sketch out future goals.",
-      "sharp_dont": "Avoid getting stuck in the past.",
-      "spoken_sharp_line": "Focusing on your future will feel more uplifting than dwelling on what's behind you.",
-      "reflection_question": "What new project excites you right now?",
-      "spoken_reflection": "What new project excites you right now? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-09",
       "power_focus": "Passion projects",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Nurturing shared experiences will feel more fulfilling than lingering on old grievances.",
       "reflection_question": "What steps can you take for more harmony?",
       "spoken_reflection": "What steps can you take for more harmony? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-15",
+      "power_focus": "Emotional depth and transformation",
+      "power_color": "Gold",
+      "sharp_do": "Reflect on your feelings today.",
+      "sharp_dont": "Avoid ignoring underlying issues.",
+      "spoken_sharp_line": "Tuning into your feelings will feel more rewarding than brushing them aside.",
+      "reflection_question": "What hidden emotions are you ready to explore?",
+      "spoken_reflection": "What hidden emotions are you ready to explore? Take a pause and think about it."
     }
   ]
 }

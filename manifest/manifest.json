@@ -89,6 +89,12 @@
       "element": "fire",
       "filename": "fire_012.mp4",
       "last_used": "2026-09-14T06:16:45.230193+00:00"
+    },
+    {
+      "id": "fire_013",
+      "element": "fire",
+      "filename": "fire_013.mp4",
+      "last_used": "2026-09-15T06:10:10.714288+00:00"
     }
   ]
 }
