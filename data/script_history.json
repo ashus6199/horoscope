@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-09",
-      "power_focus": "Passion projects",
-      "power_color": "Crimson",
-      "sharp_do": "Channel your energy into existing projects",
-      "sharp_dont": "Avoid starting new initiatives",
-      "spoken_sharp_line": "Finishing existing projects today will feel much more satisfying than launching something new.",
-      "reflection_question": "What project can you wrap up today?",
-      "spoken_reflection": "What project can you wrap up today? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-10",
       "power_focus": "Organize your intentions.",
       "power_color": "Rust",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Tuning into your feelings will feel more rewarding than brushing them aside.",
       "reflection_question": "What hidden emotions are you ready to explore?",
       "spoken_reflection": "What hidden emotions are you ready to explore? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-16",
+      "power_focus": "Embrace emotional insights.",
+      "power_color": "Scarlet",
+      "sharp_do": "Finish ongoing projects today.",
+      "sharp_dont": "Avoid starting new ventures.",
+      "spoken_sharp_line": "Finishing ongoing projects today will feel more rewarding than diving into new ventures.",
+      "reflection_question": "What truth have you been avoiding?",
+      "spoken_reflection": "What truth have you been avoiding? Take a pause and think about it."
     }
   ]
 }
