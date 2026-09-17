@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-10",
-      "power_focus": "Organize your intentions.",
-      "power_color": "Rust",
-      "sharp_do": "Align your goals with reality.",
-      "sharp_dont": "Avoid getting lost in dreams.",
-      "spoken_sharp_line": "Focusing on what\u2019s achievable will feel more rewarding than drifting into daydreams.",
-      "reflection_question": "What intentions are you setting for the new moon?",
-      "spoken_reflection": "What intentions are you setting for the new moon? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-11",
       "power_focus": "Reassessing priorities.",
       "power_color": "Amber",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finishing ongoing projects today will feel more rewarding than diving into new ventures.",
       "reflection_question": "What truth have you been avoiding?",
       "spoken_reflection": "What truth have you been avoiding? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-17",
+      "power_focus": "Embracing new adventures",
+      "power_color": "Burnt orange",
+      "sharp_do": "Explore a new hobby.",
+      "sharp_dont": "Avoid sticking to routines.",
+      "spoken_sharp_line": "Exploring something new today will feel more rewarding than sticking to the same old routine.",
+      "reflection_question": "What new experience are you craving?",
+      "spoken_reflection": "What new experience are you craving? Take a pause and think about it."
     }
   ]
 }
