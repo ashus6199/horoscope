@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-11",
-      "power_focus": "Explore practical improvements",
-      "power_color": "Scarlet",
-      "sharp_do": "Enhance your daily habits.",
-      "sharp_dont": "Avoid starting completely new ventures.",
-      "spoken_sharp_line": "Enhancing what's already in motion will feel more rewarding than launching something new right now.",
-      "reflection_question": "What small changes can improve your routine?",
-      "spoken_reflection": "Think about this: What small changes can improve your routine? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-12",
       "power_focus": "Embrace fresh beginnings.",
       "power_color": "Burnt orange",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Completing what\u2019s already on your plate will feel more rewarding than jumping into something fresh.",
       "reflection_question": "What project needs your final touch today?",
       "spoken_reflection": "What project needs your final touch today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-20",
+      "power_focus": "Grounding ambitions today",
+      "power_color": "Amber",
+      "sharp_do": "Prioritize long-term goals",
+      "sharp_dont": "Avoid impulsive decisions",
+      "spoken_sharp_line": "Staying grounded in your ambitions will feel more satisfying than making hasty choices today.",
+      "reflection_question": "What ambition are you ready to commit to?",
+      "spoken_reflection": "What ambition are you ready to commit to? Take a pause and think about it."
     }
   ]
 }
