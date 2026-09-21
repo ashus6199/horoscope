@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-12",
-      "power_focus": "Embrace fresh beginnings.",
-      "power_color": "Burnt orange",
-      "sharp_do": "Visualize your goals clearly.",
-      "sharp_dont": "Avoid pushing against obstacles.",
-      "spoken_sharp_line": "Taking a moment to visualize your goals will feel more rewarding than forcing anything today.",
-      "reflection_question": "What new intentions are you excited to set?",
-      "spoken_reflection": "What new intentions are you excited to set? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-13",
       "power_focus": "Strengthening connections",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Staying grounded in your ambitions will feel more satisfying than making hasty choices today.",
       "reflection_question": "What ambition are you ready to commit to?",
       "spoken_reflection": "What ambition are you ready to commit to? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-21",
+      "power_focus": "Prioritizing actionable steps",
+      "power_color": "Gold",
+      "sharp_do": "Focus on tangible progress.",
+      "sharp_dont": "Avoid diving into distractions.",
+      "spoken_sharp_line": "Focusing on tangible progress will feel more satisfying than diving into distractions today.",
+      "reflection_question": "What actionable step can you take today?",
+      "spoken_reflection": "What actionable step can you take today? Take a pause and think about it."
     }
   ]
 }
