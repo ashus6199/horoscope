@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-13",
-      "power_focus": "Cultivating relationships",
-      "power_color": "Ruby",
-      "sharp_do": "Engage in meaningful conversations.",
-      "sharp_dont": "Avoid superficial interactions.",
-      "spoken_sharp_line": "Engaging in meaningful conversations will feel far more rewarding than keeping things surface-level today.",
-      "reflection_question": "Which relationship needs more depth today?",
-      "spoken_reflection": "Think about this: Which relationship needs more depth today? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-14",
       "power_focus": "Nurture balance in relationships.",
       "power_color": "Amber",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Working with others will bring more satisfaction than going solo today.",
       "reflection_question": "What innovative idea has been on your mind?",
       "spoken_reflection": "What innovative idea has been on your mind? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-23",
+      "power_focus": "Embrace new connections.",
+      "power_color": "Burnt orange",
+      "sharp_do": "Engage in collaborative projects.",
+      "sharp_dont": "Avoid isolating yourself.",
+      "spoken_sharp_line": "Collaborating with others will feel more rewarding than going it alone today.",
+      "reflection_question": "What new connection can you explore today?",
+      "spoken_reflection": "What new connection can you explore today? Take a pause and think about it."
     }
   ]
 }
