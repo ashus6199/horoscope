@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-14",
-      "power_focus": "Nurture balance in relationships.",
-      "power_color": "Amber",
-      "sharp_do": "Prioritize shared experiences.",
-      "sharp_dont": "Avoid dwelling on past conflicts.",
-      "spoken_sharp_line": "Nurturing shared experiences will feel more fulfilling than lingering on old grievances.",
-      "reflection_question": "What steps can you take for more harmony?",
-      "spoken_reflection": "What steps can you take for more harmony? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-15",
       "power_focus": "Emotional depth and transformation",
       "power_color": "Gold",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Collaborating with others will feel more rewarding than going it alone today.",
       "reflection_question": "What new connection can you explore today?",
       "spoken_reflection": "What new connection can you explore today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-24",
+      "power_focus": "Emotional clarity today",
+      "power_color": "Ruby",
+      "sharp_do": "Reflect on emotional needs",
+      "sharp_dont": "Avoid pushing for new beginnings",
+      "spoken_sharp_line": "Today, reflecting on what you need will feel more rewarding than diving into something new.",
+      "reflection_question": "What emotions are you ready to release?",
+      "spoken_reflection": "What emotions are you ready to release? Take a pause and think about it."
     }
   ]
 }
