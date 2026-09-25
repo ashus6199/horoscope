@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-15",
-      "power_focus": "Emotional depth and transformation",
-      "power_color": "Gold",
-      "sharp_do": "Reflect on your feelings today.",
-      "sharp_dont": "Avoid ignoring underlying issues.",
-      "spoken_sharp_line": "Tuning into your feelings will feel more rewarding than brushing them aside.",
-      "reflection_question": "What hidden emotions are you ready to explore?",
-      "spoken_reflection": "What hidden emotions are you ready to explore? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-16",
       "power_focus": "Embrace emotional insights.",
       "power_color": "Scarlet",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Today, reflecting on what you need will feel more rewarding than diving into something new.",
       "reflection_question": "What emotions are you ready to release?",
       "spoken_reflection": "What emotions are you ready to release? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-25",
+      "power_focus": "Releasing emotional baggage",
+      "power_color": "Crimson",
+      "sharp_do": "Prioritize emotional releases today.",
+      "sharp_dont": "Avoid starting new emotional projects.",
+      "spoken_sharp_line": "Releasing what's held you back will feel much more fulfilling than diving into something new right now.",
+      "reflection_question": "What emotions do you need to let go of?",
+      "spoken_reflection": "Think about this: What emotions do you need to let go of? Take a pause and think about it."
     }
   ]
 }
