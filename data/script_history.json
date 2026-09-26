@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-16",
-      "power_focus": "Embrace emotional insights.",
-      "power_color": "Scarlet",
-      "sharp_do": "Finish ongoing projects today.",
-      "sharp_dont": "Avoid starting new ventures.",
-      "spoken_sharp_line": "Finishing ongoing projects today will feel more rewarding than diving into new ventures.",
-      "reflection_question": "What truth have you been avoiding?",
-      "spoken_reflection": "What truth have you been avoiding? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-17",
       "power_focus": "Embracing new adventures",
       "power_color": "Burnt orange",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Releasing what's held you back will feel much more fulfilling than diving into something new right now.",
       "reflection_question": "What emotions do you need to let go of?",
       "spoken_reflection": "Think about this: What emotions do you need to let go of? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-26",
+      "power_focus": "Emotional introspection",
+      "power_color": "Amber",
+      "sharp_do": "Dive into your feelings.",
+      "sharp_dont": "Avoid making hasty decisions.",
+      "spoken_sharp_line": "Exploring your feelings today will feel better than rushing into decisions without clarity.",
+      "reflection_question": "What emotions are surfacing for you?",
+      "spoken_reflection": "What emotions are surfacing for you? Take a pause and think about it."
     }
   ]
 }
