@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-17",
-      "power_focus": "Embracing new adventures",
-      "power_color": "Burnt orange",
-      "sharp_do": "Explore a new hobby.",
-      "sharp_dont": "Avoid sticking to routines.",
-      "spoken_sharp_line": "Exploring something new today will feel more rewarding than sticking to the same old routine.",
-      "reflection_question": "What new experience are you craving?",
-      "spoken_reflection": "What new experience are you craving? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-18",
       "power_focus": "Express your true self.",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Exploring your feelings today will feel better than rushing into decisions without clarity.",
       "reflection_question": "What emotions are surfacing for you?",
       "spoken_reflection": "What emotions are surfacing for you? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-27",
+      "power_focus": "Harness your creativity",
+      "power_color": "Gold",
+      "sharp_do": "Channel your creativity into a project.",
+      "sharp_dont": "Avoid overthinking your ideas.",
+      "spoken_sharp_line": "You\u2019ll find that channeling your creativity today will yield better results than dwelling on uncertainties.",
+      "reflection_question": "What creative idea have you been hesitating to pursue?",
+      "spoken_reflection": "What creative idea have you been hesitating to pursue? Take a pause and think about it."
     }
   ]
 }
