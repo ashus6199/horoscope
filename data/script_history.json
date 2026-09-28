@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-18",
-      "power_focus": "Express your true self.",
-      "power_color": "Crimson",
-      "sharp_do": "Share your ideas confidently.",
-      "sharp_dont": "Hold back your opinions.",
-      "spoken_sharp_line": "Expressing your true self will feel more rewarding than keeping your ideas to yourself.",
-      "reflection_question": "What truth do you want to express today?",
-      "spoken_reflection": "What truth do you want to express today? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-19",
       "power_focus": "Stay grounded in priorities.",
       "power_color": "Rust",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "You\u2019ll find that channeling your creativity today will yield better results than dwelling on uncertainties.",
       "reflection_question": "What creative idea have you been hesitating to pursue?",
       "spoken_reflection": "What creative idea have you been hesitating to pursue? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-28",
+      "power_focus": "Finishing projects with energy",
+      "power_color": "Scarlet",
+      "sharp_do": "Complete something already started",
+      "sharp_dont": "Avoid initiating new ventures",
+      "spoken_sharp_line": "Finishing what's already in motion will feel much more rewarding than starting something new today.",
+      "reflection_question": "What project can you finalize today?",
+      "spoken_reflection": "What project can you finalize today? Take a pause and think about it."
     }
   ]
 }
