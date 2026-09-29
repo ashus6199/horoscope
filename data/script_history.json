@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-19",
-      "power_focus": "Stay grounded in priorities.",
-      "power_color": "Rust",
-      "sharp_do": "Finish off pending tasks today.",
-      "sharp_dont": "Avoid starting anything brand new.",
-      "spoken_sharp_line": "Completing what\u2019s already on your plate will feel more rewarding than jumping into something fresh.",
-      "reflection_question": "What project needs your final touch today?",
-      "spoken_reflection": "What project needs your final touch today? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-20",
       "power_focus": "Grounding ambitions today",
       "power_color": "Amber",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finishing what's already in motion will feel much more rewarding than starting something new today.",
       "reflection_question": "What project can you finalize today?",
       "spoken_reflection": "What project can you finalize today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-29",
+      "power_focus": "Finding stability in routine.",
+      "power_color": "Burnt orange",
+      "sharp_do": "Stabilize your daily routine.",
+      "sharp_dont": "Avoid impulsive changes today.",
+      "spoken_sharp_line": "Establishing a steady rhythm will feel more rewarding than jumping into the unknown.",
+      "reflection_question": "What routine can you refine today?",
+      "spoken_reflection": "What routine can you refine today? Take a pause and think about it."
     }
   ]
 }
