@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-20",
-      "power_focus": "Grounding ambitions today",
-      "power_color": "Amber",
-      "sharp_do": "Prioritize long-term goals",
-      "sharp_dont": "Avoid impulsive decisions",
-      "spoken_sharp_line": "Staying grounded in your ambitions will feel more satisfying than making hasty choices today.",
-      "reflection_question": "What ambition are you ready to commit to?",
-      "spoken_reflection": "What ambition are you ready to commit to? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-21",
       "power_focus": "Prioritizing actionable steps",
       "power_color": "Gold",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Establishing a steady rhythm will feel more rewarding than jumping into the unknown.",
       "reflection_question": "What routine can you refine today?",
       "spoken_reflection": "What routine can you refine today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-09-30",
+      "power_focus": "Grounding your priorities.",
+      "power_color": "Rust",
+      "sharp_do": "Reconnect with your core values.",
+      "sharp_dont": "Avoid spreading yourself too thin.",
+      "spoken_sharp_line": "Focusing on your core values will feel more fulfilling than trying to juggle multiple tasks.",
+      "reflection_question": "What priorities are you ready to ground today?",
+      "spoken_reflection": "What priorities are you ready to ground today? Take a pause and think about it."
     }
   ]
 }
