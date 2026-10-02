@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-22",
-      "power_focus": "Innovative ideas bloom.",
-      "power_color": "Scarlet",
-      "sharp_do": "Embrace an unexpected partnership.",
-      "sharp_dont": "Avoid getting stuck in routine.",
-      "spoken_sharp_line": "Working with others will bring more satisfaction than going solo today.",
-      "reflection_question": "What innovative idea has been on your mind?",
-      "spoken_reflection": "What innovative idea has been on your mind? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-23",
       "power_focus": "Embrace new connections.",
       "power_color": "Burnt orange",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Reflecting on your feelings will feel more rewarding than starting new discussions.",
       "reflection_question": "What feelings need your attention today?",
       "spoken_reflection": "What feelings need your attention today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-02",
+      "power_focus": "Embrace emotional transitions",
+      "power_color": "Amber",
+      "sharp_do": "Acknowledge your shifting emotions",
+      "sharp_dont": "Avoid jumping to conclusions",
+      "spoken_sharp_line": "Acknowledging your emotions will feel better than ignoring them today.",
+      "reflection_question": "How do your emotions influence your actions?",
+      "spoken_reflection": "How do your emotions influence your actions? Take a pause and think about it."
     }
   ]
 }
