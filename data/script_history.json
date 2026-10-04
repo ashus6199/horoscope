@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-24",
-      "power_focus": "Emotional clarity today",
-      "power_color": "Ruby",
-      "sharp_do": "Reflect on emotional needs",
-      "sharp_dont": "Avoid pushing for new beginnings",
-      "spoken_sharp_line": "Today, reflecting on what you need will feel more rewarding than diving into something new.",
-      "reflection_question": "What emotions are you ready to release?",
-      "spoken_reflection": "What emotions are you ready to release? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-25",
       "power_focus": "Releasing emotional baggage",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finishing tasks that feed your spirit will feel more rewarding than starting new ones.",
       "reflection_question": "What distractions do you need to let go of?",
       "spoken_reflection": "What distractions do you need to let go of? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-04",
+      "power_focus": "Reassess your connections",
+      "power_color": "Scarlet",
+      "sharp_do": "Reconnect with old friends.",
+      "sharp_dont": "Start new romantic ventures.",
+      "spoken_sharp_line": "Reconnecting with familiar faces will feel more rewarding than diving into new relationships right now.",
+      "reflection_question": "What relationship needs your attention today?",
+      "spoken_reflection": "Consider this: What relationship needs your attention today? Take a pause and think about it."
     }
   ]
 }
