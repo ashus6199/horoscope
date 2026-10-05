@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-25",
-      "power_focus": "Releasing emotional baggage",
-      "power_color": "Crimson",
-      "sharp_do": "Prioritize emotional releases today.",
-      "sharp_dont": "Avoid starting new emotional projects.",
-      "spoken_sharp_line": "Releasing what's held you back will feel much more fulfilling than diving into something new right now.",
-      "reflection_question": "What emotions do you need to let go of?",
-      "spoken_reflection": "Think about this: What emotions do you need to let go of? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-26",
       "power_focus": "Emotional introspection",
       "power_color": "Amber",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Reconnecting with familiar faces will feel more rewarding than diving into new relationships right now.",
       "reflection_question": "What relationship needs your attention today?",
       "spoken_reflection": "Consider this: What relationship needs your attention today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-05",
+      "power_focus": "Revisiting core desires",
+      "power_color": "Burnt orange",
+      "sharp_do": "Embrace conversations from the past",
+      "sharp_dont": "Avoid making impulsive decisions",
+      "spoken_sharp_line": "Having meaningful conversations today will energize you more than jumping into new commitments.",
+      "reflection_question": "What past desire are you ready to revisit?",
+      "spoken_reflection": "What past desire are you ready to revisit? Take a pause and think about it."
     }
   ]
 }
