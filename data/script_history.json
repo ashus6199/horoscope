@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-26",
-      "power_focus": "Emotional introspection",
-      "power_color": "Amber",
-      "sharp_do": "Dive into your feelings.",
-      "sharp_dont": "Avoid making hasty decisions.",
-      "spoken_sharp_line": "Exploring your feelings today will feel better than rushing into decisions without clarity.",
-      "reflection_question": "What emotions are surfacing for you?",
-      "spoken_reflection": "What emotions are surfacing for you? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-27",
       "power_focus": "Harness your creativity",
       "power_color": "Gold",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Having meaningful conversations today will energize you more than jumping into new commitments.",
       "reflection_question": "What past desire are you ready to revisit?",
       "spoken_reflection": "What past desire are you ready to revisit? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-06",
+      "power_focus": "Reevaluating relationships",
+      "power_color": "Rust",
+      "sharp_do": "Engage in meaningful conversations.",
+      "sharp_dont": "Avoid making impulsive decisions.",
+      "spoken_sharp_line": "Engaging in deeper conversations today will feel more fulfilling than jumping into new commitments.",
+      "reflection_question": "What relationships are you reconsidering right now?",
+      "spoken_reflection": "What relationships are you reconsidering right now? Take a pause and think about it."
     }
   ]
 }
