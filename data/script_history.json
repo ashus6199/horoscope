@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-27",
-      "power_focus": "Harness your creativity",
-      "power_color": "Gold",
-      "sharp_do": "Channel your creativity into a project.",
-      "sharp_dont": "Avoid overthinking your ideas.",
-      "spoken_sharp_line": "You\u2019ll find that channeling your creativity today will yield better results than dwelling on uncertainties.",
-      "reflection_question": "What creative idea have you been hesitating to pursue?",
-      "spoken_reflection": "What creative idea have you been hesitating to pursue? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-28",
       "power_focus": "Finishing projects with energy",
       "power_color": "Scarlet",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Engaging in deeper conversations today will feel more fulfilling than jumping into new commitments.",
       "reflection_question": "What relationships are you reconsidering right now?",
       "spoken_reflection": "What relationships are you reconsidering right now? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-07",
+      "power_focus": "Rethink your connections",
+      "power_color": "Crimson",
+      "sharp_do": "Finish ongoing conversations",
+      "sharp_dont": "Start new connections",
+      "spoken_sharp_line": "Finishing ongoing conversations will feel more rewarding than starting something new right now.",
+      "reflection_question": "What connections need your attention today?",
+      "spoken_reflection": "What connections need your attention today? Take a pause and think about it."
     }
   ]
 }
