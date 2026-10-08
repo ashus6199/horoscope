@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-28",
-      "power_focus": "Finishing projects with energy",
-      "power_color": "Scarlet",
-      "sharp_do": "Complete something already started",
-      "sharp_dont": "Avoid initiating new ventures",
-      "spoken_sharp_line": "Finishing what's already in motion will feel much more rewarding than starting something new today.",
-      "reflection_question": "What project can you finalize today?",
-      "spoken_reflection": "What project can you finalize today? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-29",
       "power_focus": "Finding stability in routine.",
       "power_color": "Burnt orange",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finishing ongoing conversations will feel more rewarding than starting something new right now.",
       "reflection_question": "What connections need your attention today?",
       "spoken_reflection": "What connections need your attention today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-08",
+      "power_focus": "Reflecting on past progress",
+      "power_color": "Amber",
+      "sharp_do": "Review and celebrate your small wins",
+      "sharp_dont": "Avoid starting new projects today",
+      "spoken_sharp_line": "Taking time to review and celebrate your small wins will feel more rewarding than jumping into something new.",
+      "reflection_question": "What achievements are you proud of?",
+      "spoken_reflection": "What achievements are you proud of? Take a pause and think about it."
     }
   ]
 }
