@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-29",
-      "power_focus": "Finding stability in routine.",
-      "power_color": "Burnt orange",
-      "sharp_do": "Stabilize your daily routine.",
-      "sharp_dont": "Avoid impulsive changes today.",
-      "spoken_sharp_line": "Establishing a steady rhythm will feel more rewarding than jumping into the unknown.",
-      "reflection_question": "What routine can you refine today?",
-      "spoken_reflection": "What routine can you refine today? Take a pause and think about it."
-    },
-    {
       "date": "2026-09-30",
       "power_focus": "Grounding your priorities.",
       "power_color": "Rust",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Taking time to review and celebrate your small wins will feel more rewarding than jumping into something new.",
       "reflection_question": "What achievements are you proud of?",
       "spoken_reflection": "What achievements are you proud of? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-09",
+      "power_focus": "Prepare for new beginnings",
+      "power_color": "Gold",
+      "sharp_do": "Finalize plans for new projects.",
+      "sharp_dont": "Avoid initiating anything major today.",
+      "spoken_sharp_line": "Finalizing plans now will feel much better than trying to start something new today.",
+      "reflection_question": "What intention are you setting for the New Moon?",
+      "spoken_reflection": "What intention are you setting for the New Moon? Take a pause and think about it."
     }
   ]
 }
