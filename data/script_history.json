@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-09-30",
-      "power_focus": "Grounding your priorities.",
-      "power_color": "Rust",
-      "sharp_do": "Reconnect with your core values.",
-      "sharp_dont": "Avoid spreading yourself too thin.",
-      "spoken_sharp_line": "Focusing on your core values will feel more fulfilling than trying to juggle multiple tasks.",
-      "reflection_question": "What priorities are you ready to ground today?",
-      "spoken_reflection": "What priorities are you ready to ground today? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-01",
       "power_focus": "Emotional clarity",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finalizing plans now will feel much better than trying to start something new today.",
       "reflection_question": "What intention are you setting for the New Moon?",
       "spoken_reflection": "What intention are you setting for the New Moon? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-10",
+      "power_focus": "Clarity in relationships",
+      "power_color": "Scarlet",
+      "sharp_do": "Clarify your thoughts on partnerships",
+      "sharp_dont": "Avoid rushing into new commitments",
+      "spoken_sharp_line": "Clarifying your thoughts about partnerships will feel better than rushing into new commitments today.",
+      "reflection_question": "What intentions are you setting for relationships?",
+      "spoken_reflection": "What intentions are you setting for relationships? Take a pause and think about it."
     }
   ]
 }
