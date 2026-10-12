@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-02",
-      "power_focus": "Embrace emotional transitions",
-      "power_color": "Amber",
-      "sharp_do": "Acknowledge your shifting emotions",
-      "sharp_dont": "Avoid jumping to conclusions",
-      "spoken_sharp_line": "Acknowledging your emotions will feel better than ignoring them today.",
-      "reflection_question": "How do your emotions influence your actions?",
-      "spoken_reflection": "How do your emotions influence your actions? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-03",
       "power_focus": "Letting go of distractions",
       "power_color": "Gold",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Reconnecting with someone from your past will feel more fulfilling than diving into new relationships today.",
       "reflection_question": "Who from your past could use a message?",
       "spoken_reflection": "Think about this: Who from your past could use a message? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-12",
+      "power_focus": "Reevaluate your values",
+      "power_color": "Ruby",
+      "sharp_do": "Prioritize what feels aligned",
+      "sharp_dont": "Avoid rushing into new commitments",
+      "spoken_sharp_line": "Taking time to reflect on what fits your values will feel better than diving into new commitments.",
+      "reflection_question": "What values are you reconsidering right now?",
+      "spoken_reflection": "Think about this: What values are you reconsidering right now? Take a pause and think about it."
     }
   ]
 }
