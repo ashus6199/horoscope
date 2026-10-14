@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-04",
-      "power_focus": "Reassess your connections",
-      "power_color": "Scarlet",
-      "sharp_do": "Reconnect with old friends.",
-      "sharp_dont": "Start new romantic ventures.",
-      "spoken_sharp_line": "Reconnecting with familiar faces will feel more rewarding than diving into new relationships right now.",
-      "reflection_question": "What relationship needs your attention today?",
-      "spoken_reflection": "Consider this: What relationship needs your attention today? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-05",
       "power_focus": "Revisiting core desires",
       "power_color": "Burnt orange",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Engaging openly today will foster connection, while ignoring emotions could stir up tension.",
       "reflection_question": "What emotional truths are you uncovering today?",
       "spoken_reflection": "What emotional truths are you uncovering today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-14",
+      "power_focus": "Reflecting on connections.",
+      "power_color": "Amber",
+      "sharp_do": "Reconnect with your core values.",
+      "sharp_dont": "Avoid rushing into new commitments.",
+      "spoken_sharp_line": "Focusing on what you value will feel more rewarding than starting new things today.",
+      "reflection_question": "What lingering feelings need your attention?",
+      "spoken_reflection": "Consider this: What lingering feelings need your attention? Take a pause and think about it."
     }
   ]
 }
