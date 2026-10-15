@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-05",
-      "power_focus": "Revisiting core desires",
-      "power_color": "Burnt orange",
-      "sharp_do": "Embrace conversations from the past",
-      "sharp_dont": "Avoid making impulsive decisions",
-      "spoken_sharp_line": "Having meaningful conversations today will energize you more than jumping into new commitments.",
-      "reflection_question": "What past desire are you ready to revisit?",
-      "spoken_reflection": "What past desire are you ready to revisit? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-06",
       "power_focus": "Reevaluating relationships",
       "power_color": "Rust",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Focusing on what you value will feel more rewarding than starting new things today.",
       "reflection_question": "What lingering feelings need your attention?",
       "spoken_reflection": "Consider this: What lingering feelings need your attention? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-15",
+      "power_focus": "Personal growth in connections",
+      "power_color": "Gold",
+      "sharp_do": "Embrace introspection today.",
+      "sharp_dont": "Avoid rushing into new commitments.",
+      "spoken_sharp_line": "Reflecting on what you truly want will feel better than jumping into something new immediately.",
+      "reflection_question": "What do you truly want from your relationships?",
+      "spoken_reflection": "Take a moment to ask yourself, 'What do you truly want from your relationships?' Take a pause and think about it."
     }
   ]
 }
