@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-08",
-      "power_focus": "Reflecting on past progress",
-      "power_color": "Amber",
-      "sharp_do": "Review and celebrate your small wins",
-      "sharp_dont": "Avoid starting new projects today",
-      "spoken_sharp_line": "Taking time to review and celebrate your small wins will feel more rewarding than jumping into something new.",
-      "reflection_question": "What achievements are you proud of?",
-      "spoken_reflection": "What achievements are you proud of? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-09",
       "power_focus": "Prepare for new beginnings",
       "power_color": "Gold",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Reconnecting with someone familiar will feel more rewarding than jumping into new bonds.",
       "reflection_question": "Which past connection is calling for your attention?",
       "spoken_reflection": "Take a moment to consider, which past connection is calling for your attention? Think it through."
+    },
+    {
+      "date": "2026-10-18",
+      "power_focus": "Align with your desires",
+      "power_color": "Rust",
+      "sharp_do": "Prioritize what matters most.",
+      "sharp_dont": "Avoid rushing into decisions.",
+      "spoken_sharp_line": "Focusing on what truly matters today will feel more fulfilling than making hasty choices.",
+      "reflection_question": "What desires are you ready to prioritize?",
+      "spoken_reflection": "What desires are you ready to prioritize? Take a pause and think about it."
     }
   ]
 }
