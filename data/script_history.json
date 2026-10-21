@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-11",
-      "power_focus": "Revisiting past connections",
-      "power_color": "Burnt orange",
-      "sharp_do": "Reconnect with an old friend.",
-      "sharp_dont": "Avoid starting new relationships.",
-      "spoken_sharp_line": "Reconnecting with someone from your past will feel more fulfilling than diving into new relationships today.",
-      "reflection_question": "Who from your past could use a message?",
-      "spoken_reflection": "Think about this: Who from your past could use a message? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-12",
       "power_focus": "Reevaluate your values",
       "power_color": "Ruby",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Engaging in open dialogues today will feel rewarding, while rushing into choices may lead to friction.",
       "reflection_question": "What relationship patterns are you ready to change?",
       "spoken_reflection": "Consider this: What relationship patterns are you ready to change? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-21",
+      "power_focus": "Revisiting relationships",
+      "power_color": "Gold",
+      "sharp_do": "Engage in meaningful conversations",
+      "sharp_dont": "Avoid superficial interactions",
+      "spoken_sharp_line": "Engaging deeply with others will feel more satisfying than keeping things light today.",
+      "reflection_question": "What relationship do you want to nurture today?",
+      "spoken_reflection": "What relationship do you want to nurture today? Take a pause and think about it."
     }
   ]
 }
