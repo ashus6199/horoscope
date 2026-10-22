@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-12",
-      "power_focus": "Reevaluate your values",
-      "power_color": "Ruby",
-      "sharp_do": "Prioritize what feels aligned",
-      "sharp_dont": "Avoid rushing into new commitments",
-      "spoken_sharp_line": "Taking time to reflect on what fits your values will feel better than diving into new commitments.",
-      "reflection_question": "What values are you reconsidering right now?",
-      "spoken_reflection": "Think about this: What values are you reconsidering right now? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-13",
       "power_focus": "Revisiting emotional foundations",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Engaging deeply with others will feel more satisfying than keeping things light today.",
       "reflection_question": "What relationship do you want to nurture today?",
       "spoken_reflection": "What relationship do you want to nurture today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-22",
+      "power_focus": "Revisiting creativity",
+      "power_color": "Scarlet",
+      "sharp_do": "Channel your creativity into something familiar.",
+      "sharp_dont": "Avoid starting completely new ventures.",
+      "spoken_sharp_line": "Finishing up creative projects will spark more joy than diving into entirely fresh endeavors today.",
+      "reflection_question": "What creative project have you neglected?",
+      "spoken_reflection": "What creative project have you neglected? Take a pause and think about it."
     }
   ]
 }
