@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-13",
-      "power_focus": "Revisiting emotional foundations",
-      "power_color": "Crimson",
-      "sharp_do": "Dive into heartfelt conversations.",
-      "sharp_dont": "Avoid sweeping feelings under the rug.",
-      "spoken_sharp_line": "Engaging openly today will foster connection, while ignoring emotions could stir up tension.",
-      "reflection_question": "What emotional truths are you uncovering today?",
-      "spoken_reflection": "What emotional truths are you uncovering today? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-14",
       "power_focus": "Reflecting on connections.",
       "power_color": "Amber",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finishing up creative projects will spark more joy than diving into entirely fresh endeavors today.",
       "reflection_question": "What creative project have you neglected?",
       "spoken_reflection": "What creative project have you neglected? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-23",
+      "power_focus": "Emotional clarity ahead",
+      "power_color": "Burnt orange",
+      "sharp_do": "Ground yourself in emotional clarity.",
+      "sharp_dont": "Avoid jumping to conclusions.",
+      "spoken_sharp_line": "Finding clarity in your feelings will feel better than making hasty decisions or assumptions.",
+      "reflection_question": "What emotions are you ready to understand better?",
+      "spoken_reflection": "What emotions are you ready to understand better? Take a pause and think about it."
     }
   ]
 }
