@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-14",
-      "power_focus": "Reflecting on connections.",
-      "power_color": "Amber",
-      "sharp_do": "Reconnect with your core values.",
-      "sharp_dont": "Avoid rushing into new commitments.",
-      "spoken_sharp_line": "Focusing on what you value will feel more rewarding than starting new things today.",
-      "reflection_question": "What lingering feelings need your attention?",
-      "spoken_reflection": "Consider this: What lingering feelings need your attention? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-15",
       "power_focus": "Personal growth in connections",
       "power_color": "Gold",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finding clarity in your feelings will feel better than making hasty decisions or assumptions.",
       "reflection_question": "What emotions are you ready to understand better?",
       "spoken_reflection": "What emotions are you ready to understand better? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-24",
+      "power_focus": "Embracing your passions",
+      "power_color": "Rust",
+      "sharp_do": "Focus on activities that inspire you.",
+      "sharp_dont": "Avoid getting sidetracked by distractions.",
+      "spoken_sharp_line": "Engaging fully in activities you love will feel much more fulfilling than getting caught up in minor tasks.",
+      "reflection_question": "What passion project are you ready to dive into?",
+      "spoken_reflection": "What passion project are you ready to dive into? Take a pause and think about it."
     }
   ]
 }
