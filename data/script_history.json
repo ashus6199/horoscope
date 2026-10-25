@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-15",
-      "power_focus": "Personal growth in connections",
-      "power_color": "Gold",
-      "sharp_do": "Embrace introspection today.",
-      "sharp_dont": "Avoid rushing into new commitments.",
-      "spoken_sharp_line": "Reflecting on what you truly want will feel better than jumping into something new immediately.",
-      "reflection_question": "What do you truly want from your relationships?",
-      "spoken_reflection": "Take a moment to ask yourself, 'What do you truly want from your relationships?' Take a pause and think about it."
-    },
-    {
       "date": "2026-10-16",
       "power_focus": "Revisiting passions.",
       "power_color": "Scarlet",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Engaging fully in activities you love will feel much more fulfilling than getting caught up in minor tasks.",
       "reflection_question": "What passion project are you ready to dive into?",
       "spoken_reflection": "What passion project are you ready to dive into? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-25",
+      "power_focus": "Mindful reflection",
+      "power_color": "Crimson",
+      "sharp_do": "Take time to reflect on past decisions.",
+      "sharp_dont": "Avoid rushing into new commitments.",
+      "spoken_sharp_line": "Reflecting on what's already been set in motion will feel better than jumping into something new.",
+      "reflection_question": "What decision are you reconsidering right now?",
+      "spoken_reflection": "What decision are you reconsidering right now? Take a pause and think about it."
     }
   ]
 }
