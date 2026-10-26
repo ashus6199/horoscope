@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-16",
-      "power_focus": "Revisiting passions.",
-      "power_color": "Scarlet",
-      "sharp_do": "Explore past passions.",
-      "sharp_dont": "Avoid rushing into new romances.",
-      "spoken_sharp_line": "Exploring what once inspired you will feel more fulfilling than jumping into something new.",
-      "reflection_question": "What past passion deserves your attention now?",
-      "spoken_reflection": "What past passion deserves your attention now? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-17",
       "power_focus": "Reflecting on past connections",
       "power_color": "Burnt orange",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Reflecting on what's already been set in motion will feel better than jumping into something new.",
       "reflection_question": "What decision are you reconsidering right now?",
       "spoken_reflection": "What decision are you reconsidering right now? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-26",
+      "power_focus": "Finishing old projects",
+      "power_color": "Amber",
+      "sharp_do": "Complete what's already in motion.",
+      "sharp_dont": "Avoid starting new ventures.",
+      "spoken_sharp_line": "Finishing something today will feel more satisfying than starting something new.",
+      "reflection_question": "What old project needs your attention today?",
+      "spoken_reflection": "What old project needs your attention today? Take a pause and think about it."
     }
   ]
 }
