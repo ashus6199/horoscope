@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-17",
-      "power_focus": "Reflecting on past connections",
-      "power_color": "Burnt orange",
-      "sharp_do": "Reach out to an old friend.",
-      "sharp_dont": "Start new relationships today.",
-      "spoken_sharp_line": "Reconnecting with someone familiar will feel more rewarding than jumping into new bonds.",
-      "reflection_question": "Which past connection is calling for your attention?",
-      "spoken_reflection": "Take a moment to consider, which past connection is calling for your attention? Think it through."
-    },
-    {
       "date": "2026-10-18",
       "power_focus": "Align with your desires",
       "power_color": "Rust",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finishing something today will feel more satisfying than starting something new.",
       "reflection_question": "What old project needs your attention today?",
       "spoken_reflection": "What old project needs your attention today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-27",
+      "power_focus": "Navigating past ideas",
+      "power_color": "Gold",
+      "sharp_do": "Revisit meaningful dialogues.",
+      "sharp_dont": "Avoid diving into new commitments.",
+      "spoken_sharp_line": "Revisiting something meaningful today will feel more rewarding than trying to start fresh.",
+      "reflection_question": "What old conversation do you need to revisit?",
+      "spoken_reflection": "What old conversation do you need to revisit? Take a pause and think about it."
     }
   ]
 }
