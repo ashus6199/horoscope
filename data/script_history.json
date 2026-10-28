@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-18",
-      "power_focus": "Align with your desires",
-      "power_color": "Rust",
-      "sharp_do": "Prioritize what matters most.",
-      "sharp_dont": "Avoid rushing into decisions.",
-      "spoken_sharp_line": "Focusing on what truly matters today will feel more fulfilling than making hasty choices.",
-      "reflection_question": "What desires are you ready to prioritize?",
-      "spoken_reflection": "What desires are you ready to prioritize? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-19",
       "power_focus": "Reassessing your values",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Revisiting something meaningful today will feel more rewarding than trying to start fresh.",
       "reflection_question": "What old conversation do you need to revisit?",
       "spoken_reflection": "What old conversation do you need to revisit? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-28",
+      "power_focus": "Reflect on connections.",
+      "power_color": "Scarlet",
+      "sharp_do": "Revisit past connections.",
+      "sharp_dont": "Avoid starting new dialogues.",
+      "spoken_sharp_line": "Revisiting old connections will feel more rewarding than trying to initiate new ones.",
+      "reflection_question": "What past connection deserves your attention?",
+      "spoken_reflection": "What past connection deserves your attention? Take a pause and think about it."
     }
   ]
 }
