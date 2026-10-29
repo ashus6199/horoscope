@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-19",
-      "power_focus": "Reassessing your values",
-      "power_color": "Crimson",
-      "sharp_do": "Reflect on what nurtures you.",
-      "sharp_dont": "Avoid rushing into new commitments.",
-      "spoken_sharp_line": "You\u2019ll feel more fulfilled by reflecting on what nurtures your soul than jumping into new commitments.",
-      "reflection_question": "What values are you ready to reassess?",
-      "spoken_reflection": "What values are you ready to reassess? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-20",
       "power_focus": "Clarifying relationship dynamics",
       "power_color": "Amber",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Revisiting old connections will feel more rewarding than trying to initiate new ones.",
       "reflection_question": "What past connection deserves your attention?",
       "spoken_reflection": "What past connection deserves your attention? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-29",
+      "power_focus": "Reassessing your communication",
+      "power_color": "Burnt orange",
+      "sharp_do": "Clarify your messages today.",
+      "sharp_dont": "Avoid starting new conversations.",
+      "spoken_sharp_line": "Clarifying your messages will feel more rewarding than diving into new discussions right now.",
+      "reflection_question": "What misunderstanding needs your attention?",
+      "spoken_reflection": "What misunderstanding needs your attention? Take a pause and think about it."
     }
   ]
 }
