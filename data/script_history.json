@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-20",
-      "power_focus": "Clarifying relationship dynamics",
-      "power_color": "Amber",
-      "sharp_do": "Dive into conversations with friends.",
-      "sharp_dont": "Avoid making impulsive decisions.",
-      "spoken_sharp_line": "Engaging in open dialogues today will feel rewarding, while rushing into choices may lead to friction.",
-      "reflection_question": "What relationship patterns are you ready to change?",
-      "spoken_reflection": "Consider this: What relationship patterns are you ready to change? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-21",
       "power_focus": "Revisiting relationships",
       "power_color": "Gold",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Clarifying your messages will feel more rewarding than diving into new discussions right now.",
       "reflection_question": "What misunderstanding needs your attention?",
       "spoken_reflection": "What misunderstanding needs your attention? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-30",
+      "power_focus": "Deep emotional insights",
+      "power_color": "Rust",
+      "sharp_do": "Dive into emotional truths.",
+      "sharp_dont": "Avoid starting new relationships.",
+      "spoken_sharp_line": "Digging into your emotional landscape will feel more fulfilling than trying to forge new connections right now.",
+      "reflection_question": "What old feelings need your attention?",
+      "spoken_reflection": "What old feelings need your attention? Take a pause and think about it."
     }
   ]
 }
