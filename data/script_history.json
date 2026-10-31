@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-21",
-      "power_focus": "Revisiting relationships",
-      "power_color": "Gold",
-      "sharp_do": "Engage in meaningful conversations",
-      "sharp_dont": "Avoid superficial interactions",
-      "spoken_sharp_line": "Engaging deeply with others will feel more satisfying than keeping things light today.",
-      "reflection_question": "What relationship do you want to nurture today?",
-      "spoken_reflection": "What relationship do you want to nurture today? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-22",
       "power_focus": "Revisiting creativity",
       "power_color": "Scarlet",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Digging into your emotional landscape will feel more fulfilling than trying to forge new connections right now.",
       "reflection_question": "What old feelings need your attention?",
       "spoken_reflection": "What old feelings need your attention? Take a pause and think about it."
+    },
+    {
+      "date": "2026-10-31",
+      "power_focus": "Aligning with intuition.",
+      "power_color": "Crimson",
+      "sharp_do": "Trust your gut feelings.",
+      "sharp_dont": "Ignore subtle signs around you.",
+      "spoken_sharp_line": "Listening to your intuition will feel better than dismissing those subtle hints.",
+      "reflection_question": "What intuitive nudges are you overlooking?",
+      "spoken_reflection": "What intuitive nudges are you overlooking? Take a pause and think about it."
     }
   ]
 }
