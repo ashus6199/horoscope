@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-22",
-      "power_focus": "Revisiting creativity",
-      "power_color": "Scarlet",
-      "sharp_do": "Channel your creativity into something familiar.",
-      "sharp_dont": "Avoid starting completely new ventures.",
-      "spoken_sharp_line": "Finishing up creative projects will spark more joy than diving into entirely fresh endeavors today.",
-      "reflection_question": "What creative project have you neglected?",
-      "spoken_reflection": "What creative project have you neglected? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-23",
       "power_focus": "Emotional clarity ahead",
       "power_color": "Burnt orange",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Listening to your intuition will feel better than dismissing those subtle hints.",
       "reflection_question": "What intuitive nudges are you overlooking?",
       "spoken_reflection": "What intuitive nudges are you overlooking? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-01",
+      "power_focus": "Clarifying your intentions",
+      "power_color": "Amber",
+      "sharp_do": "Clarify your future plans.",
+      "sharp_dont": "Avoid rushing into new commitments.",
+      "spoken_sharp_line": "Clarifying your intentions will feel better than rushing into new commitments today.",
+      "reflection_question": "What goals are you ready to clarify?",
+      "spoken_reflection": "Take a moment to consider: what goals are you ready to clarify? Think it through."
     }
   ]
 }
