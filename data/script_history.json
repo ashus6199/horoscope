@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-23",
-      "power_focus": "Emotional clarity ahead",
-      "power_color": "Burnt orange",
-      "sharp_do": "Ground yourself in emotional clarity.",
-      "sharp_dont": "Avoid jumping to conclusions.",
-      "spoken_sharp_line": "Finding clarity in your feelings will feel better than making hasty decisions or assumptions.",
-      "reflection_question": "What emotions are you ready to understand better?",
-      "spoken_reflection": "What emotions are you ready to understand better? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-24",
       "power_focus": "Embracing your passions",
       "power_color": "Rust",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Clarifying your intentions will feel better than rushing into new commitments today.",
       "reflection_question": "What goals are you ready to clarify?",
       "spoken_reflection": "Take a moment to consider: what goals are you ready to clarify? Think it through."
+    },
+    {
+      "date": "2026-11-02",
+      "power_focus": "Revisiting past ideas",
+      "power_color": "Gold",
+      "sharp_do": "Revise an old project.",
+      "sharp_dont": "Start something brand new.",
+      "spoken_sharp_line": "Revising something familiar will feel more rewarding than diving into uncharted territory right now.",
+      "reflection_question": "What old idea needs your attention?",
+      "spoken_reflection": "What old idea needs your attention? Take a pause and think about it."
     }
   ]
 }
