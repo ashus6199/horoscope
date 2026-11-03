@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-24",
-      "power_focus": "Embracing your passions",
-      "power_color": "Rust",
-      "sharp_do": "Focus on activities that inspire you.",
-      "sharp_dont": "Avoid getting sidetracked by distractions.",
-      "spoken_sharp_line": "Engaging fully in activities you love will feel much more fulfilling than getting caught up in minor tasks.",
-      "reflection_question": "What passion project are you ready to dive into?",
-      "spoken_reflection": "What passion project are you ready to dive into? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-25",
       "power_focus": "Mindful reflection",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Revising something familiar will feel more rewarding than diving into uncharted territory right now.",
       "reflection_question": "What old idea needs your attention?",
       "spoken_reflection": "What old idea needs your attention? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-03",
+      "power_focus": "Finishing existing tasks",
+      "power_color": "Scarlet",
+      "sharp_do": "Wrap up loose ends today.",
+      "sharp_dont": "Avoid starting new projects.",
+      "spoken_sharp_line": "Finishing what's already in motion will feel more rewarding than launching something fresh.",
+      "reflection_question": "What task are you ready to complete today?",
+      "spoken_reflection": "What task are you ready to complete today? Take a pause and think about it."
     }
   ]
 }
