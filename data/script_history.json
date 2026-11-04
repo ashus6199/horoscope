@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-25",
-      "power_focus": "Mindful reflection",
-      "power_color": "Crimson",
-      "sharp_do": "Take time to reflect on past decisions.",
-      "sharp_dont": "Avoid rushing into new commitments.",
-      "spoken_sharp_line": "Reflecting on what's already been set in motion will feel better than jumping into something new.",
-      "reflection_question": "What decision are you reconsidering right now?",
-      "spoken_reflection": "What decision are you reconsidering right now? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-26",
       "power_focus": "Finishing old projects",
       "power_color": "Amber",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finishing what's already in motion will feel more rewarding than launching something fresh.",
       "reflection_question": "What task are you ready to complete today?",
       "spoken_reflection": "What task are you ready to complete today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-04",
+      "power_focus": "Revisiting past connections",
+      "power_color": "Burnt orange",
+      "sharp_do": "Reach out to an old friend",
+      "sharp_dont": "Start new conversations with strangers",
+      "spoken_sharp_line": "Reconnecting with someone familiar will feel better than diving into new interactions right now.",
+      "reflection_question": "Who in your past needs a message today?",
+      "spoken_reflection": "Think about this: Who in your past needs a message today? Take a pause and think about it."
     }
   ]
 }
