@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-27",
-      "power_focus": "Navigating past ideas",
-      "power_color": "Gold",
-      "sharp_do": "Revisit meaningful dialogues.",
-      "sharp_dont": "Avoid diving into new commitments.",
-      "spoken_sharp_line": "Revisiting something meaningful today will feel more rewarding than trying to start fresh.",
-      "reflection_question": "What old conversation do you need to revisit?",
-      "spoken_reflection": "What old conversation do you need to revisit? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-28",
       "power_focus": "Reflect on connections.",
       "power_color": "Scarlet",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Clarifying misunderstandings today will feel more rewarding than reacting impulsively.",
       "reflection_question": "What communication needs your attention today?",
       "spoken_reflection": "Consider this: What communication needs your attention today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-06",
+      "power_focus": "Setting intentions for growth",
+      "power_color": "Crimson",
+      "sharp_do": "Prioritize your true desires.",
+      "sharp_dont": "Avoid distractions from others' goals.",
+      "spoken_sharp_line": "Focusing on what you truly desire will feel more fulfilling than getting sidetracked by others' expectations.",
+      "reflection_question": "What intention are you ready to set?",
+      "spoken_reflection": "What intention are you ready to set? Take a pause and think about it."
     }
   ]
 }
