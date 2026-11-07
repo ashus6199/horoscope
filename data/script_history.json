@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-28",
-      "power_focus": "Reflect on connections.",
-      "power_color": "Scarlet",
-      "sharp_do": "Revisit past connections.",
-      "sharp_dont": "Avoid starting new dialogues.",
-      "spoken_sharp_line": "Revisiting old connections will feel more rewarding than trying to initiate new ones.",
-      "reflection_question": "What past connection deserves your attention?",
-      "spoken_reflection": "What past connection deserves your attention? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-29",
       "power_focus": "Reassessing your communication",
       "power_color": "Burnt orange",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Focusing on what you truly desire will feel more fulfilling than getting sidetracked by others' expectations.",
       "reflection_question": "What intention are you ready to set?",
       "spoken_reflection": "What intention are you ready to set? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-07",
+      "power_focus": "New beginnings and balance",
+      "power_color": "Amber",
+      "sharp_do": "Embrace harmony in conversations.",
+      "sharp_dont": "Avoid diving into new commitments.",
+      "spoken_sharp_line": "Fostering balance in your interactions will feel more satisfying than rushing into new obligations.",
+      "reflection_question": "What new path are you ready to explore?",
+      "spoken_reflection": "What new path are you ready to explore? Take a pause and think about it."
     }
   ]
 }
