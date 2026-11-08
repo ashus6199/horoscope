@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-29",
-      "power_focus": "Reassessing your communication",
-      "power_color": "Burnt orange",
-      "sharp_do": "Clarify your messages today.",
-      "sharp_dont": "Avoid starting new conversations.",
-      "spoken_sharp_line": "Clarifying your messages will feel more rewarding than diving into new discussions right now.",
-      "reflection_question": "What misunderstanding needs your attention?",
-      "spoken_reflection": "What misunderstanding needs your attention? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-30",
       "power_focus": "Deep emotional insights",
       "power_color": "Rust",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Fostering balance in your interactions will feel more satisfying than rushing into new obligations.",
       "reflection_question": "What new path are you ready to explore?",
       "spoken_reflection": "What new path are you ready to explore? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-08",
+      "power_focus": "Embracing transformation",
+      "power_color": "Gold",
+      "sharp_do": "Focus on your emotional clarity.",
+      "sharp_dont": "Avoid starting new projects.",
+      "spoken_sharp_line": "Finding emotional clarity will feel more rewarding than jumping into new projects today.",
+      "reflection_question": "What fear is holding you back right now?",
+      "spoken_reflection": "What fear is holding you back right now? Take a pause and think about it."
     }
   ]
 }
