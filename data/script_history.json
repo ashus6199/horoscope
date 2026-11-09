@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-30",
-      "power_focus": "Deep emotional insights",
-      "power_color": "Rust",
-      "sharp_do": "Dive into emotional truths.",
-      "sharp_dont": "Avoid starting new relationships.",
-      "spoken_sharp_line": "Digging into your emotional landscape will feel more fulfilling than trying to forge new connections right now.",
-      "reflection_question": "What old feelings need your attention?",
-      "spoken_reflection": "What old feelings need your attention? Take a pause and think about it."
-    },
-    {
       "date": "2026-10-31",
       "power_focus": "Aligning with intuition.",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finding emotional clarity will feel more rewarding than jumping into new projects today.",
       "reflection_question": "What fear is holding you back right now?",
       "spoken_reflection": "What fear is holding you back right now? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-09",
+      "power_focus": "Reflecting on past decisions",
+      "power_color": "Scarlet",
+      "sharp_do": "Finish what you've started.",
+      "sharp_dont": "Avoid starting new projects.",
+      "spoken_sharp_line": "Completing tasks you've begun will feel more satisfying than initiating anything new right now.",
+      "reflection_question": "What past decision needs your attention today?",
+      "spoken_reflection": "What past decision needs your attention today? Take a pause and think about it."
     }
   ]
 }
