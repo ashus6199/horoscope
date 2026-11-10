@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-10-31",
-      "power_focus": "Aligning with intuition.",
-      "power_color": "Crimson",
-      "sharp_do": "Trust your gut feelings.",
-      "sharp_dont": "Ignore subtle signs around you.",
-      "spoken_sharp_line": "Listening to your intuition will feel better than dismissing those subtle hints.",
-      "reflection_question": "What intuitive nudges are you overlooking?",
-      "spoken_reflection": "What intuitive nudges are you overlooking? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-01",
       "power_focus": "Clarifying your intentions",
       "power_color": "Amber",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Completing tasks you've begun will feel more satisfying than initiating anything new right now.",
       "reflection_question": "What past decision needs your attention today?",
       "spoken_reflection": "What past decision needs your attention today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-10",
+      "power_focus": "Navigating past connections",
+      "power_color": "Burnt orange",
+      "sharp_do": "Reach out to someone from your past",
+      "sharp_dont": "Start new relationships or projects today",
+      "spoken_sharp_line": "Reconnecting will feel better than diving into something brand new right now.",
+      "reflection_question": "What past connection are you ready to revisit?",
+      "spoken_reflection": "What past connection are you ready to revisit? Take a pause and think about it."
     }
   ]
 }
