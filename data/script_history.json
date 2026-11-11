@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-01",
-      "power_focus": "Clarifying your intentions",
-      "power_color": "Amber",
-      "sharp_do": "Clarify your future plans.",
-      "sharp_dont": "Avoid rushing into new commitments.",
-      "spoken_sharp_line": "Clarifying your intentions will feel better than rushing into new commitments today.",
-      "reflection_question": "What goals are you ready to clarify?",
-      "spoken_reflection": "Take a moment to consider: what goals are you ready to clarify? Think it through."
-    },
-    {
       "date": "2026-11-02",
       "power_focus": "Revisiting past ideas",
       "power_color": "Gold",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Reconnecting will feel better than diving into something brand new right now.",
       "reflection_question": "What past connection are you ready to revisit?",
       "spoken_reflection": "What past connection are you ready to revisit? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-11",
+      "power_focus": "Aligning thoughts with feelings",
+      "power_color": "Ruby",
+      "sharp_do": "Clarify your thoughts before sharing.",
+      "sharp_dont": "Avoid jumping to conclusions too quickly.",
+      "spoken_sharp_line": "Clarifying your thoughts before sharing will feel more fulfilling than rushing out new ideas.",
+      "reflection_question": "What message do you want to clarify today?",
+      "spoken_reflection": "What message do you want to clarify today? Take a pause and think about it."
     }
   ]
 }
