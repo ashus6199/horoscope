@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-04",
-      "power_focus": "Revisiting past connections",
-      "power_color": "Burnt orange",
-      "sharp_do": "Reach out to an old friend",
-      "sharp_dont": "Start new conversations with strangers",
-      "spoken_sharp_line": "Reconnecting with someone familiar will feel better than diving into new interactions right now.",
-      "reflection_question": "Who in your past needs a message today?",
-      "spoken_reflection": "Think about this: Who in your past needs a message today? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-05",
       "power_focus": "Reflecting on communication",
       "power_color": "Rust",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Clearing your mind will feel more rewarding than diving into something brand new.",
       "reflection_question": "What clarity are you seeking to achieve?",
       "spoken_reflection": "Think about this: What clarity are you seeking to achieve? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-14",
+      "power_focus": "Embrace new opportunities",
+      "power_color": "Gold",
+      "sharp_do": "Act on an idea you've had.",
+      "sharp_dont": "Avoid overthinking without action.",
+      "spoken_sharp_line": "Taking action on an idea today will feel much more rewarding than getting stuck in analysis paralysis.",
+      "reflection_question": "What new opportunity are you ready to pursue?",
+      "spoken_reflection": "What new opportunity are you ready to pursue? Take a pause and think about it."
     }
   ]
 }
