@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-05",
-      "power_focus": "Reflecting on communication",
-      "power_color": "Rust",
-      "sharp_do": "Take time to clarify misunderstandings.",
-      "sharp_dont": "Avoid jumping to conclusions too quickly.",
-      "spoken_sharp_line": "Clarifying misunderstandings today will feel more rewarding than reacting impulsively.",
-      "reflection_question": "What communication needs your attention today?",
-      "spoken_reflection": "Consider this: What communication needs your attention today? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-06",
       "power_focus": "Setting intentions for growth",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Taking action on an idea today will feel much more rewarding than getting stuck in analysis paralysis.",
       "reflection_question": "What new opportunity are you ready to pursue?",
       "spoken_reflection": "What new opportunity are you ready to pursue? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-15",
+      "power_focus": "Relationship clarity",
+      "power_color": "Scarlet",
+      "sharp_do": "Embrace conversations about feelings.",
+      "sharp_dont": "Avoid dismissing partner needs.",
+      "spoken_sharp_line": "Embracing open conversations will feel more rewarding than brushing issues aside today.",
+      "reflection_question": "What relationships need your attention today?",
+      "spoken_reflection": "What relationships need your attention today? Take a pause and think about it."
     }
   ]
 }
