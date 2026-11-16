@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-06",
-      "power_focus": "Setting intentions for growth",
-      "power_color": "Crimson",
-      "sharp_do": "Prioritize your true desires.",
-      "sharp_dont": "Avoid distractions from others' goals.",
-      "spoken_sharp_line": "Focusing on what you truly desire will feel more fulfilling than getting sidetracked by others' expectations.",
-      "reflection_question": "What intention are you ready to set?",
-      "spoken_reflection": "What intention are you ready to set? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-07",
       "power_focus": "New beginnings and balance",
       "power_color": "Amber",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Embracing open conversations will feel more rewarding than brushing issues aside today.",
       "reflection_question": "What relationships need your attention today?",
       "spoken_reflection": "What relationships need your attention today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-16",
+      "power_focus": "Curiosity and connection",
+      "power_color": "Burnt orange",
+      "sharp_do": "Engage in open conversations.",
+      "sharp_dont": "Avoid sticking to rigid plans.",
+      "spoken_sharp_line": "Engaging in open conversations will feel more rewarding than sticking to rigid plans today.",
+      "reflection_question": "What new idea are you curious about?",
+      "spoken_reflection": "What new idea are you curious about? Take a pause and think about it."
     }
   ]
 }
