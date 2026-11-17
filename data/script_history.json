@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-07",
-      "power_focus": "New beginnings and balance",
-      "power_color": "Amber",
-      "sharp_do": "Embrace harmony in conversations.",
-      "sharp_dont": "Avoid diving into new commitments.",
-      "spoken_sharp_line": "Fostering balance in your interactions will feel more satisfying than rushing into new obligations.",
-      "reflection_question": "What new path are you ready to explore?",
-      "spoken_reflection": "What new path are you ready to explore? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-08",
       "power_focus": "Embracing transformation",
       "power_color": "Gold",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Engaging in open conversations will feel more rewarding than sticking to rigid plans today.",
       "reflection_question": "What new idea are you curious about?",
       "spoken_reflection": "What new idea are you curious about? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-17",
+      "power_focus": "Innovative thinking",
+      "power_color": "Rust",
+      "sharp_do": "Share your inventive thoughts.",
+      "sharp_dont": "Avoid sticking to old routines.",
+      "spoken_sharp_line": "Sharing your inventive thoughts will spark creativity, while sticking to old routines may feel stifling.",
+      "reflection_question": "What innovative idea have you been holding back?",
+      "spoken_reflection": "What innovative idea have you been holding back? Take a pause and think about it."
     }
   ]
 }
