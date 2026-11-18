@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-08",
-      "power_focus": "Embracing transformation",
-      "power_color": "Gold",
-      "sharp_do": "Focus on your emotional clarity.",
-      "sharp_dont": "Avoid starting new projects.",
-      "spoken_sharp_line": "Finding emotional clarity will feel more rewarding than jumping into new projects today.",
-      "reflection_question": "What fear is holding you back right now?",
-      "spoken_reflection": "What fear is holding you back right now? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-09",
       "power_focus": "Reflecting on past decisions",
       "power_color": "Scarlet",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Sharing your inventive thoughts will spark creativity, while sticking to old routines may feel stifling.",
       "reflection_question": "What innovative idea have you been holding back?",
       "spoken_reflection": "What innovative idea have you been holding back? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-18",
+      "power_focus": "Emotional connection",
+      "power_color": "Crimson",
+      "sharp_do": "Reach out to someone you care about.",
+      "sharp_dont": "Avoid dismissing your feelings.",
+      "spoken_sharp_line": "Connecting with loved ones will feel more fulfilling than brushing off your emotions today.",
+      "reflection_question": "What emotions are you ready to express?",
+      "spoken_reflection": "What emotions are you ready to express? Take a pause and think about it."
     }
   ]
 }
