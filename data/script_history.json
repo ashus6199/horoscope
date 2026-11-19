@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-09",
-      "power_focus": "Reflecting on past decisions",
-      "power_color": "Scarlet",
-      "sharp_do": "Finish what you've started.",
-      "sharp_dont": "Avoid starting new projects.",
-      "spoken_sharp_line": "Completing tasks you've begun will feel more satisfying than initiating anything new right now.",
-      "reflection_question": "What past decision needs your attention today?",
-      "spoken_reflection": "What past decision needs your attention today? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-10",
       "power_focus": "Navigating past connections",
       "power_color": "Burnt orange",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Connecting with loved ones will feel more fulfilling than brushing off your emotions today.",
       "reflection_question": "What emotions are you ready to express?",
       "spoken_reflection": "What emotions are you ready to express? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-19",
+      "power_focus": "Creative expression",
+      "power_color": "Amber",
+      "sharp_do": "Channel your feelings into art.",
+      "sharp_dont": "Avoid overthinking your ideas.",
+      "spoken_sharp_line": "Finding an outlet for your emotions will feel more fulfilling than getting stuck in analysis.",
+      "reflection_question": "What creative idea can you express today?",
+      "spoken_reflection": "What creative idea can you express today? Take a pause and think about it."
     }
   ]
 }
