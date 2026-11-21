@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-11",
-      "power_focus": "Aligning thoughts with feelings",
-      "power_color": "Ruby",
-      "sharp_do": "Clarify your thoughts before sharing.",
-      "sharp_dont": "Avoid jumping to conclusions too quickly.",
-      "spoken_sharp_line": "Clarifying your thoughts before sharing will feel more fulfilling than rushing out new ideas.",
-      "reflection_question": "What message do you want to clarify today?",
-      "spoken_reflection": "What message do you want to clarify today? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-12",
       "power_focus": "Completing ongoing projects.",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finalizing plans today will feel more rewarding than starting something new and uncertain.",
       "reflection_question": "What bold decision are you ready to make?",
       "spoken_reflection": "Take a moment to think about this: What bold decision are you ready to make? Let it simmer."
+    },
+    {
+      "date": "2026-11-21",
+      "power_focus": "Drive and determination",
+      "power_color": "Scarlet",
+      "sharp_do": "Finish what you've started.",
+      "sharp_dont": "Avoid initiating new projects.",
+      "spoken_sharp_line": "Wrapping up current tasks will feel more satisfying than starting something fresh today.",
+      "reflection_question": "What project do you want to complete today?",
+      "spoken_reflection": "What project do you want to complete today? Take a pause and think about it."
     }
   ]
 }
