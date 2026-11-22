@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-12",
-      "power_focus": "Completing ongoing projects.",
-      "power_color": "Crimson",
-      "sharp_do": "Wrap up loose ends today.",
-      "sharp_dont": "Avoid beginning new tasks.",
-      "spoken_sharp_line": "You'll find wrapping up projects feels much more satisfying than starting something new right now.",
-      "reflection_question": "What project needs your attention today?",
-      "spoken_reflection": "What project needs your attention today? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-13",
       "power_focus": "Clearing mental clutter",
       "power_color": "Amber",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Wrapping up current tasks will feel more satisfying than starting something fresh today.",
       "reflection_question": "What project do you want to complete today?",
       "spoken_reflection": "What project do you want to complete today? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-22",
+      "power_focus": "Taking action on plans",
+      "power_color": "Burnt orange",
+      "sharp_do": "Take action on plans.",
+      "sharp_dont": "Avoid starting new projects.",
+      "spoken_sharp_line": "Taking action on plans will feel more satisfying than starting something new right now.",
+      "reflection_question": "What plans are you ready to take action on?",
+      "spoken_reflection": "What plans are you ready to take action on? Take a pause and think about it."
     }
   ]
 }
