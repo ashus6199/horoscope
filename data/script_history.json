@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-13",
-      "power_focus": "Clearing mental clutter",
-      "power_color": "Amber",
-      "sharp_do": "Prioritize mental clarity.",
-      "sharp_dont": "Avoid starting new projects.",
-      "spoken_sharp_line": "Clearing your mind will feel more rewarding than diving into something brand new.",
-      "reflection_question": "What clarity are you seeking to achieve?",
-      "spoken_reflection": "Think about this: What clarity are you seeking to achieve? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-14",
       "power_focus": "Embrace new opportunities",
       "power_color": "Gold",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Taking action on plans will feel more satisfying than starting something new right now.",
       "reflection_question": "What plans are you ready to take action on?",
       "spoken_reflection": "What plans are you ready to take action on? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-23",
+      "power_focus": "Emotional grounding",
+      "power_color": "Rust",
+      "sharp_do": "Reflect on your priorities today.",
+      "sharp_dont": "Avoid jumping into new commitments.",
+      "spoken_sharp_line": "Finishing up what\u2019s already in motion will feel more satisfying than starting something new right now.",
+      "reflection_question": "What emotional anchors do you need to establish?",
+      "spoken_reflection": "What emotional anchors do you need to establish? Take a pause and think about it."
     }
   ]
 }
