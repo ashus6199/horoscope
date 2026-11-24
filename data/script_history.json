@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-14",
-      "power_focus": "Embrace new opportunities",
-      "power_color": "Gold",
-      "sharp_do": "Act on an idea you've had.",
-      "sharp_dont": "Avoid overthinking without action.",
-      "spoken_sharp_line": "Taking action on an idea today will feel much more rewarding than getting stuck in analysis paralysis.",
-      "reflection_question": "What new opportunity are you ready to pursue?",
-      "spoken_reflection": "What new opportunity are you ready to pursue? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-15",
       "power_focus": "Relationship clarity",
       "power_color": "Scarlet",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finishing up what\u2019s already in motion will feel more satisfying than starting something new right now.",
       "reflection_question": "What emotional anchors do you need to establish?",
       "spoken_reflection": "What emotional anchors do you need to establish? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-24",
+      "power_focus": "Nurturing your values",
+      "power_color": "Crimson",
+      "sharp_do": "Ground into your core values",
+      "sharp_dont": "Avoid rushing new commitments",
+      "spoken_sharp_line": "Finding clarity in your values will feel more fulfilling than jumping into new commitments today.",
+      "reflection_question": "What values do you want to prioritize today?",
+      "spoken_reflection": "Take a moment to ponder, what values do you want to prioritize today? Think about it."
     }
   ]
 }
