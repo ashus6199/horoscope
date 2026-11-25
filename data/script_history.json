@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-15",
-      "power_focus": "Relationship clarity",
-      "power_color": "Scarlet",
-      "sharp_do": "Embrace conversations about feelings.",
-      "sharp_dont": "Avoid dismissing partner needs.",
-      "spoken_sharp_line": "Embracing open conversations will feel more rewarding than brushing issues aside today.",
-      "reflection_question": "What relationships need your attention today?",
-      "spoken_reflection": "What relationships need your attention today? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-16",
       "power_focus": "Curiosity and connection",
       "power_color": "Burnt orange",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Finding clarity in your values will feel more fulfilling than jumping into new commitments today.",
       "reflection_question": "What values do you want to prioritize today?",
       "spoken_reflection": "Take a moment to ponder, what values do you want to prioritize today? Think about it."
+    },
+    {
+      "date": "2026-11-25",
+      "power_focus": "Emotional release",
+      "power_color": "Amber",
+      "sharp_do": "Express what\u2019s been building inside.",
+      "sharp_dont": "Ignore your emotional needs.",
+      "spoken_sharp_line": "Allowing your feelings to flow will feel more satisfying than keeping them bottled up.",
+      "reflection_question": "What emotions are you ready to release?",
+      "spoken_reflection": "What emotions are you ready to release? Take a pause and think about it."
     }
   ]
 }
