@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-16",
-      "power_focus": "Curiosity and connection",
-      "power_color": "Burnt orange",
-      "sharp_do": "Engage in open conversations.",
-      "sharp_dont": "Avoid sticking to rigid plans.",
-      "spoken_sharp_line": "Engaging in open conversations will feel more rewarding than sticking to rigid plans today.",
-      "reflection_question": "What new idea are you curious about?",
-      "spoken_reflection": "What new idea are you curious about? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-17",
       "power_focus": "Innovative thinking",
       "power_color": "Rust",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Allowing your feelings to flow will feel more satisfying than keeping them bottled up.",
       "reflection_question": "What emotions are you ready to release?",
       "spoken_reflection": "What emotions are you ready to release? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-26",
+      "power_focus": "Releasing old patterns",
+      "power_color": "Gold",
+      "sharp_do": "Embrace what no longer serves you.",
+      "sharp_dont": "Avoid clinging to past habits.",
+      "spoken_sharp_line": "Letting go of old patterns will feel more liberating than holding onto them.",
+      "reflection_question": "What old patterns are you ready to release?",
+      "spoken_reflection": "What old patterns are you ready to release? Take a pause and think about it."
     }
   ]
 }
