@@ -1,16 +1,6 @@
 {
   "sagittarius": [
     {
-      "date": "2026-11-17",
-      "power_focus": "Innovative thinking",
-      "power_color": "Rust",
-      "sharp_do": "Share your inventive thoughts.",
-      "sharp_dont": "Avoid sticking to old routines.",
-      "spoken_sharp_line": "Sharing your inventive thoughts will spark creativity, while sticking to old routines may feel stifling.",
-      "reflection_question": "What innovative idea have you been holding back?",
-      "spoken_reflection": "What innovative idea have you been holding back? Take a pause and think about it."
-    },
-    {
       "date": "2026-11-18",
       "power_focus": "Emotional connection",
       "power_color": "Crimson",
@@ -99,6 +89,16 @@
       "spoken_sharp_line": "Letting go of old patterns will feel more liberating than holding onto them.",
       "reflection_question": "What old patterns are you ready to release?",
       "spoken_reflection": "What old patterns are you ready to release? Take a pause and think about it."
+    },
+    {
+      "date": "2026-11-27",
+      "power_focus": "Emotional clarity",
+      "power_color": "Scarlet",
+      "sharp_do": "Finish up existing projects.",
+      "sharp_dont": "Start new ones today.",
+      "spoken_sharp_line": "Wrapping up what's already in motion will feel much more rewarding than diving into new beginnings right now.",
+      "reflection_question": "What lingering tasks need your attention?",
+      "spoken_reflection": "What lingering tasks need your attention? Take a pause and think about it."
     }
   ]
 }
